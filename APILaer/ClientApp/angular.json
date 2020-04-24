@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "projects": {
+    "APILaer": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "ClientApp",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "ClientApp/src/index.html",
+            "main": "ClientApp/src/main.ts",
+            "polyfills": "ClientApp/src/polyfills.ts",
+            "tsConfig": "tsconfig.json",
+            "aot": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "APILaer:build"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "APILaer"
+}
