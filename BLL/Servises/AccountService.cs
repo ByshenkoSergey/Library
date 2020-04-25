@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -104,7 +103,7 @@ namespace BL.Service
 
             try
             {
-                await _unit.UserRepository.DeleteUserAsync(userId);
+                _unit.UserRepository.DeleteUser(userId);
                 await _unit.SaveChangeAsync();
 
             }
@@ -142,16 +141,13 @@ namespace BL.Service
 
                 };
 
-                await _unit.UserRepository.EditUserAsync(userId, newUser);
+                _unit.UserRepository.EditUser(userId, newUser);
                 await _unit.SaveChangeAsync();
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public async Task InsertUserAsync(NewUserDTO newUserDTO)
@@ -160,8 +156,7 @@ namespace BL.Service
             {
                 throw new ArgumentNullException("New user is null");
             }
-
-            try
+                        try
             {
                 var newUser = new ApplicationUser
                 {
@@ -175,7 +170,7 @@ namespace BL.Service
                     PhoneNumber = newUserDTO.PhoneNumber
                 };
 
-                await _unit.UserRepository.InsertUserAsync(newUser);
+                _unit.UserRepository.AddUser(newUser);
                 await _unit.SaveChangeAsync();
             }
             catch (Exception)

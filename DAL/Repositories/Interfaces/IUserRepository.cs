@@ -7,11 +7,11 @@ namespace DAL.Repository.Interfaces
 {
     public interface IUserRepository 
     {
-        Task DeleteUserAsync(Guid id);
-        Task EditUserAsync(Guid id, ApplicationUser newUser);
+        void DeleteUser(Guid id);
+        void EditUser(Guid id, ApplicationUser newUser);
         Task<IEnumerable<ApplicationUser>> GetAllUsersAsync();
         Task<ApplicationUser> GetUserAsync(Guid id);
         Task<Guid> GetUserIdAsync(string userName);
-        Task InsertUserAsync(ApplicationUser newUser);
+        void AddUser(ApplicationUser newUser);
     }
 }

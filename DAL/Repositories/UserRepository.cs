@@ -34,9 +34,6 @@ namespace DAL.Repository
             {
                 throw;
             }
-
-
-
         }
 
         public async Task<IEnumerable<ApplicationUser>> GetAllUsersAsync()
@@ -52,11 +49,11 @@ namespace DAL.Repository
             }
         }
 
-        public async Task DeleteUserAsync(Guid id)
+        public void DeleteUser(Guid id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var user = _context.Users.Find(id);
                 if (user == null)
                 {
                     throw new ArgumentException("Do not serch this user");
@@ -71,7 +68,7 @@ namespace DAL.Repository
 
         }
 
-        public async Task EditUserAsync(Guid id, ApplicationUser newUser)
+        public void EditUser(Guid id, ApplicationUser newUser)
         {
             try
             {
@@ -79,7 +76,7 @@ namespace DAL.Repository
                 {
                     throw new ArgumentNullException("ApplicationUser is null");
                 }
-                var user = await _context.Users.FindAsync(id);
+                var user =  _context.Users.FindAsync(id).Result;
 
                 if (user == null)
                 {
@@ -87,7 +84,7 @@ namespace DAL.Repository
                 }
 
                 _context.Entry<ApplicationUser>(user).State = EntityState.Modified;
-                await _context.Users.AddAsync(newUser);
+                AddUser(newUser);
             }
             catch (Exception)
             {
@@ -97,7 +94,7 @@ namespace DAL.Repository
 
         }
 
-        public async Task InsertUserAsync(ApplicationUser newUser)
+        public void AddUser(ApplicationUser newUser)
         {
             try
             {
@@ -105,9 +102,7 @@ namespace DAL.Repository
                 {
                     throw new ArgumentNullException("ApplicationUser is null");
                 }
-
-                await _context.Users.AddAsync(newUser);
-
+                                _context.Users.Add(newUser);
             }
             catch (Exception)
             {

@@ -12,8 +12,6 @@ namespace DAL.Repository
     {
         private LibraryDataBaseContext _context;
         
-
-
         public UserRoleRepository(LibraryDataBaseContext context)
         {
             _context = context;
@@ -21,7 +19,6 @@ namespace DAL.Repository
 
         public async Task<ApplicationUserRole> GetUserRoleAsync(Guid id)
         {
-
             try
             {
                 var role = await _context.Roles.FindAsync(id);
@@ -35,29 +32,26 @@ namespace DAL.Repository
             {
                 throw;
             }
-
-
         }
+
 
         public async Task<IEnumerable<ApplicationUserRole>> GetAllUserRolesAsync()
         {
             try
             {
                 return await _context.Roles.ToListAsync<ApplicationUserRole>();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public async Task DeleteUserRoleAsync(Guid id)
+        public void DeleteUserRole(Guid id)
         {
             try
             {
-                var role = await _context.Roles.FindAsync(id);
+                var role = _context.Roles.Find(id);
                 if (role == null)
                 {
                     throw new ArgumentException("Do not serch this role");
@@ -66,14 +60,12 @@ namespace DAL.Repository
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
-        public async Task EditUserRoleAsync(Guid id, ApplicationUserRole newRole)
+
+        public void EditUserRole(Guid id, ApplicationUserRole newRole)
         {
             try
             {
@@ -81,7 +73,7 @@ namespace DAL.Repository
                 {
                     throw new ArgumentNullException("ApplicationUserRole is null");
                 }
-                var role = await _context.Roles.FindAsync(id);
+                var role = _context.Roles.Find(id);
 
                 if (role == null)
                 {
@@ -89,16 +81,15 @@ namespace DAL.Repository
                 }
 
                 _context.Entry<ApplicationUserRole>(role).State = EntityState.Modified;
-                await _context.Roles.AddAsync(newRole);
+                AddUserRole(newRole);
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        public async Task InsertUserRoleAsync(ApplicationUserRole newRole)
+        public void AddUserRole(ApplicationUserRole newRole)
         {
             try
             {
@@ -107,7 +98,7 @@ namespace DAL.Repository
                     throw new ArgumentNullException("ApplicationUserRole is null");
                 }
 
-                await _context.Roles.AddAsync(newRole);
+               _context.Roles.Add(newRole);
             }
             catch (Exception)
             {
