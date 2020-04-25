@@ -102,7 +102,7 @@ namespace BL.Infrastructure
                 PublishingHouseName = publishingHouseName
             };
 
-            await _unit.PublishingHouseRepository.InsertPublishingHouseAsync(newPublishingHouse);
+            _unit.PublishingHouseRepository.AddPublishingHouse(newPublishingHouse);
             await _unit.SaveChangeAsync();
 
             var id = await _unit.PublishingHouseRepository.GetPublishingHouseIdAsync(newPublishingHouse);

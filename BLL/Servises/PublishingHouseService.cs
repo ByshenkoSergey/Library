@@ -36,7 +36,7 @@ namespace BL
         {
             try
             {
-                _unit.PublishingHouseRepository.DeletePublishingHouseAsync(id).Wait();
+                _unit.PublishingHouseRepository.DeletePublishingHouse(id);
                 await _unit.SaveChangeAsync();
             }
             catch (NullReferenceException e)
@@ -56,7 +56,7 @@ namespace BL
             try
             {
                 var publishingHouse = _mapper.GetMapper().Map<PublishingHouse>(publishingHouseDTO);
-                _unit.PublishingHouseRepository.EditPublishingHouseAsync(publishingHouse, id).Wait();
+                _unit.PublishingHouseRepository.EditPublishingHouse(publishingHouse, id);
                 await _unit.SaveChangeAsync();
             }
 
@@ -69,7 +69,7 @@ namespace BL
         public async Task<Guid> InsertPublishingHouseAsync(PublishingHouseDTO publishingHouseDTO)
         {
             var publishingHouse = _mapper.GetMapper().Map<PublishingHouse>(publishingHouseDTO);
-            _unit.PublishingHouseRepository.InsertPublishingHouseAsync(publishingHouse).Wait();
+            _unit.PublishingHouseRepository.AddPublishingHouse(publishingHouse);
             await _unit.SaveChangeAsync();
             var id = await _unit.PublishingHouseRepository.GetPublishingHouseIdAsync(publishingHouse);
             if (id == default)

@@ -19,10 +19,10 @@ namespace DAL.Repository
 
 
 
-        public async Task DeletePublishingHouseAsync(Guid id)
+        public void DeletePublishingHouse(Guid id)
         {
 
-            var publishingHouse = await _context.PublishingHouses.FindAsync(id);
+            var publishingHouse = _context.PublishingHouses.Find(id);
             if (publishingHouse == null)
             {
                 throw new NullReferenceException("Publishing house not found");
@@ -33,18 +33,17 @@ namespace DAL.Repository
         }
 
 
-        public async Task EditPublishingHouseAsync(PublishingHouse item, Guid id)
+        public void EditPublishingHouse(PublishingHouse item, Guid id)
         {
-            var publishingHouse = await _context.PublishingHouses.FindAsync(id);
+            var publishingHouse = _context.PublishingHouses.Find(id);
 
             if (publishingHouse == null)
             {
                 throw new NullReferenceException("PublishingHouse not found");
             }
 
-            await DeletePublishingHouseAsync(id);
-            await _context.SaveChangesAsync();
-            await _context.PublishingHouses.AddAsync(item);
+           DeletePublishingHouse(id);
+            AddPublishingHouse(item);
         }
 
 
@@ -61,9 +60,9 @@ namespace DAL.Repository
         }
 
 
-        public async Task InsertPublishingHouseAsync(PublishingHouse item)
+        public void AddPublishingHouse(PublishingHouse item)
         {
-            await _context.PublishingHouses.AddAsync(item);
+           _context.PublishingHouses.Add(item);
         }
 
         public async Task<Guid> GetPublishingHouseIdAsync(PublishingHouse item)

@@ -9,9 +9,9 @@ namespace DAL.Repository.Interfaces
     {
         Task<IEnumerable<PublishingHouse>> GetAllPublishingHousesAsync();
         Task<PublishingHouse> GetPublishingHouseAsync(Guid id);
-        Task InsertPublishingHouseAsync(PublishingHouse item);
-        Task EditPublishingHouseAsync(PublishingHouse item, Guid id);
-        Task DeletePublishingHouseAsync(Guid id);
+        void AddPublishingHouse(PublishingHouse item);
+        void EditPublishingHouse(PublishingHouse item, Guid id);
+        void DeletePublishingHouse(Guid id);
         Task<Guid> GetPublishingHouseIdAsync(PublishingHouse item);
     }
 }
