@@ -132,7 +132,7 @@ namespace BL.Infrastructure
                     {
                         AuthorName = authorName
                     };
-                    await _unit.AuthorRepository.InsertAuthorAsync(newAuthor);
+                    _unit.AuthorRepository.AddAuthor(newAuthor);
                     await _unit.SaveChangeAsync();
                 }
                 return await _unit.AuthorRepository.GetAuthorIdAsync(newAuthor);

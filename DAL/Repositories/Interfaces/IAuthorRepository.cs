@@ -9,9 +9,9 @@ namespace DAL.Repository.Interfaces
     {
         Task<IEnumerable<Author>> GetAllAuthorsAsync();
         Task<Author> GetAuthorAsync(Guid id);
-        Task InsertAuthorAsync(Author item);
-        Task EditAuthorAsync(Author item, Guid id);
-        Task DeleteAuthorAsync(Guid id);
+        void AddAuthor(Author item);
+        void EditAuthor(Author item, Guid id);
+        void DeleteAuthor(Guid id);
         Task<Guid> GetAuthorIdAsync(Author item);
        
     }

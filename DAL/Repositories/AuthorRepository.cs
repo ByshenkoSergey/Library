@@ -14,12 +14,12 @@ namespace DAL.Repository
 
         public AuthorRepository(LibraryDataBaseContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
-        public async Task DeleteAuthorAsync(Guid id)
+        public void DeleteAuthor(Guid id)
         {
-            var author = await _context.Authors.FindAsync(id);
+            var author =  _context.Authors.Find(id);
             if (author == null)
             {
                 throw new NullReferenceException("Author not found");
@@ -29,19 +29,19 @@ namespace DAL.Repository
         }
 
 
-        public async Task EditAuthorAsync(Author item, Guid id)
+        public void EditAuthor(Author item, Guid id)
         {
 
-            var author = await _context.Authors.FindAsync(id);
+            var author = _context.Authors.Find(id);
 
             if (author == null)
             {
                 throw new NullReferenceException("Author not found");
             }
 
-            await DeleteAuthorAsync(id);
-            await _context.SaveChangesAsync();
-            await _context.Authors.AddAsync(item);
+            DeleteAuthor(id);
+            //await _context.SaveChangesAsync();
+             AddAuthor(item);
         }
 
 
@@ -58,9 +58,9 @@ namespace DAL.Repository
         }
 
 
-        public async Task InsertAuthorAsync(Author item)
+        public void AddAuthor(Author item)
         {
-            await _context.Authors.AddAsync(item);
+            _context.Authors.Add(item);
         }
 
 
