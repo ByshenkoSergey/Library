@@ -19,7 +19,7 @@ namespace DAL.Repository
 
         public void DeleteAuthor(Guid id)
         {
-            var author =  _context.Authors.Find(id);
+            var author = _context.Authors.Find(id);
             if (author == null)
             {
                 throw new NullReferenceException("Author not found");
@@ -27,25 +27,17 @@ namespace DAL.Repository
             _context.Entry<Author>(author).State = EntityState.Deleted;
             _context.Authors.Remove(author);
         }
-
-
         public void EditAuthor(Author item, Guid id)
         {
-
             var author = _context.Authors.Find(id);
-
             if (author == null)
             {
                 throw new NullReferenceException("Author not found");
             }
 
             DeleteAuthor(id);
-            //await _context.SaveChangesAsync();
-             AddAuthor(item);
+            AddAuthor(item);
         }
-
-
-
         public async Task<Author> GetAuthorAsync(Guid id)
         {
             return await _context.Authors.FindAsync(id);
@@ -62,8 +54,6 @@ namespace DAL.Repository
         {
             _context.Authors.Add(item);
         }
-
-
         public async Task<Guid> GetAuthorIdAsync(Author item)
         {
 
@@ -75,9 +65,8 @@ namespace DAL.Repository
                 if (author == item)
                     return author.AuthorId;
             }
-
             return default;
         }
-
     }
+
 }

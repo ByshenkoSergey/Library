@@ -15,12 +15,12 @@ namespace DAL.Repository
 
         public BookRepository(LibraryDataBaseContext context)
         {
-            this._context = context;
+           _context = context;
         }
 
-        public async Task DeleteBookAsync(Guid id)
+        public void DeleteBook(Guid id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = _context.Books.Find(id);
             if (book == null)
             {
                 throw new NullReferenceException("Book not found");
@@ -30,16 +30,15 @@ namespace DAL.Repository
         }
 
 
-        public async Task EditBookAsync(Book item, Guid id)
+        public void EditBook(Book item, Guid id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = _context.Books.Find(id);
             if (book == null)
             {
                 throw new NullReferenceException("Book not found");
             }
-            await DeleteBookAsync(id);
-            await _context.SaveChangesAsync();
-            await _context.Books.AddAsync(item);
+            DeleteBook(id);
+            AddBook(item);
         }
 
 
@@ -55,9 +54,9 @@ namespace DAL.Repository
         }
 
 
-        public async Task InsertBookAsync(Book item)
+        public void AddBook(Book item)
         {
-            await _context.Books.AddAsync(item);
+            _context.Books.Add(item);
         }
 
 

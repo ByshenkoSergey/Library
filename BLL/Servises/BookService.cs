@@ -27,7 +27,7 @@ namespace BL.Service
             try
             {
                 var book = await _unit.BookRepository.GetBookAsync(id);
-                await _unit.BookRepository.DeleteBookAsync(id);
+                _unit.BookRepository.DeleteBook(id);
                 DeleteBookFile(book.BookFileAddress);
                 await _unit.SaveChangeAsync();
             }
@@ -80,7 +80,7 @@ namespace BL.Service
             try
             {
                 var book = _mapper.GetMapper().Map<BookAddDTO, Book>(newBookDTO);
-                await _unit.BookRepository.InsertBookAsync(book);
+                _unit.BookRepository.AddBook(book);
                 await _unit.SaveChangeAsync();
                 return await _unit.BookRepository.GetBookIdAsync(book.BookName);
             }
@@ -95,7 +95,7 @@ namespace BL.Service
             try
             {
                 var book = _mapper.GetMapper().Map<BookAddDTO, Book>(newBookDTO);
-                await _unit.BookRepository.EditBookAsync(book, bookId);
+                _unit.BookRepository.EditBook(book, bookId);
                 await _unit.SaveChangeAsync();
             }
             catch (ValidationException e)

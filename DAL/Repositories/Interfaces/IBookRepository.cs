@@ -9,9 +9,9 @@ namespace DAL.Repository.Interfaces
     {
         Task<IEnumerable<Book>> GetAllBooksAsync();
         Task<Book> GetBookAsync(Guid id);
-        Task InsertBookAsync(Book item);
-        Task EditBookAsync(Book item, Guid id);
-        Task DeleteBookAsync(Guid id);
+        void AddBook(Book item);
+        void EditBook(Book item, Guid id);
+        void DeleteBook(Guid id);
         Task<Guid> GetBookIdAsync(string item);
     }
 }
