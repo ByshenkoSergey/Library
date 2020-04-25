@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public abstract class Repository<T> : IRepository<T> where T : class
     {
         private LibraryDataBaseContext _context;
 
@@ -52,9 +52,10 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var task = Task.Run(() => _context.Set<T>());
-            return await task;
+            return await _context.Set<T>().ToListAsync<T>();
         }
+
+        public abstract Task<Guid> GetModelIdAsync(string name);
 
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API_Laer
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorController : ControllerBase

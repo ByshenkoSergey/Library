@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace DAL.Models.IdentityModels
 {
-    public class ApplicationUserRole : IdentityRole<Guid>
+    public class UserRole : IdentityRole<Guid>
     {
         public Guid RoleId { get; set; }
         [PersonalData]
         public string RoleName { get; set; }
 
-        public virtual IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
+        public virtual IEnumerable<User> ApplicationUsers { get; set; }
 
-        public ApplicationUserRole()
+        public UserRole()
         {
-            ApplicationUsers = new List<ApplicationUser>();
+            ApplicationUsers = new List<User>();
         }
     }
 }

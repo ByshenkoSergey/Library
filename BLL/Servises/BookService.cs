@@ -26,8 +26,8 @@ namespace BL.Service
         {
             try
             {
-                var book = await _unit.BookRepository.GetBookAsync(id);
-                _unit.BookRepository.DeleteBook(id);
+                var book = await _unit.BookRepository.GetAsync(id);
+                _unit.BookRepository.Delete(id);
                 DeleteBookFile(book.BookFileAddress);
                 await _unit.SaveChangeAsync();
             }
@@ -38,7 +38,7 @@ namespace BL.Service
         }
         public async Task<BookOpenDTO> GetBookOpenDTOAsync(Guid id)
         {
-            var book = await _unit.BookRepository.GetBookAsync(id);
+            var book = await _unit.BookRepository.GetAsync(id);
 
             if (book == null)
             {
@@ -58,14 +58,14 @@ namespace BL.Service
         {
             try
             {
-                return _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(await _unit.BookRepository.GetAllBooksAsync());
+                return _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(await _unit.BookRepository.GetAllAsync());
             }
             catch (ValidationException e)
             {
                 throw e;
             }
         }
-        public async Task<Guid> InsertBookAsync(BookAddDTO newBookDTO)
+        public async Task<Guid> AddBookAsync(BookAddDTO newBookDTO)
         {
             if (!newBookDTO.BookFileAddress.EndsWith(".txt"))
             {
@@ -80,9 +80,9 @@ namespace BL.Service
             try
             {
                 var book = _mapper.GetMapper().Map<BookAddDTO, Book>(newBookDTO);
-                _unit.BookRepository.AddBook(book);
+                _unit.BookRepository.Add(book);
                 await _unit.SaveChangeAsync();
-                return await _unit.BookRepository.GetBookIdAsync(book.BookName);
+                return await _unit.BookRepository.GetModelIdAsync(book.BookName);
             }
             catch (ValidationException e)
             {
@@ -95,12 +95,11 @@ namespace BL.Service
             try
             {
                 var book = _mapper.GetMapper().Map<BookAddDTO, Book>(newBookDTO);
-                _unit.BookRepository.EditBook(book, bookId);
+                _unit.BookRepository.Edit(book, bookId);
                 await _unit.SaveChangeAsync();
             }
             catch (ValidationException e)
             {
-
                 throw e;
             }
         }
@@ -120,7 +119,7 @@ namespace BL.Service
         }
         private async Task<bool> BookAvailabilityCheckAsync(BookAddDTO newBookDTO)
         {
-            var bookList = await _unit.BookRepository.GetAllBooksAsync();
+            var bookList = await _unit.BookRepository.GetAllAsync();
             var bookDTOList = _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookAddDTO>>(bookList);
 
             foreach (var book in bookDTOList)

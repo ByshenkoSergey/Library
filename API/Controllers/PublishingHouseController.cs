@@ -49,7 +49,7 @@ namespace API_Laer
         {
             try
             {
-                return Ok(await _service.InsertPublishingHouseAsync(publishingHouseDTO));
+                return Ok(await _service.AddPublishingHouseAsync(publishingHouseDTO));
             }
             catch (Exception e)// to do conkreate error
             {

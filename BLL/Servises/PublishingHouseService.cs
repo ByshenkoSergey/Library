@@ -22,7 +22,7 @@ namespace BL
 
         public async Task<PublishingHouseDTO> GetPublishingHouseDTOAsync(Guid id)
         {
-            var publishingHouse = await _unit.PublishingHouseRepository.GetPublishingHouseAsync(id);
+            var publishingHouse = await _unit.PublishingHouseRepository.GetAsync(id);
 
             if (publishingHouse == null)
             {
@@ -36,7 +36,7 @@ namespace BL
         {
             try
             {
-                _unit.PublishingHouseRepository.DeletePublishingHouse(id);
+                _unit.PublishingHouseRepository.Delete(id);
                 await _unit.SaveChangeAsync();
             }
             catch (NullReferenceException e)
@@ -47,7 +47,7 @@ namespace BL
 
         public async Task<IEnumerable<PublishingHouseDTO>> GetAllPublishingHouseDTOAsync()
         {
-            return _mapper.GetMapper().Map<IEnumerable<PublishingHouse>, IEnumerable<PublishingHouseDTO>>(await _unit.PublishingHouseRepository.GetAllPublishingHousesAsync());
+            return _mapper.GetMapper().Map<IEnumerable<PublishingHouse>, IEnumerable<PublishingHouseDTO>>(await _unit.PublishingHouseRepository.GetAllAsync());
         }
 
 
@@ -56,7 +56,7 @@ namespace BL
             try
             {
                 var publishingHouse = _mapper.GetMapper().Map<PublishingHouse>(publishingHouseDTO);
-                _unit.PublishingHouseRepository.EditPublishingHouse(publishingHouse, id);
+                _unit.PublishingHouseRepository.Edit(publishingHouse, id);
                 await _unit.SaveChangeAsync();
             }
 
@@ -66,12 +66,12 @@ namespace BL
             }
         }
 
-        public async Task<Guid> InsertPublishingHouseAsync(PublishingHouseDTO publishingHouseDTO)
+        public async Task<Guid> AddPublishingHouseAsync(PublishingHouseDTO publishingHouseDTO)
         {
             var publishingHouse = _mapper.GetMapper().Map<PublishingHouse>(publishingHouseDTO);
-            _unit.PublishingHouseRepository.AddPublishingHouse(publishingHouse);
+            _unit.PublishingHouseRepository.Add(publishingHouse);
             await _unit.SaveChangeAsync();
-            var id = await _unit.PublishingHouseRepository.GetPublishingHouseIdAsync(publishingHouse);
+            var id = await _unit.PublishingHouseRepository.GetModelIdAsync(publishingHouse.PublishingHouseName);
             if (id == default)
             {
                 throw new ValidationException("Publishing house not found", "");

@@ -98,7 +98,7 @@ namespace API_Laer
         {
             try
             {
-                var id = await _service.InsertBookAsync(bookDTO);
+                var id = await _service.AddBookAsync(bookDTO);
                 return Ok($"Book is added, new Id is {id}");
             }
             catch (ValidationException e)

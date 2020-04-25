@@ -2,6 +2,7 @@ using AutoMapper;
 using BL;
 using BL.Infrastructure;
 using BL.Options;
+using BLL.Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 namespace API_Laer
 {
@@ -19,7 +21,6 @@ namespace API_Laer
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; }
@@ -27,33 +28,18 @@ namespace API_Laer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                 .AddJwtBearer(options =>
-                 {
-                     options.RequireHttpsMetadata = false;
-                     options.TokenValidationParameters = new TokenValidationParameters
-                     {
-                         ValidateIssuer = false,
-                         ValidIssuer = AuthOptions.issuer,
-                         ValidateAudience = false,
-                         ValidAudience = AuthOptions.audience,
-                         ValidateLifetime = true,
-                         IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                         ValidateIssuerSigningKey = true,
-                     };
-                 });
-            services.AddBLServises(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddAPILaerServices();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCors();
             services.AddControllers();
 
+            services.AddBLServises(Configuration.GetConnectionString("DefaultConnection"), 
+                Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
 
-
-
+            services.AddAPILaerServices();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+                {
+                    configuration.RootPath = "ClientApp/dist";
+                });
 
         }
 
@@ -65,6 +51,7 @@ namespace API_Laer
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -73,6 +60,11 @@ namespace API_Laer
             }
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
 

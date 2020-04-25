@@ -25,6 +25,7 @@ namespace BL.Infrastructure
             _mapper = new MapperConfiguration(cnf =>
             {
                 cnf.CreateMap<Author, AuthorDTO>();
+                cnf.CreateMap<User, NewUserDTO>();
                 cnf.CreateMap<AuthorDTO, Author>();
                 cnf.CreateMap<PublishingHouse, PublishingHouseDTO>();
                 cnf.CreateMap<PublishingHouseDTO, PublishingHouse>();
@@ -44,8 +45,11 @@ namespace BL.Infrastructure
                                .ForMember("PublishingHouseName", opt => opt.MapFrom(p => GetPublishingHouseNameAsync(p.PublishingHouseId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
 
-                cnf.CreateMap<ApplicationUser, NewUserDTO>()
-                                .ForMember("UserRole", opt => opt.MapFrom(p => GetUserRole(p.ApplicationUserRoleId).Result));
+                cnf.CreateMap<User, NewUserDTO>()
+                                .ForMember("UserRole", opt => opt.MapFrom(p => GetUserRoleName(p.ApplicationUserRoleId).Result));
+                
+                cnf.CreateMap<NewUserDTO, User>()
+                                .ForMember("ApplicationUserRoleId", opt => opt.MapFrom(p => GetUserRoleId(p.UserRole).Result));
 
 
 
@@ -55,15 +59,31 @@ namespace BL.Infrastructure
         }
 
         #region NewUserDTOToApplicationUser
-        private async Task<string> GetUserRole(Guid applicationUserRoleId)
+        private async Task<string> GetUserRoleName(Guid applicationUserRoleId)
         {
-            var role = await _unit.UserRoleRepository.GetUserRoleAsync(applicationUserRoleId);
+            var role = await _unit.UserRoleRepository.GetAsync(applicationUserRoleId);
+            
+            if (role == default)
+            {
+                throw new ValidationException("User role not found", "");
+            }
             return role.RoleName;
         }
         #endregion
 
+        #region ApplicationUserToNewUserDTO
+        private async Task<Guid> GetUserRoleId(string applicationUserRoleName)
+        {
+            var roleId = await _unit.UserRoleRepository.GetModelIdAsync(applicationUserRoleName);
+            if (roleId == default)
+            {
+                throw new ValidationException("User role not found", "");
+            }
+            return roleId;
+        }
+        #endregion
 
-        #region MupBookToBookFormDTO
+        #region MapBookToBookFormDTO
         private async Task<string> GetBookTextAsync(string bookFileAddress)
         {
             try
@@ -87,7 +107,7 @@ namespace BL.Infrastructure
         #region MapBookAddDTOToBook
         private async Task<Guid> GetPublishingHouseIdAsync(string publishingHouseName)
         {
-            var PublishingHouseList = await _unit.PublishingHouseRepository.GetAllPublishingHousesAsync();
+            var PublishingHouseList = await _unit.PublishingHouseRepository.GetAllAsync();
 
             foreach (var publishingHouse in PublishingHouseList)
             {
@@ -102,10 +122,10 @@ namespace BL.Infrastructure
                 PublishingHouseName = publishingHouseName
             };
 
-            _unit.PublishingHouseRepository.AddPublishingHouse(newPublishingHouse);
+            _unit.PublishingHouseRepository.Add(newPublishingHouse);
             await _unit.SaveChangeAsync();
 
-            var id = await _unit.PublishingHouseRepository.GetPublishingHouseIdAsync(newPublishingHouse);
+            var id = await _unit.PublishingHouseRepository.GetModelIdAsync(newPublishingHouse.PublishingHouseName);
             return id;
 
         }
@@ -114,7 +134,7 @@ namespace BL.Infrastructure
         {
             try
             {
-                var authorList = await _unit.AuthorRepository.GetAllAuthorsAsync();
+                var authorList = await _unit.AuthorRepository.GetAllAsync();
 
                 Author newAuthor = null;
 
@@ -132,10 +152,10 @@ namespace BL.Infrastructure
                     {
                         AuthorName = authorName
                     };
-                    _unit.AuthorRepository.AddAuthor(newAuthor);
+                    _unit.AuthorRepository.Add(newAuthor);
                     await _unit.SaveChangeAsync();
                 }
-                return await _unit.AuthorRepository.GetAuthorIdAsync(newAuthor);
+                return await _unit.AuthorRepository.GetModelIdAsync(newAuthor.AuthorName);
             }
             catch (ValidationException e)
             {
@@ -148,7 +168,7 @@ namespace BL.Infrastructure
         #region MapBooksToBooksFromDTO
         private async Task<string> GetPublishingHouseNameAsync(Guid publishingHouseId)
         {
-            var publishingHouse = await _unit.PublishingHouseRepository.GetPublishingHouseAsync(publishingHouseId);
+            var publishingHouse = await _unit.PublishingHouseRepository.GetAsync(publishingHouseId);
 
             if (publishingHouse == null)
             {
@@ -159,7 +179,7 @@ namespace BL.Infrastructure
 
         private async Task<string> GetAuthorNameAsync(Guid authorId)
         {
-            var author = await _unit.AuthorRepository.GetAuthorAsync(authorId);
+            var author = await _unit.AuthorRepository.GetAsync(authorId);
 
             if (author == null)
             {

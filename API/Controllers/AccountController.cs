@@ -6,9 +6,10 @@ using BL.DTOModels;
 
 namespace API_Laer
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
-   // [AllowAnonymous]
+    [Route("api/[controller]")]
+    
     public class AccountController : ControllerBase
     {
         private IUserService _service;
@@ -17,13 +18,13 @@ namespace API_Laer
         {
             _service = service;
         }
-
+        [AllowAnonymous]
         [HttpPost("token")]
-        public async Task<IActionResult> Token(LoginUserDTO loginUser )
+        public async Task<IActionResult> Token(LoginUserDTO loginUser)
         {
             var token = await _service.GetTokenAsync(loginUser.Login, loginUser.Password);
 
-            return new ObjectResult(token); 
+            return new ObjectResult(token);
         }
     }
 

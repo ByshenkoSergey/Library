@@ -22,7 +22,7 @@ namespace BL.Service
 
         public async Task<AuthorDTO> GetAuthorDTOAsync(Guid id)
         {
-            var author = await _unit.AuthorRepository.GetAuthorAsync(id);
+            var author = await _unit.AuthorRepository.GetAsync(id);
 
             if (author == null)
             {
@@ -41,7 +41,7 @@ namespace BL.Service
         {
             try
             {
-                _unit.AuthorRepository.DeleteAuthor(id);
+                _unit.AuthorRepository.Delete(id);
                 await _unit.SaveChangeAsync();
             }
             catch (NullReferenceException e)
@@ -52,7 +52,7 @@ namespace BL.Service
 
         public async Task<IEnumerable<AuthorDTO>> GetAllAuthorDTOAsync()
         {
-            return _mapper.GetMapper().Map<IEnumerable<Author>, IEnumerable<AuthorDTO>>(await _unit.AuthorRepository.GetAllAuthorsAsync());
+            return _mapper.GetMapper().Map<IEnumerable<Author>, IEnumerable<AuthorDTO>>(await _unit.AuthorRepository.GetAllAsync());
         }
 
         public async Task EditAuthorAsync(Guid id, AuthorDTO authorDTO)
@@ -60,7 +60,7 @@ namespace BL.Service
             try
             {
                 var author = _mapper.GetMapper().Map<AuthorDTO, Author>(authorDTO);
-                _unit.AuthorRepository.EditAuthor(author, id);
+                _unit.AuthorRepository.Edit(author, id);
                 await _unit.SaveChangeAsync();
             }
 
@@ -73,10 +73,11 @@ namespace BL.Service
         public async Task<Guid> InsertAuthorAsync(AuthorDTO authorDTO)
         {
             var author = _mapper.GetMapper().Map<Author>(authorDTO);
-            _unit.AuthorRepository.AddAuthor(author);
+            _unit.AuthorRepository.Add(author);
             await _unit.SaveChangeAsync();
-            return await _unit.AuthorRepository.GetAuthorIdAsync(author);
+            return await _unit.AuthorRepository.GetModelIdAsync(author.AuthorName);
         }
+                
     }
 
 }

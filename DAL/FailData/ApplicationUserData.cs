@@ -7,7 +7,7 @@ namespace DAL.FailData
 {
     public class ApplicationUserData
     {
-        private static List<ApplicationUserRole> roleList = ApplicationUserRoleData.GetApplicationUserRoleData().ToList();
+        private static List<UserRole> roleList = ApplicationUserRoleData.GetApplicationUserRoleData().ToList();
 
         
         private static Guid GetUserRoleGuid(string roleName)
@@ -24,9 +24,9 @@ namespace DAL.FailData
             return result;
         }
 
-        public static IEnumerable<ApplicationUser> GetApplicationUserData()
+        public static IEnumerable<User> GetApplicationUserData()
         {
-            yield return new ApplicationUser
+            yield return new User
             {
                 UserId = Guid.NewGuid(),
                 UserLogin = "Pupkin@gmail.com",
@@ -39,7 +39,7 @@ namespace DAL.FailData
                 ApplicationUserRoleId = GetUserRoleGuid("Admin"),
             };
 
-            yield return new ApplicationUser
+            yield return new User
             {
                 UserId = Guid.NewGuid(),
                 UserLogin = "Petrov@gmail.com",
@@ -52,7 +52,7 @@ namespace DAL.FailData
                 ApplicationUserRoleId = GetUserRoleGuid("Moderator"),
             };
 
-            yield return new ApplicationUser
+            yield return new User
             {
                 UserId = Guid.NewGuid(),
                 UserLogin = "Ivanov@gmail.com",

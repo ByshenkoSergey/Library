@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Configurations
 {
-    internal class ApplicationUserRoleConfiguration : IEntityTypeConfiguration<ApplicationUserRole>
+    internal class ApplicationUserRoleConfiguration : IEntityTypeConfiguration<UserRole>
     {
-        public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
+        public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder.HasKey(k => k.RoleId);
             builder.Ignore(i => i.Id);

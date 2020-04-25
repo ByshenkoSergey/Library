@@ -12,6 +12,6 @@ namespace BL.Service.Interfaces
         Task EditBookAsync(BookAddDTO newBookDTO, Guid bookId);
         Task<IEnumerable<BookFormDTO>> GetAllBooksFormDTOAsync();
         Task<BookOpenDTO> GetBookOpenDTOAsync(Guid id);
-        Task<Guid> InsertBookAsync(BookAddDTO newBookDTO);
+        Task<Guid> AddBookAsync(BookAddDTO newBookDTO);
     }
 }

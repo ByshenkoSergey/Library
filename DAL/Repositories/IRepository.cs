@@ -12,5 +12,7 @@ namespace DAL.Repository.Interfaces
         Task<T> FindModelAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetAsync(Guid id);
+        Task<Guid> GetModelIdAsync(string item);
+
     }
 }

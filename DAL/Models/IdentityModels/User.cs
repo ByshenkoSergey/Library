@@ -3,7 +3,7 @@ using System;
 
 namespace DAL.Models.IdentityModels
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class User : IdentityUser<Guid>
     {
         public Guid UserId { get; set; }
         [PersonalData]
@@ -19,7 +19,7 @@ namespace DAL.Models.IdentityModels
 
 
         public Guid ApplicationUserRoleId { get; set; }
-        public virtual ApplicationUserRole ApplicationUserRole { get; set; }
+        public virtual UserRole ApplicationUserRole { get; set; }
 
     }
 }

@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace DAL.Context
 {
-    public class LibraryDataBaseContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, Guid>
+    public class LibraryDataBaseContext : IdentityDbContext<User, UserRole, Guid>
     {
         public LibraryDataBaseContext(DbContextOptions<LibraryDataBaseContext> options)
 : base(options)
@@ -29,8 +29,8 @@ namespace DAL.Context
             modelBuilder.Entity<Book>().HasData(BooksData.GetBooksData());
             modelBuilder.Entity<Author>().HasData(AuthorsData.GetAuthorsData());
             modelBuilder.Entity<PublishingHouse>().HasData(PublishingHousesData.GetPublishingHousesData());
-            modelBuilder.Entity<ApplicationUserRole>().HasData(ApplicationUserRoleData.GetApplicationUserRoleData());
-            modelBuilder.Entity<ApplicationUser>().HasData(ApplicationUserData.GetApplicationUserData());
+            modelBuilder.Entity<UserRole>().HasData(ApplicationUserRoleData.GetApplicationUserRoleData());
+            modelBuilder.Entity<User>().HasData(ApplicationUserData.GetApplicationUserData());
         }
     }
 }
