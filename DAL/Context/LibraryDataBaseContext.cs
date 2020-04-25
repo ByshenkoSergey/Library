@@ -5,6 +5,7 @@ using DAL.Models.IdentityModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Reflection;
 
 namespace DAL.Context
 {
@@ -28,12 +29,8 @@ namespace DAL.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new BookConfigurations());
-            modelBuilder.ApplyConfiguration(new PublishingHousesConfigurations());
-            modelBuilder.ApplyConfiguration(new AuthorConfigurations());
-            modelBuilder.ApplyConfiguration(new ApplicationUserRoleConfiguration());
-            modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
-
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            
             modelBuilder.Entity<Book>().HasData(BooksData.GetBooksData());
             modelBuilder.Entity<Author>().HasData(AuthorsData.GetAuthorsData());
             modelBuilder.Entity<PublishingHouse>().HasData(PublishingHousesData.GetPublishingHousesData());
