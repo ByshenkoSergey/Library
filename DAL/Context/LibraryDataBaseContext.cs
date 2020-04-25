@@ -11,10 +11,8 @@ namespace DAL.Context
 {
     public class LibraryDataBaseContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, Guid>
     {
-
-
         public LibraryDataBaseContext(DbContextOptions<LibraryDataBaseContext> options)
-    : base(options)
+: base(options)
         {
             Database.EnsureCreated();
         }
@@ -23,21 +21,16 @@ namespace DAL.Context
         public DbSet<Author> Authors { get; set; }
         public DbSet<PublishingHouse> PublishingHouses { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
+
             modelBuilder.Entity<Book>().HasData(BooksData.GetBooksData());
             modelBuilder.Entity<Author>().HasData(AuthorsData.GetAuthorsData());
             modelBuilder.Entity<PublishingHouse>().HasData(PublishingHousesData.GetPublishingHousesData());
             modelBuilder.Entity<ApplicationUserRole>().HasData(ApplicationUserRoleData.GetApplicationUserRoleData());
             modelBuilder.Entity<ApplicationUser>().HasData(ApplicationUserData.GetApplicationUserData());
-
         }
-
     }
 }
