@@ -8,7 +8,7 @@ using BLL.Infrastructure.Mapping;
 
 namespace BLL.Services
 {
-    class UserRoleService : IUserRoleService
+    public class UserRoleService : IUserRoleService
     {
         private IUnitOfWork _unit;
         private IMapConfig _mapper;

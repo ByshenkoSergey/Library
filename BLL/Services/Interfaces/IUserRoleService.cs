@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BLL.Services
+namespace BLL.Services.Interfaces
 {
-    interface IUserRoleService : IDisposable
+    public interface IUserRoleService : IDisposable
     {
         Task<Guid> AddUserRoleAsync(UserRoleDTO userRoleDTO);
         Task DeleteUserRoleAsync(Guid id);
