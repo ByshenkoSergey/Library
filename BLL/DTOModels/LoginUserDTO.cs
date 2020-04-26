@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BL.DTOModels
+﻿namespace BLL.DTOModels
 {
     public class LoginUserDTO
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BL.DTOModels
+﻿namespace BLL.DTOModels
 {
     public class BookAddDTO
     {

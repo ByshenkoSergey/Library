@@ -1,13 +1,14 @@
-﻿using BL.DTOModels;
-using BL.Infrastructure;
-using BL.Service.Interfaces;
+﻿using BLL.DTOModels;
+using BLL.Infrastructure;
+using BLL.Infrastructure.Mapping;
+using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BL
+namespace BLL.Services
 {
     public class PublishingHouseService : IPublishingHouseService
     {

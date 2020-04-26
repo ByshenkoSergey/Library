@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BL.Service.Interfaces;
+using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using BL.DTOModels;
+using BLL.DTOModels;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -116,6 +116,5 @@ namespace API_Laer
             }        
         }
     }
-
 
 }

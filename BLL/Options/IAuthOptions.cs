@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace BL.Options
+namespace BLL.Options
 {
     public interface IAuthOptions
     {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL.DTOModels;
+using BLL.DTOModels;
 using DAL.Models;
 using DAL.Models.IdentityModels;
 using DAL.UnitOfWork;
@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BL.Infrastructure
+namespace BLL.Infrastructure.Mapping
 {
     public class MapConfig : IMapConfig
     {

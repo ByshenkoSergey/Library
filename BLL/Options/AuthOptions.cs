@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace BL.Options
+namespace BLL.Options
 {
     public class AuthOptions : IAuthOptions
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BL.DTOModels
+namespace BLL.DTOModels
 {
     public class NewUserDTO
     {

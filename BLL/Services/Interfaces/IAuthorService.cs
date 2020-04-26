@@ -1,9 +1,9 @@
-﻿using BL.DTOModels;
+﻿using BLL.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BL.Service.Interfaces
+namespace BL.Services.Interfaces
 {
     public interface IAuthorService : IDisposable
     {

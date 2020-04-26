@@ -5,14 +5,16 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Text.Json;
-using BL.Service.Interfaces;
 using DAL.UnitOfWork;
-using BL.DTOModels;
-using BL.Infrastructure;
+using BLL.DTOModels;
+using BLL.Infrastructure;
 using DAL.Models.IdentityModels;
-using BL.Options;
+using BLL.Options;
+using BLL.Helper;
+using BLL.Services.Interfaces;
+using BLL.Infrastructure.Mapping;
 
-namespace BL.Service
+namespace BLL.Services
 {
     public class UserService : IUserService
     {
@@ -41,7 +43,8 @@ namespace BL.Service
                 throw new ValidationException("User not found", "");
             }
 
-            return _mapper.GetMapper().Map<NewUserDTO>(user);
+            var userDTO = _mapper.GetMapper().Map<NewUserDTO>(user);
+            return userDTO.WithoutPassword();
         }
 
 
@@ -49,14 +52,14 @@ namespace BL.Service
         {
             try
             {
-                return _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(await _unit.UserRepository.GetAllAsync());
+                IEnumerable<NewUserDTO> users = _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(await _unit.UserRepository.GetAllAsync());
+                return users.WithoutPasswords();
             }
             catch (Exception)
             {
                 throw;
             }
         }
-
 
         public async Task DeleteUserAsync(Guid userId)
         {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace BL.Infrastructure
+namespace BLL.Infrastructure.Mapping
 {
     public interface IMapConfig
     {

@@ -1,6 +1,7 @@
-﻿using BL.DTOModels;
-using BL.Infrastructure;
-using BL.Service.Interfaces;
+﻿using BLL.DTOModels;
+using BLL.Infrastructure;
+using BLL.Infrastructure.Mapping;
+using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BL.Service
+namespace BLL.Service
 {
     public class BookService : IBookService
     {
