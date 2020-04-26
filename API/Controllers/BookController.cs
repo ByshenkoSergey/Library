@@ -5,9 +5,11 @@ using BL.Service.Interfaces;
 using BL.DTOModels;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Laer
 {
+    [Authorize]
     [Route("api/book")]
     [ApiController]
     public class BookController : ControllerBase
@@ -61,7 +63,7 @@ namespace API_Laer
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -79,6 +81,8 @@ namespace API_Laer
         }
 
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> EditBookAsync(BookAddDTO newBookDTO, Guid id)
         {
@@ -93,8 +97,10 @@ namespace API_Laer
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
-        public async Task<ActionResult> InsertAsync( BookAddDTO bookDTO)
+        public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
             try
             {

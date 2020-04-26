@@ -60,16 +60,10 @@ namespace BL.Service
 
         public async Task DeleteUserAsync(Guid userId)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException("User id is null");
-            }
-
             try
             {
                 _unit.UserRepository.Delete(userId);
                 await _unit.SaveChangeAsync();
-
             }
             catch (NullReferenceException e)
             {
@@ -91,13 +85,15 @@ namespace BL.Service
             }
         }
 
-        public async Task InsertUserAsync(NewUserDTO newUserDTO)
+        public async Task<Guid> AddUserAsync(NewUserDTO newUserDTO)
         {
             try
             {
                 var newUser = _mapper.GetMapper().Map<User>(newUserDTO);
                 _unit.UserRepository.Add(newUser);
                 await _unit.SaveChangeAsync();
+                Guid id = await _unit.UserRepository.GetModelIdAsync(newUser.UserName);
+                return id;
             }
             catch (ArgumentException e)
             {

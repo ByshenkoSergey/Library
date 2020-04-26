@@ -4,9 +4,11 @@ using BL.Service.Interfaces;
 using BL.DTOModels;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Laer
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PublishingHouseController : ControllerBase
@@ -30,6 +32,8 @@ namespace API_Laer
             return Ok(publishingHouse);
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<PublishingHouseDTO>>> GetAllPublishingHouseAsync()
         {
@@ -44,6 +48,8 @@ namespace API_Laer
 
         }
 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult<int>> PostPublishingHouseDTOAsync(PublishingHouseDTO publishingHouseDTO)
         {
@@ -53,11 +59,12 @@ namespace API_Laer
             }
             catch (Exception e)// to do conkreate error
             {
-                return BadRequest(e.Message);             
+                return BadRequest(e.Message);
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutPublishingHouseDTOAsync(Guid id, PublishingHouseDTO publishingHouseDTO)
         {
@@ -70,9 +77,10 @@ namespace API_Laer
             {
                 return BadRequest(e.Message);
             }
-        
+
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeletePublishingHouseDTOAsync(Guid id)
         {

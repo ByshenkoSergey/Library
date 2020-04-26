@@ -20,7 +20,7 @@ namespace API_Laer
             _service = service;
         }
 
-        
+
         [HttpGet("get/{id}")]
         public async Task<ActionResult<AuthorDTO>> GetAuthorAsync(Guid id)
         {
@@ -39,8 +39,8 @@ namespace API_Laer
             return Ok(author);
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthorAsync()
         {
@@ -55,8 +55,8 @@ namespace API_Laer
 
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult<int>> PostAuthorDTOAsync(AuthorDTO authorDTO)
         {
@@ -64,15 +64,15 @@ namespace API_Laer
             {
                 return Ok(await _service.InsertAuthorAsync(authorDTO));
             }
-            catch (Exception e)// to do conkreate error
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
 
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutAuthorDTOAsync(Guid id, AuthorDTO authorDTO)
         {
@@ -88,8 +88,8 @@ namespace API_Laer
 
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpDelete("delete/{id}")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAuthorDTOAsync(Guid id)
         {
             try
