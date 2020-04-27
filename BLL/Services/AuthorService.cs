@@ -1,13 +1,13 @@
-﻿using BL.Services.Interfaces;
-using BLL.DTOModels;
+﻿using BLL.DTOModels;
 using BLL.Infrastructure.Mapping;
+using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BLL.Service
+namespace BLL.Services
 {
     public class AuthorService : IAuthorService
     {

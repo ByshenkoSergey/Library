@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using BL.Service.Interfaces;
-using BL.Service;
+using BLL.Services.Interfaces;
+using BLL.Services;
 
-namespace BL
+namespace API.Infrastructure
 {
     public static class APILaerInfrastructure
     {

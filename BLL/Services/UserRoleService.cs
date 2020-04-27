@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLL.Infrastructure.Mapping;
+using BLL.Services.Interfaces;
 
 namespace BLL.Services
 {

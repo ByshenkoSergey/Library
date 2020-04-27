@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BLL.Service
+namespace BLL.Services
 {
     public class BookService : IBookService
     {

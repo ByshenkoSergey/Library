@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BL.Services.Interfaces
+namespace BLL.Services.Interfaces
 {
     public interface IAuthorService : IDisposable
     {

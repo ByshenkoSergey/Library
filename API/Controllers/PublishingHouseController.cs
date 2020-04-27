@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BL.Service.Interfaces;
-using BL.DTOModels;
+using BLL.Services.Interfaces;
+using BLL.DTOModels;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
