@@ -53,7 +53,7 @@ namespace BLL.Services
             try
             {
                 IEnumerable<NewUserDTO> users = _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(await _unit.UserRepository.GetAllAsync());
-                return users.WithoutPasswords();
+                return users;//.WithoutPasswords();
             }
             catch (Exception)
             {
