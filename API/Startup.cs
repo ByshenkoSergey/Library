@@ -25,8 +25,8 @@ namespace API_Laer
         {
             services.AddCors();
             services.AddControllers();
-
-            services.AddBLServises(Configuration.GetConnectionString("DefaultConnection"), 
+            //DefaultConnection
+            services.AddBLServises(Configuration.GetConnectionString("NewConnectionHomePC"), 
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
 
             services.AddAPILaerServices();
