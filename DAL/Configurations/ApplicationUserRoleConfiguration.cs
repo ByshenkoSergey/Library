@@ -12,7 +12,6 @@ namespace DAL.Configurations
             builder.Ignore(i => i.Id);
             builder.HasMany(m => m.ApplicationUsers).WithOne(o => o.ApplicationUserRole).OnDelete(DeleteBehavior.ClientNoAction);
             builder.Property(p => p.RoleName).HasMaxLength(256);
-            builder.Property(p => p.Id).ValueGeneratedNever();
         }
     }
 }

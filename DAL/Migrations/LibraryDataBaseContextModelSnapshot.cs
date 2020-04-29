@@ -216,7 +216,7 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.IdentityModels.ApplicationUser", b =>
+            modelBuilder.Entity("DAL.Models.IdentityModels.User", b =>
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
@@ -310,10 +310,10 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("c7a480cc-327a-45c2-8fb4-db77aee70cf5"),
+                            UserId = new Guid("12561c57-8647-47a4-bded-3e3c8345d2b5"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "094d6b96-29a3-417b-9a7d-9712ddbf5104",
+                            ConcurrencyStamp = "987d496a-94d6-4fad-afcb-7781cb55197e",
                             Email = "pupkin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -322,16 +322,16 @@ namespace DAL.Migrations
                             TwoFactorEnabled = false,
                             UserFirstName = "Vova",
                             UserLastName = "Pupkin",
-                            UserLogin = "Pupkin@gmail.com",
-                            UserPassword = "1111",
+                            UserLogin = "pupkin@gmail.com",
+                            UserPassword = "11111111",
                             UserYearsOld = "19"
                         },
                         new
                         {
-                            UserId = new Guid("657bf850-9f8f-44c8-8057-b152c4aaa15e"),
+                            UserId = new Guid("6298d724-1c4d-4c0d-91c0-1d6f21853f8f"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "8f6c7d63-ceb1-455d-8632-dbd42c563419",
+                            ConcurrencyStamp = "651a1e97-54b6-4c04-b418-95e6a0d59ca1",
                             Email = "petrov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -341,15 +341,15 @@ namespace DAL.Migrations
                             UserFirstName = "Sergey",
                             UserLastName = "Petrov",
                             UserLogin = "Petrov@gmail.com",
-                            UserPassword = "2222",
+                            UserPassword = "22222222",
                             UserYearsOld = "31"
                         },
                         new
                         {
-                            UserId = new Guid("b2be8bd2-bcf3-4749-9788-f92170689b74"),
+                            UserId = new Guid("36551419-12fc-4010-8dd5-4371698cf536"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "91a5f5d8-4ea2-4114-9355-cc270c8bdd51",
+                            ConcurrencyStamp = "019fc32c-3313-4f8d-bce7-1c187474353f",
                             Email = "ivanov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -359,12 +359,12 @@ namespace DAL.Migrations
                             UserFirstName = "Taras",
                             UserLastName = "Ivanov",
                             UserLogin = "Ivanov@gmail.com",
-                            UserPassword = "3333",
+                            UserPassword = "33333333",
                             UserYearsOld = "52"
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.IdentityModels.ApplicationUserRole", b =>
+            modelBuilder.Entity("DAL.Models.IdentityModels.UserRole", b =>
                 {
                     b.Property<Guid>("RoleId")
                         .ValueGeneratedOnAdd()
@@ -373,9 +373,6 @@ namespace DAL.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
@@ -402,29 +399,25 @@ namespace DAL.Migrations
                         new
                         {
                             RoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "8da1d239-128e-4e03-a840-1a89f0c0b2f5",
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ConcurrencyStamp = "66575127-cf0c-493a-b277-33255af5686d",
                             RoleName = "Admin"
                         },
                         new
                         {
                             RoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "74dcd55d-8253-4839-974c-f92794d5e873",
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ConcurrencyStamp = "d811b21c-a1ca-4e4e-8127-113fda3ff1eb",
                             RoleName = "User"
                         },
                         new
                         {
                             RoleId = new Guid("a7548337-8541-515f-f961-a25489212a32"),
-                            ConcurrencyStamp = "0bfdf3f1-f591-466b-b14a-4d64bc16231c",
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ConcurrencyStamp = "106203bf-00f5-452c-993b-1d7bbc9e23fd",
                             RoleName = "SuperUser"
                         },
                         new
                         {
                             RoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "f2116151-fd5c-43e4-acc8-61d5faa32069",
-                            Id = new Guid("00000000-0000-0000-0000-000000000000"),
+                            ConcurrencyStamp = "2c7cb254-3c98-4102-b38e-10dbc18e0efc",
                             RoleName = "Moderator"
                         });
                 });
@@ -607,9 +600,9 @@ namespace DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.IdentityModels.ApplicationUser", b =>
+            modelBuilder.Entity("DAL.Models.IdentityModels.User", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUserRole", "ApplicationUserRole")
+                    b.HasOne("DAL.Models.IdentityModels.UserRole", "ApplicationUserRole")
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("ApplicationUserRoleId")
                         .OnDelete(DeleteBehavior.ClientNoAction)
@@ -618,7 +611,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUserRole", null)
+                    b.HasOne("DAL.Models.IdentityModels.UserRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -627,7 +620,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("DAL.Models.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -636,7 +629,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("DAL.Models.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -645,13 +638,13 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUserRole", null)
+                    b.HasOne("DAL.Models.IdentityModels.UserRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("DAL.Models.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -660,7 +653,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("DAL.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("DAL.Models.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
