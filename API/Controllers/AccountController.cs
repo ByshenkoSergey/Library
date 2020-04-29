@@ -45,7 +45,7 @@ namespace API_Laer
 
         }
         [Authorize]
-        [HttpPost("post/user")]
+        [HttpPost("user/post")]
         public async Task<IActionResult> AddNewUserAsync(NewUserDTO newUser)
         {
             try
@@ -63,7 +63,7 @@ namespace API_Laer
             }
         }
 
-        [HttpGet("get/user/{id}")]
+        [HttpGet("user/get/{id}")]
         public async Task<IActionResult> GetUserAsync(Guid id)
         {
             try
@@ -77,7 +77,7 @@ namespace API_Laer
             }
         }
 
-        [HttpGet("get/user")]
+        [HttpGet("user/get")]
         public async Task<IActionResult> GetAllUserAsync()
         {
             try
@@ -92,7 +92,7 @@ namespace API_Laer
         }
 
         [Authorize]
-        [HttpPut("put/user/{id}")]
+        [HttpPut("user/put/{id}")]
         public async Task<IActionResult> EditUserAsync(Guid id, NewUserDTO user)
         {
             try
@@ -106,7 +106,7 @@ namespace API_Laer
             }
         }
 
-        [HttpDelete("delete/user/{id}")]
+        [HttpDelete("user/delete/{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             try
@@ -128,7 +128,7 @@ namespace API_Laer
 
 
         [Authorize]
-        [HttpPost("post/userrole")]
+        [HttpPost("userrole/post")]
         public async Task<IActionResult> AddNewUserRoleAsync(UserRoleDTO UserRole)
         {
             try
@@ -146,7 +146,7 @@ namespace API_Laer
             }
         }
 
-        [HttpGet("get/userrole/{id}")]
+        [HttpGet("userrole/get/{id}")]
         public async Task<IActionResult> GetUserRoleAsync(Guid id)
         {
             try
@@ -160,7 +160,7 @@ namespace API_Laer
             }
         }
 
-        [HttpGet("get/userrole")]
+        [HttpGet("userrole/get")]
         public async Task<IActionResult> GetAllUserRoleAsync()
         {
             try
@@ -175,7 +175,7 @@ namespace API_Laer
         }
 
         [Authorize]
-        [HttpPut("put/userrole/{id}")]
+        [HttpPut("userrole/put/{id}")]
         public async Task<IActionResult> EditUserRoleAsync(Guid id, UserRoleDTO user)
         {
             try
@@ -189,7 +189,7 @@ namespace API_Laer
             }
         }
 
-        [HttpDelete("delete/userrole/{id}")]
+        [HttpDelete("userrole/delete/{id}")]
         public async Task<IActionResult> DeleteUserRole(Guid id)
         {
             try

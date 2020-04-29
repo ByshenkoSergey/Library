@@ -11,7 +11,7 @@ namespace DAL.Configurations
             builder.HasKey(k => k.PublishingHouseId);
             builder.Property(p => p.PublishingHouseName).IsRequired().HasMaxLength(50);
             builder.Property(p => p.PublishingHouseEmail).HasMaxLength(35);
-            builder.Property(p => p.PublishingHouseTellNamber).HasMaxLength(25);
+            builder.Property(p => p.PublishingHouseTellNumber).HasMaxLength(25);
             builder.Property(p => p.PublishingHouseInfo).HasMaxLength(200);
             
         }

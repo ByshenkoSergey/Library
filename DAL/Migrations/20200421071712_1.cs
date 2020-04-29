@@ -43,7 +43,7 @@ namespace DAL.Migrations
                     PublishingHouseId = table.Column<Guid>(nullable: false),
                     PublishingHouseName = table.Column<string>(maxLength: 50, nullable: false),
                     PublishingHouseInfo = table.Column<string>(maxLength: 200, nullable: true),
-                    PublishingHouseTellNamber = table.Column<string>(maxLength: 25, nullable: true),
+                    PublishingHouseTellNumber = table.Column<string>(maxLength: 25, nullable: true),
                     PublishingHouseEmail = table.Column<string>(maxLength: 35, nullable: true)
                 },
                 constraints: table =>
@@ -250,7 +250,7 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "PublishingHouses",
-                columns: new[] { "PublishingHouseId", "PublishingHouseEmail", "PublishingHouseInfo", "PublishingHouseName", "PublishingHouseTellNamber" },
+                columns: new[] { "PublishingHouseId", "PublishingHouseEmail", "PublishingHouseInfo", "PublishingHouseName", "PublishingHouseTellNumber" },
                 values: new object[,]
                 {
                     { new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"), "NewWord@gmail.com", "...Text...", "New word", "+38 (095) 111-11-11" },

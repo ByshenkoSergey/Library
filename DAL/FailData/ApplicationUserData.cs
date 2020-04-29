@@ -29,10 +29,10 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "Pupkin@gmail.com",
+                UserLogin = "pupkin@gmail.com",
                 UserFirstName = "Vova",
                 UserLastName = "Pupkin",
-                UserPassword = "1111",
+                UserPassword = "11111111",
                 UserYearsOld = "19",
                 PhoneNumber = "095-987-35-67",
                 Email = "pupkin@gmail.com",

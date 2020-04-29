@@ -443,7 +443,7 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("PublishingHouseTellNamber")
+                    b.Property<string>("PublishingHouseTellNumber")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
@@ -458,7 +458,7 @@ namespace DAL.Migrations
                             PublishingHouseEmail = "NewWord@gmail.com",
                             PublishingHouseInfo = "...Text...",
                             PublishingHouseName = "New word",
-                            PublishingHouseTellNamber = "+38 (095) 111-11-11"
+                            PublishingHouseTellNumber = "+38 (095) 111-11-11"
                         },
                         new
                         {
@@ -466,7 +466,7 @@ namespace DAL.Migrations
                             PublishingHouseEmail = "PenPen@gmail.com",
                             PublishingHouseInfo = "...Text...",
                             PublishingHouseName = "Pen and pensile",
-                            PublishingHouseTellNamber = "+38 (095) 222-22-22"
+                            PublishingHouseTellNumber = "+38 (095) 222-22-22"
                         },
                         new
                         {
@@ -474,7 +474,7 @@ namespace DAL.Migrations
                             PublishingHouseEmail = "absde@gmail.com",
                             PublishingHouseInfo = "...Text...",
                             PublishingHouseName = "ABSDE",
-                            PublishingHouseTellNamber = "+38 (095) 333-33-33"
+                            PublishingHouseTellNumber = "+38 (095) 333-33-33"
                         },
                         new
                         {
@@ -482,7 +482,7 @@ namespace DAL.Migrations
                             PublishingHouseEmail = "hbooks@gmail.com",
                             PublishingHouseInfo = "...Text...",
                             PublishingHouseName = "Hape books",
-                            PublishingHouseTellNamber = "+38 (095) 999-99-99"
+                            PublishingHouseTellNumber = "+38 (095) 999-99-99"
                         });
                 });
 

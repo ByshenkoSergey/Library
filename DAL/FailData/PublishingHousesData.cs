@@ -15,7 +15,7 @@ namespace DAL.FailData
                 PublishingHouseName = "New word",
                 PublishingHouseInfo = "...Text...",
                 PublishingHouseEmail = @"NewWord@gmail.com",
-                PublishingHouseTellNamber = @"+38 (095) 111-11-11"
+                PublishingHouseTellNumber = @"+38 (095) 111-11-11"
             };
 
             yield return new PublishingHouse
@@ -24,7 +24,7 @@ namespace DAL.FailData
                 PublishingHouseName = "Pen and pensile",
                 PublishingHouseInfo = "...Text...",
                 PublishingHouseEmail = @"PenPen@gmail.com",
-                PublishingHouseTellNamber = @"+38 (095) 222-22-22"
+                PublishingHouseTellNumber = @"+38 (095) 222-22-22"
             };
 
             yield return new PublishingHouse
@@ -33,7 +33,7 @@ namespace DAL.FailData
                 PublishingHouseName = "ABSDE",
                 PublishingHouseInfo = "...Text...",
                 PublishingHouseEmail = @"absde@gmail.com",
-                PublishingHouseTellNamber = @"+38 (095) 333-33-33"
+                PublishingHouseTellNumber = @"+38 (095) 333-33-33"
             };
 
             yield return new PublishingHouse
@@ -42,7 +42,7 @@ namespace DAL.FailData
                 PublishingHouseName = "Hape books",
                 PublishingHouseInfo = "...Text...",
                 PublishingHouseEmail = @"hbooks@gmail.com",
-                PublishingHouseTellNamber = @"+38 (095) 999-99-99"
+                PublishingHouseTellNumber = @"+38 (095) 999-99-99"
             };
         }
     }
