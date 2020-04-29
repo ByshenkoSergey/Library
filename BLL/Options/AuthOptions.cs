@@ -1,18 +1,15 @@
-﻿using BLL.Helper;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace BLL.Options
 {
     public class AuthOptions : IAuthOptions
     {
-        private readonly AppSettings _appSettings;
+        private readonly string _secretKey;
 
-
-        public AuthOptions(IOptions<AppSettings> appSettings)
+        public AuthOptions(string secretKey)
         {
-            _appSettings = appSettings.Value;
+            _secretKey = secretKey;
         }
 
         public const string issuer = "Library"; // издатель токена
@@ -24,7 +21,7 @@ namespace BLL.Options
         {
             get
             {
-                return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.Secret));
+                return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secretKey));
             }
         }
 

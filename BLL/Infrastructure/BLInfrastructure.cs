@@ -14,10 +14,11 @@ using BLL.Infrastructure.Mapping;
 namespace BLL.Infrastructure
 {
     public static class BLInfrastructure
-    {
+    { 
+    
         public static void AddBLServises(this IServiceCollection services, string connectionString, string key)
         {
-            services.AddScoped<IAuthOptions, AuthOptions>();
+            services.AddScoped<IAuthOptions, AuthOptions>(c=> new AuthOptions(key) );
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMapConfig, MapConfig>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

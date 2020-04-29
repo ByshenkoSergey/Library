@@ -42,7 +42,7 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "Petrov@gmail.com",
+                UserLogin = "petrov@gmail.com",
                 UserFirstName = "Sergey",
                 UserLastName = "Petrov",
                 UserPassword = "22222222",
@@ -55,7 +55,7 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "Ivanov@gmail.com",
+                UserLogin = "ivanov@gmail.com",
                 UserFirstName = "Taras",
                 UserLastName = "Ivanov",
                 UserPassword = "33333333",
