@@ -1,0 +1,33 @@
+<div class="books">
+    <h1>Список книг</h1>
+    <table class="table table-striped">
+    <thead>
+    <tr>
+      <td>Номер книги</td>
+      <td>Книга</td>
+      <td>Автор</td>
+      <td>Путь к файлу</td>
+      <td>Издательство</td>
+      <td>Год публикации</td>
+      <td>Рейтинг</td>
+      <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let b of books">
+      <ng-template [ngIf]="book?.BookId != b.BookId" >
+        <td>{{b?.BookId}}</td>
+        <td>{{b?.BookName}}</td>
+        <td>{{b?.AuthorName}}</td>
+        <td>{{b?.BookFileAddress}}</td>
+        <td>{{b?.YearOfPublishing}}</td>
+        <td>{{b?.PublishingHouseName}}</td>
+        <td>{{b?.Rating}}</td>
+
+      </ng-template>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+
