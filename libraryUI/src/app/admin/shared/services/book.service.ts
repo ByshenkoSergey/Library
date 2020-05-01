@@ -23,8 +23,10 @@ export class BookService {
           bookName:list[key].bookName,
           bookFileAddress:list[key].bookFileAddress,
           authorName:list[key].authorName,
+           authorId:list[key].authorId,
           yearOfPublishing:list[key].yearOfPublishing,
-           publisherName:list[key].publisherName
+           publisherName:list[key].publisherName,
+           publisherId:list[key].publisherId
         }))
      }));
        }

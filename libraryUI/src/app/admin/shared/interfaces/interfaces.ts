@@ -4,7 +4,7 @@ export interface UserLogin {
 }
 
 export interface BookAdd {
-  bookId?: number
+  bookId?: any
   bookName: string
   bookFileAddress: string
   authorName: string
@@ -17,8 +17,10 @@ export interface BookForm {
   bookName: string
   bookFileAddress: string
   authorName: string
+  authorId:number
   yearOfPublishing: string
   publisherName: string
+  publisherId: number
   rating: number
 }
 
@@ -29,9 +31,9 @@ export interface DbAuthResponse {
 }
 
 export interface Author {
-  authorID?: number
-  authorName?: string
-  authorBiography?: string
+  authorId: number
+  authorName: string
+  authorBiography: string
 }
 
 export interface Book {

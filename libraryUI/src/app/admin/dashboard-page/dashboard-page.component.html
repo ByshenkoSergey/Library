@@ -31,7 +31,7 @@
     <td>
       <button
         class="btn btn-link open"
-        [routerLink]="['/admin','author', book.authorName ]"
+        [routerLink]="['/admin','author', book.authorId ]"
       >
       {{book.authorName}}
       </button>
@@ -41,7 +41,7 @@
     <td>
       <button
         class="btn btn-link open"
-        [routerLink]="['/admin','publishing', book.publisherName ]"
+        [routerLink]="['/admin','publishing', book.publisherId ]"
       >
       {{book.publisherName}}
       </button>

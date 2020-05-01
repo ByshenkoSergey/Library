@@ -1,22 +1,12 @@
-<div class="text-center">
-  <h1>{{author.authorName}}</h1>
-
+<div class="author" *ngIf="author$ | async as author; else loading">
+  <div class="header">
+    <h1>{{author.authorName}}</h1>
+  </div>
+  <div class="info">
+    <p>{{author.authorBiography}}</p>
+  </div>
 </div>
 
-
-
-<table>
-  <thead>
-  <tr>
-    <th>Имя автор</th>
-    <th>Биография автора</th>
-
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>book.bookName</td>
-    <td>book.authorName</td>
-  </tr>
-  </tbody>
-</table>
+<ng-template #loading>
+   <div class="text-center">Loading...</div>
+ </ng-template>
