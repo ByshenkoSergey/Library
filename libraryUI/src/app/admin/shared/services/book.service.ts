@@ -32,7 +32,15 @@ export class BookService {
        }
 
   getBookLight(id: number): Observable<Book> {
-   return this.http.get<Book>(this.url + '/get/lightform/' + id);
+    return this.http.get<Book>(this.url + '/get/lightForm/' + id)
+      .pipe(map((response:any)=>{
+        return {
+          ...response,
+          bookId:response.bookId,
+          bookName:response.bookName,
+          bookText:response.bookText
+        }
+      }));
   }
 
   getBook(id: number): Observable<BookAdd> {

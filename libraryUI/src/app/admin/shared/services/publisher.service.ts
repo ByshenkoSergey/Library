@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {Publisher} from "../interfaces/interfaces";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 
 export class PublisherService {
 
@@ -16,9 +18,18 @@ export class PublisherService {
     return this.http.get(this.url + '/gets');
   }
 
-  getPublisher(id: number) {
-
-    return this.http.get(this.url + '/get' + id);
+  getPublisher(id: number): Observable<Publisher> {
+    return this.http.get<Publisher>(this.url + '/get/' + id)
+      .pipe(map((response:any)=>{
+        return {
+          ...response,
+          publisherId:response.publisherId,
+          publisherName:response.publisherName,
+          publisherEmail:response.publisherEmail,
+          publisherTellNumber:response.publisherTellNumber,
+          publisherInfo:response.publisherInfo,
+        }
+      }));
   }
 
   createPublisher(publisher: Publisher) {

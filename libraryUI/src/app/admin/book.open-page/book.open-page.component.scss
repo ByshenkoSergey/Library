@@ -1,0 +1,13 @@
+.book{
+  .header{
+    display: flow-root;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .info{
+    strong {
+      margin-right: 1rem;
+      margin-top: 500px;
+    }
+  }
+}

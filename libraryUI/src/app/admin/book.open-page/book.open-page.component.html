@@ -1,1 +1,12 @@
-<p>book.open-page works!</p>
+<div class="book" *ngIf="book$ | async as book; else loading">
+  <div class="header">
+    <h1>{{book.bookName}}</h1>
+  </div>
+  <div class="info">
+    <p>{{book.bookText}}</p>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="text-center">Loading...</div>
+</ng-template>

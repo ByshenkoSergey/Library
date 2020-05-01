@@ -1,0 +1,20 @@
+.publisher{
+  .header{
+    margin-top: 40px;
+    h1{
+      color: #662672;
+    }
+    .tell{
+      margin-top: 10px;
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .info{
+    margin-top: 20px;
+    strong {
+      margin-right: 2rem;
+    }
+  }
+}

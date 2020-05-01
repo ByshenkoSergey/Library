@@ -33,7 +33,7 @@ namespace API_Laer
                     return NotFound();
                 }
 
-                return Ok(new ObjectResult(bookDTO));
+                return Ok(bookDTO);
             }
             catch (ValidationException e)
             {
