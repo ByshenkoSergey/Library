@@ -7,9 +7,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-bookedit-page',
-  templateUrl: './bookedit-page.component.html',
-  styleUrls: ['./bookedit-page.component.scss']
+  selector: 'app-book.edit-page',
+  templateUrl: './book.edit-page.component.html',
+  styleUrls: ['./book.edit-page.component.scss']
 })
 export class BookEditPageComponent implements OnInit, OnDestroy {
 
@@ -36,7 +36,7 @@ export class BookEditPageComponent implements OnInit, OnDestroy {
             bookName: new FormControl(book.bookName, Validators.required),
             authorName: new FormControl(book.authorName, Validators.required),
             yearOfPublishing: new FormControl(book.yearOfPublishing, Validators.required),
-            publishingHouseName: new FormControl(book.publishingHouseName, Validators.required),
+            publisherName: new FormControl(book.publisherName, Validators.required),
       })
     })
   }
@@ -51,7 +51,7 @@ this.submitted = true
   bookName: this.form.value.bookName,
   authorName: this.form.value.authorName,
   yearOfPublishing: this.form.value.yearOfPublishing,
-  publishingHouseName: this.form.value.publishingHouseName,
+  publisherName: this.form.value.publisherName,
   bookFileAddress: this.book.bookFileAddress
   }
     this.uSub=this.service.updateBook(book).subscribe(()=>{

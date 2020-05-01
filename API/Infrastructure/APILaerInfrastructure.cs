@@ -10,7 +10,7 @@ namespace API.Infrastructure
         {
             service.AddScoped<IAuthorService, AuthorService>();
             service.AddScoped<IBookService, BookService>();
-            service.AddScoped<IPublishingHouseService, PublishingHouseService>();
+            service.AddScoped<IPublisherService, PublisherService>();
         }
     }
 }

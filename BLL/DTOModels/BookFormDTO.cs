@@ -9,7 +9,7 @@ namespace BLL.DTOModels
         public string BookFileAddress { get; set; }
         public string AuthorName { get; set; }
         public string YearOfPublishing { get; set; }
-        public string PublishingHouseName { get; set; }
+        public string PublisherName { get; set; }
         public int Rating { get; set; }
 
     }

@@ -19,7 +19,7 @@ namespace DAL.Context
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<PublishingHouse> PublishingHouses { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,7 @@ namespace DAL.Context
 
             modelBuilder.Entity<Book>().HasData(BooksData.GetBooksData());
             modelBuilder.Entity<Author>().HasData(AuthorsData.GetAuthorsData());
-            modelBuilder.Entity<PublishingHouse>().HasData(PublishingHousesData.GetPublishingHousesData());
+            modelBuilder.Entity<Publisher>().HasData(PublisherData.GetPublishersData());
             modelBuilder.Entity<UserRole>().HasData(ApplicationUserRoleData.GetApplicationUserRoleData());
             modelBuilder.Entity<User>().HasData(ApplicationUserData.GetApplicationUserData());
         }

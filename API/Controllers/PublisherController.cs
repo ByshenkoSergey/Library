@@ -11,48 +11,48 @@ namespace API_Laer
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PublishingHouseController : ControllerBase
+    public class PublisherController : ControllerBase
     {
-        private IPublishingHouseService _service;
+        private IPublisherService _service;
 
-        public PublishingHouseController(IPublishingHouseService service)
+        public PublisherController(IPublisherService service)
         {
             _service = service;
         }
 
         [HttpGet("get/{id}")]
-        public async Task<ActionResult<PublishingHouseDTO>> GetPublishingHouseAsync(Guid id)
+        public async Task<ActionResult<PublisherDTO>> GetPublisherAsync(Guid id)
         {
-            var publishingHouse = await _service.GetPublishingHouseDTOAsync(id);
+            var Publisher = await _service.GetPublisherDTOAsync(id);
 
-            if (publishingHouse == null)
+            if (Publisher == null)
             {
                 return NotFound();
             }
-            return Ok(publishingHouse);
+            return Ok(Publisher);
         }
 
         [HttpGet("get")]
-        public async Task<ActionResult<PublishingHouseDTO>> GetPublishingHouseByNameAsync([FromBody]string name)
+        public async Task<ActionResult<PublisherDTO>> GetPublisherByNameAsync([FromBody]string name)
         {
-            var publishingHouse = await _service.GetPublishingHouseByNameAsync(name);
+            var Publisher = await _service.GetPublisherByNameAsync(name);
 
-            if (publishingHouse == null)
+            if (Publisher == null)
             {
                 return NotFound();
             }
-            return Ok(publishingHouse);
+            return Ok(Publisher);
         }
 
 
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
-        public async Task<ActionResult<IEnumerable<PublishingHouseDTO>>> GetAllPublishingHouseAsync()
+        public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublisherAsync()
         {
             try
             {
-                return Ok(await _service.GetAllPublishingHouseDTOAsync());
+                return Ok(await _service.GetAllPublisherDTOAsync());
             }
             catch (Exception e)
             {
@@ -64,11 +64,11 @@ namespace API_Laer
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
-        public async Task<ActionResult<int>> PostPublishingHouseDTOAsync(PublishingHouseDTO publishingHouseDTO)
+        public async Task<ActionResult<int>> PostPublisherDTOAsync(PublisherDTO PublisherDTO)
         {
             try
             {
-                return Ok(await _service.AddPublishingHouseAsync(publishingHouseDTO));
+                return Ok(await _service.AddPublisherAsync(PublisherDTO));
             }
             catch (Exception e)// to do conkreate error
             {
@@ -79,11 +79,11 @@ namespace API_Laer
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
-        public async Task<ActionResult> PutPublishingHouseDTOAsync(Guid id, PublishingHouseDTO publishingHouseDTO)
+        public async Task<ActionResult> PutPublisherDTOAsync(Guid id, PublisherDTO PublisherDTO)
         {
             try
             {
-                await _service.EditPublishingHouseAsync(id, publishingHouseDTO);
+                await _service.EditPublisherAsync(id, PublisherDTO);
                 return Ok("Update is complite");
             }
             catch (NullReferenceException e)
@@ -95,11 +95,11 @@ namespace API_Laer
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> DeletePublishingHouseDTOAsync(Guid id)
+        public async Task<ActionResult> DeletePublisherDTOAsync(Guid id)
         {
             try
             {
-                await _service.DeletePublishingHouseAsync(id);
+                await _service.DeletePublisherAsync(id);
                 return Ok("Publishing house is delete");
             }
             catch (NullReferenceException e)

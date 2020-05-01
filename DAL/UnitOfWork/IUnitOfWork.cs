@@ -10,7 +10,7 @@ namespace DAL.UnitOfWork
     {
         IRepository<Author> AuthorRepository { get; }
         IRepository<Book> BookRepository { get; }
-        IRepository<PublishingHouse> PublishingHouseRepository { get; }
+        IRepository<Publisher> PublisherRepository { get; }
         IRepository<User> UserRepository { get; }
         IRepository<UserRole> UserRoleRepository { get; }
 

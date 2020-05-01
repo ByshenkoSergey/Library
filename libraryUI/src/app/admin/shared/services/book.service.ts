@@ -24,7 +24,7 @@ export class BookService {
           bookFileAddress:list[key].bookFileAddress,
           authorName:list[key].authorName,
           yearOfPublishing:list[key].yearOfPublishing,
-          publishingHouseName:list[key].publishingHouseName
+           publisherName:list[key].publisherName
         }))
      }));
        }
@@ -43,7 +43,7 @@ export class BookService {
         bookName:book.bookName,
         authorName:book.authorName,
         yearOfPublishing:book.yearOfPublishing,
-        publishingHouseName:book.publishingHouseName
+        publisherName:book.publisherName
       }
     }));
   }

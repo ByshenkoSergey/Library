@@ -5,9 +5,9 @@ import { BookAdd } from '../shared/interfaces/interfaces';
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-bookadd-page',
-  templateUrl: './bookadd-page.component.html',
-  styleUrls: ['./bookadd-page.component.scss']
+  selector: 'app-book.add-page',
+  templateUrl: './book.add-page.component.html',
+  styleUrls: ['./book.add-page.component.scss']
 })
 export class BookAddPageComponent implements OnInit {
 
@@ -23,7 +23,7 @@ export class BookAddPageComponent implements OnInit {
       bookFileAddress: new FormControl(null, Validators.required),
       authorName: new FormControl(null,Validators.required),
       yearOfPublishing: new FormControl(null,Validators.required),
-      publishingHouseName: new FormControl(null,Validators.required)
+      publisherName: new FormControl(null,Validators.required)
 
     })
   }
@@ -37,7 +37,7 @@ submit(){
       bookFileAddress: this.form.value.bookFileAddress,
      authorName: this.form.value.authorName,
      yearOfPublishing: this.form.value.yearOfPublishing,
-     publishingHouseName: this.form.value.publishingHouseName
+      publisherName: this.form.value.publisherName
     }
     this.service.create(book).subscribe( () =>{
       this.form.reset()

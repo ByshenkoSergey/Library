@@ -7,7 +7,7 @@ namespace DAL.FailData
 {
     public class BooksData
     {
-        private static List<PublishingHouse> publishings = PublishingHousesData.GetPublishingHousesData().ToList();
+        private static List<Publisher> publishings = PublisherData.GetPublishersData().ToList();
         private static List<Author> authors = AuthorsData.GetAuthorsData().ToList();
 
         public static IEnumerable<Book> GetBooksData()
@@ -18,7 +18,7 @@ namespace DAL.FailData
                 BookName = "Black sea",
                 BookFileAddress = "BookLibrary/Black sea.txt",
                 YearOfPublishing = "2008",
-                PublishingHouseId = publishings[1].PublishingHouseId,
+                PublisherId = publishings[1].PublisherId,
                 AuthorId = authors[0].AuthorId,
                 Rating = 3
             };
@@ -29,7 +29,7 @@ namespace DAL.FailData
                 BookName = "Нello cat",
                 BookFileAddress = "BookLibrary/Нello cat.txt",
                 YearOfPublishing = "2010",
-                PublishingHouseId = publishings[3].PublishingHouseId,
+                PublisherId = publishings[3].PublisherId,
                 AuthorId = authors[1].AuthorId,
                 Rating = 5
             };
@@ -40,7 +40,7 @@ namespace DAL.FailData
                 BookName = "Black dog",
                 BookFileAddress = "BookLibrary/Black dog.txt",
                 YearOfPublishing = "2001",
-                PublishingHouseId = publishings[2].PublishingHouseId,
+                PublisherId = publishings[2].PublisherId,
                 AuthorId = authors[2].AuthorId,
                 Rating = 0
 
@@ -52,7 +52,7 @@ namespace DAL.FailData
                 BookName = "Happy bird",
                 BookFileAddress = "BookLibrary/Happy bird.txt",
                 YearOfPublishing = "1994",
-                PublishingHouseId = publishings[0].PublishingHouseId,
+                PublisherId = publishings[0].PublisherId,
                 AuthorId = authors[3].AuthorId,
                 Rating = 2
             };
@@ -63,7 +63,7 @@ namespace DAL.FailData
                 BookName = "Little snake",
                 BookFileAddress = "BookLibrary/Little snake.txt",
                 YearOfPublishing = "2009",
-                PublishingHouseId = publishings[2].PublishingHouseId,
+                PublisherId = publishings[2].PublisherId,
                 AuthorId = authors[4].AuthorId,
                 Rating = 5
 
@@ -75,7 +75,7 @@ namespace DAL.FailData
                 BookName = "Merry",
                 BookFileAddress = "BookLibrary/Merry.txt",
                 YearOfPublishing = "2012",
-                PublishingHouseId = publishings[0].PublishingHouseId,
+                PublisherId = publishings[0].PublisherId,
                 AuthorId = authors[5].AuthorId,
                 Rating = 4
             };
@@ -86,7 +86,7 @@ namespace DAL.FailData
                 BookName = "New spring",
                 BookFileAddress = "BookLibrary/New spring.txt",
                 YearOfPublishing = "2005",
-                PublishingHouseId = publishings[3].PublishingHouseId,
+                PublisherId = publishings[3].PublisherId,
                 AuthorId = authors[6].AuthorId,
                 Rating = 4
 
@@ -98,7 +98,7 @@ namespace DAL.FailData
                 BookName = "Square World",
                 BookFileAddress = "BookLibrary/Square World.txt",
                 YearOfPublishing = "2015",
-                PublishingHouseId = publishings[1].PublishingHouseId,
+                PublisherId = publishings[1].PublisherId,
                 AuthorId = authors[7].AuthorId,
                 Rating = 5
             };

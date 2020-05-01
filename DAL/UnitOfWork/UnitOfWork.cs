@@ -16,7 +16,7 @@ namespace DAL.UnitOfWork
         private LibraryDataBaseContext _context;
         private IRepository<Author> _authorRepository;
         private IRepository<Book> _bookRepository;
-        private IRepository<PublishingHouse> _publishingHouseRepository;
+        private IRepository<Publisher> _PublisherRepository;
         private IRepository<UserRole> _userRoleRepository;
         private IRepository<User> _userRepository;
         private bool disposed = false;
@@ -30,7 +30,7 @@ namespace DAL.UnitOfWork
 
         public IRepository<Book> BookRepository { get => _bookRepository = _bookRepository ?? new BookRepository(_context); }
 
-        public IRepository<PublishingHouse> PublishingHouseRepository { get => _publishingHouseRepository = _publishingHouseRepository ?? new PublishingHouseRepository(_context); }
+        public IRepository<Publisher> PublisherRepository { get => _PublisherRepository = _PublisherRepository ?? new PublisherRepository(_context); }
 
         public IRepository<UserRole> UserRoleRepository { get => _userRoleRepository = _userRoleRepository ?? new UserRoleRepository(_context); }
 

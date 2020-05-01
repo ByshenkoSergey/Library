@@ -28,22 +28,22 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<Author, AuthorDTO>();
                 cnf.CreateMap<User, NewUserDTO>();
                 cnf.CreateMap<AuthorDTO, Author>();
-                cnf.CreateMap<PublishingHouse, PublishingHouseDTO>();
-                cnf.CreateMap<PublishingHouseDTO, PublishingHouse>();
+                cnf.CreateMap<Publisher, PublisherDTO>();
+                cnf.CreateMap<PublisherDTO, Publisher>();
                 cnf.CreateMap<Book, BookOpenDTO>()
                                .ForMember("BookText", o => o.MapFrom(p => GetBookTextAsync(p.BookFileAddress).Result));
 
                 cnf.CreateMap<Book, BookFormDTO>()
-                               .ForMember("PublishingHouseName", opt => opt.MapFrom(p => GetPublishingHouseNameAsync(p.PublishingHouseId).Result))
+                               .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
 
                 cnf.CreateMap<BookAddDTO, Book>()
-                               .ForMember("PublishingHouseId", opt => opt.MapFrom(p => GetPublishingHouseIdAsync(p.PublishingHouseName).Result))
+                               .ForMember("PublisherId", opt => opt.MapFrom(p => GetPublisherIdAsync(p.PublisherName).Result))
                                .ForMember("AuthorId", opt => opt.MapFrom(p => GetAuthorIdAsync(p.AuthorName).Result))
                                .ForMember("Rating", opt => opt.MapFrom(p => 0));
 
                 cnf.CreateMap<Book, BookAddDTO>()
-                               .ForMember("PublishingHouseName", opt => opt.MapFrom(p => GetPublishingHouseNameAsync(p.PublishingHouseId).Result))
+                               .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
 
                 cnf.CreateMap<User, NewUserDTO>()
@@ -106,27 +106,27 @@ namespace BLL.Infrastructure.Mapping
         #endregion
 
         #region MapBookAddDTOToBook
-        private async Task<Guid> GetPublishingHouseIdAsync(string publishingHouseName)
+        private async Task<Guid> GetPublisherIdAsync(string publisherName)
         {
-            var PublishingHouseList = await _unit.PublishingHouseRepository.GetAllAsync();
+            var publisherList = await _unit.PublisherRepository.GetAllAsync();
 
-            foreach (var publishingHouse in PublishingHouseList)
+            foreach (var publisher in publisherList)
             {
-                if (publishingHouseName == publishingHouse.PublishingHouseName)
+                if (publisherName == publisher.PublisherName)
                 {
-                    return publishingHouse.PublishingHouseId;
+                    return publisher.PublisherId;
                 }
             }
 
-            var newPublishingHouse = new PublishingHouse
+            var newPublisher = new Publisher
             {
-                PublishingHouseName = publishingHouseName
+                PublisherName = publisherName
             };
 
-            _unit.PublishingHouseRepository.Add(newPublishingHouse);
+            _unit.PublisherRepository.Add(newPublisher);
             await _unit.SaveChangeAsync();
 
-            var id = await _unit.PublishingHouseRepository.GetModelIdAsync(newPublishingHouse.PublishingHouseName);
+            var id = await _unit.PublisherRepository.GetModelIdAsync(newPublisher.PublisherName);
             return id;
 
         }
@@ -167,15 +167,15 @@ namespace BLL.Infrastructure.Mapping
 
 
         #region MapBooksToBooksFromDTO
-        private async Task<string> GetPublishingHouseNameAsync(Guid publishingHouseId)
+        private async Task<string> GetPublisherNameAsync(Guid publisherId)
         {
-            var publishingHouse = await _unit.PublishingHouseRepository.GetAsync(publishingHouseId);
+            var publisher = await _unit.PublisherRepository.GetAsync(publisherId);
 
-            if (publishingHouse == null)
+            if (publisher == null)
             {
-                throw new ValidationException("Publishing house not found!", "");
+                throw new ValidationException("Publisher not found!", "");
             }
-            return publishingHouse.PublishingHouseName;
+            return publisher.PublisherName;
         }
 
         private async Task<string> GetAuthorNameAsync(Guid authorId)

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var BookForm = /** @class */ (function () {
-    function BookForm(BookId, BookName, BookFileAddress, AvtorsName, YearOfPublishing, PublishingHouseName, Rating) {
+    function BookForm(BookId, BookName, BookFileAddress, AvtorsName, YearOfPublishing, PublisherName, Rating) {
         this.BookId = BookId;
         this.BookName = BookName;
         this.BookFileAddress = BookFileAddress;
         this.AvtorsName = AvtorsName;
         this.YearOfPublishing = YearOfPublishing;
-        this.PublishingHouseName = PublishingHouseName;
+        this.PublisherName = PublisherName;
         this.Rating = Rating;
     }
     return BookForm;

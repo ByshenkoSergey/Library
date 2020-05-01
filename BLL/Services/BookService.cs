@@ -149,7 +149,7 @@ namespace BLL.Services
 
             foreach (var book in bookDTOList)
             {
-                if (book.BookName == newBookDTO.BookName && book.AuthorName == newBookDTO.AuthorName && book.PublishingHouseName == newBookDTO.PublishingHouseName)
+                if (book.BookName == newBookDTO.BookName && book.AuthorName == newBookDTO.AuthorName && book.PublisherName == newBookDTO.PublisherName)
                 {
                     return true;
                 }

@@ -16,9 +16,9 @@ export class AuthorPageComponent implements OnInit, OnDestroy {
   constructor(private service: AuthorService) { }
 
   ngOnInit(){
-  this.aSub=this.service.getAuthors(id).subscribe(author=>{
-    this.author=author
-    })
+  //this.aSub=this.service.getAuthors(id).subscribe(author=>{
+  //  this.author=author
+   // })
    }
 
 

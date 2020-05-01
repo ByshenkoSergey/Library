@@ -114,7 +114,7 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("PublishingHouseId")
+                    b.Property<Guid>("PublisherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rating")
@@ -129,7 +129,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("PublishingHouseId");
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Books");
 
@@ -140,7 +140,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("94c6f173-72ed-4e9a-89f5-d61a611de2dd"),
                             BookFileAddress = "BookLibrary/Black sea.txt",
                             BookName = "Black sea",
-                            PublishingHouseId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
+                            PublisherId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
                             Rating = 3,
                             YearOfPublishing = "2008"
                         },
@@ -150,7 +150,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("b41d9e9b-80ee-4fa5-bc26-1098847f622f"),
                             BookFileAddress = "BookLibrary/Нello cat.txt",
                             BookName = "Нello cat",
-                            PublishingHouseId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
+                            PublisherId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
                             Rating = 5,
                             YearOfPublishing = "2010"
                         },
@@ -160,7 +160,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("4d0b7f16-8ea1-4d62-a63a-02fec3a8e0aa"),
                             BookFileAddress = "BookLibrary/Black dog.txt",
                             BookName = "Black dog",
-                            PublishingHouseId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
+                            PublisherId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
                             Rating = 0,
                             YearOfPublishing = "2001"
                         },
@@ -170,7 +170,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("37185335-bab6-4d2f-b7b4-8a454327dc21"),
                             BookFileAddress = "BookLibrary/Happy bird.txt",
                             BookName = "Happy bird",
-                            PublishingHouseId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
+                            PublisherId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
                             Rating = 2,
                             YearOfPublishing = "1994"
                         },
@@ -180,7 +180,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("f13b3ba0-52eb-474e-b9f1-cd6857771d98"),
                             BookFileAddress = "BookLibrary/Little snake.txt",
                             BookName = "Little snake",
-                            PublishingHouseId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
+                            PublisherId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
                             Rating = 5,
                             YearOfPublishing = "2009"
                         },
@@ -190,7 +190,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("85691dc6-7a56-49c9-b310-998acab7f9f4"),
                             BookFileAddress = "BookLibrary/Merry.txt",
                             BookName = "Merry",
-                            PublishingHouseId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
+                            PublisherId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
                             Rating = 4,
                             YearOfPublishing = "2012"
                         },
@@ -200,7 +200,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("e2134267-1183-42fe-be17-0f7e38973b00"),
                             BookFileAddress = "BookLibrary/New spring.txt",
                             BookName = "New spring",
-                            PublishingHouseId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
+                            PublisherId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
                             Rating = 4,
                             YearOfPublishing = "2005"
                         },
@@ -210,7 +210,7 @@ namespace DAL.Migrations
                             AuthorId = new Guid("fb599382-3096-4f33-bc61-c18eefb9950f"),
                             BookFileAddress = "BookLibrary/Square World.txt",
                             BookName = "Square World",
-                            PublishingHouseId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
+                            PublisherId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
                             Rating = 5,
                             YearOfPublishing = "2015"
                         });
@@ -310,10 +310,10 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("2b36567d-eb39-42fd-b04c-57c127f9b321"),
+                            UserId = new Guid("3dc8a6f3-7ed3-4f5d-bcd1-5491b675e0ba"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "201fb5fb-2218-4272-b067-49cf7887aa87",
+                            ConcurrencyStamp = "59cd80fd-56f6-4529-b8c3-d988c954974c",
                             Email = "pupkin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -328,10 +328,10 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("a1f9f529-69bf-496c-9257-b67f58697d85"),
+                            UserId = new Guid("52da52e2-d1a4-49d8-ac5d-ff6205c0daec"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "eea85a2c-97ff-4151-bd04-ea32e3613a8c",
+                            ConcurrencyStamp = "110c49ea-27be-4d64-89b0-2acbd1dd8855",
                             Email = "petrov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -346,10 +346,10 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("3f60dd3d-7641-4783-b621-e82278c2dba2"),
+                            UserId = new Guid("e4ddab7d-5b54-4683-9f0d-a3bc50bceee3"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "7693ead1-9377-4bb8-9ee1-b0e8a82795d3",
+                            ConcurrencyStamp = "c31047cb-dd58-4a84-b7e6-3631a181f200",
                             Email = "ivanov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -399,88 +399,88 @@ namespace DAL.Migrations
                         new
                         {
                             RoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "73a16c92-7128-49d3-9d2c-cad13b9721f5",
+                            ConcurrencyStamp = "94ea46c9-3e7d-4064-9ba6-dfdf886612b2",
                             RoleName = "Admin"
                         },
                         new
                         {
                             RoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "5b5a2ce0-7703-4707-80f1-c589ff37898d",
+                            ConcurrencyStamp = "ed906d3b-5e44-4735-8518-a97cb2309e70",
                             RoleName = "User"
                         },
                         new
                         {
                             RoleId = new Guid("a7548337-8541-515f-f961-a25489212a32"),
-                            ConcurrencyStamp = "97395931-02d1-4e2f-84f7-2a6f7343a3e6",
+                            ConcurrencyStamp = "daed8168-2801-4c7a-a57e-31deaee68d39",
                             RoleName = "SuperUser"
                         },
                         new
                         {
                             RoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "721f79fd-a595-4eae-8318-d95fb665b5f9",
+                            ConcurrencyStamp = "3c041d23-b631-4e36-9d45-e49f0527ec54",
                             RoleName = "Moderator"
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.PublishingHouse", b =>
+            modelBuilder.Entity("DAL.Models.Publisher", b =>
                 {
-                    b.Property<Guid>("PublishingHouseId")
+                    b.Property<Guid>("PublisherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PublishingHouseEmail")
+                    b.Property<string>("PublisherEmail")
                         .HasColumnType("nvarchar(35)")
                         .HasMaxLength(35);
 
-                    b.Property<string>("PublishingHouseInfo")
+                    b.Property<string>("PublisherInfo")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("PublishingHouseName")
+                    b.Property<string>("PublisherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("PublishingHouseTellNumber")
+                    b.Property<string>("PublisherTellNumber")
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
 
-                    b.HasKey("PublishingHouseId");
+                    b.HasKey("PublisherId");
 
-                    b.ToTable("PublishingHouses");
+                    b.ToTable("Publishers");
 
                     b.HasData(
                         new
                         {
-                            PublishingHouseId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
-                            PublishingHouseEmail = "NewWord@gmail.com",
-                            PublishingHouseInfo = "...Text...",
-                            PublishingHouseName = "New word",
-                            PublishingHouseTellNumber = "+38 (095) 111-11-11"
+                            PublisherId = new Guid("e40037b1-36b2-4671-bd1d-f0784e1299bf"),
+                            PublisherEmail = "NewWord@gmail.com",
+                            PublisherInfo = "...Text...",
+                            PublisherName = "New word",
+                            PublisherTellNumber = "+38 (095) 111-11-11"
                         },
                         new
                         {
-                            PublishingHouseId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
-                            PublishingHouseEmail = "PenPen@gmail.com",
-                            PublishingHouseInfo = "...Text...",
-                            PublishingHouseName = "Pen and pensile",
-                            PublishingHouseTellNumber = "+38 (095) 222-22-22"
+                            PublisherId = new Guid("e1ad8ea8-6019-4250-893d-41372a755c05"),
+                            PublisherEmail = "PenPen@gmail.com",
+                            PublisherInfo = "...Text...",
+                            PublisherName = "Pen and pensile",
+                            PublisherTellNumber = "+38 (095) 222-22-22"
                         },
                         new
                         {
-                            PublishingHouseId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
-                            PublishingHouseEmail = "absde@gmail.com",
-                            PublishingHouseInfo = "...Text...",
-                            PublishingHouseName = "ABSDE",
-                            PublishingHouseTellNumber = "+38 (095) 333-33-33"
+                            PublisherId = new Guid("5a8f4495-ac8f-4ecc-beb2-58409180073b"),
+                            PublisherEmail = "absde@gmail.com",
+                            PublisherInfo = "...Text...",
+                            PublisherName = "ABSDE",
+                            PublisherTellNumber = "+38 (095) 333-33-33"
                         },
                         new
                         {
-                            PublishingHouseId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
-                            PublishingHouseEmail = "hbooks@gmail.com",
-                            PublishingHouseInfo = "...Text...",
-                            PublishingHouseName = "Hape books",
-                            PublishingHouseTellNumber = "+38 (095) 999-99-99"
+                            PublisherId = new Guid("35b6fdea-c2aa-4edf-af6e-655aa1eb06a5"),
+                            PublisherEmail = "hbooks@gmail.com",
+                            PublisherInfo = "...Text...",
+                            PublisherName = "Hape books",
+                            PublisherTellNumber = "+38 (095) 999-99-99"
                         });
                 });
 
@@ -593,9 +593,9 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.PublishingHouse", "PublishingHouse")
+                    b.HasOne("DAL.Models.Publisher", "Publisher")
                         .WithMany("Books")
-                        .HasForeignKey("PublishingHouseId")
+                        .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

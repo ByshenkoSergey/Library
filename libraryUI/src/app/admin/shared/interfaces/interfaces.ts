@@ -9,7 +9,7 @@ export interface BookAdd {
   bookFileAddress: string
   authorName: string
   yearOfPublishing: string
-  publishingHouseName: string
+  publisherName: string
 }
 
 export interface BookForm {
@@ -18,7 +18,7 @@ export interface BookForm {
   bookFileAddress: string
   authorName: string
   yearOfPublishing: string
-  publishingHouseName: string
+  publisherName: string
   rating: number
 }
 
@@ -40,12 +40,12 @@ export interface Book {
   bookText?: string
 }
 
-export interface PublishingHouse {
-  publishingHouseId?: number
-  publishingHouseName?: string
-  publishingHouseInfo?: string
-  publishingHouseTellNumber?: string
-  publishingHouseEmail?: string
+export interface Publisher {
+  publisherId?: number
+  publisherName?: string
+  publisherInfo?: string
+  publisherTellNumber?: string
+  publisherEmail?: string
 }
 
 export interface User {

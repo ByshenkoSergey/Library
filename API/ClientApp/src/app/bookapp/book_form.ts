@@ -5,6 +5,6 @@
         public BookFileAddress?: string,
         public AvtorsName?: string[],
         public YearOfPublishing?: string,
-        public PublishingHouseName?: string,
+        public PublisherName?: string,
         public Rating?: number) { }
 }

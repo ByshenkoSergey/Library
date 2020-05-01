@@ -51,15 +51,15 @@
 
   <div
     class="form-control"
-    [ngClass]="{invalid: form.get('publishingHouseName').touched&&form.get('publishingHouseName').invalid}"
+    [ngClass]="{invalid: form.get('publisherName').touched&&form.get('publisherName').invalid}"
   >
-    <label for="publishingHouseName">Название издательства </label>
-    <input id="publishingHouseName" type="text" formControlName="publishingHouseName">
+    <label for="publisherName">Название издательства </label>
+    <input id="publisherName" type="text" formControlName="publisherName">
     <div
       class="validation"
-      *ngIf="form.get('publishingHouseName').touched&&form.get('publishingHouseName').invalid"
+      *ngIf="form.get('publisherName').touched&&form.get('publisherName').invalid"
     >
-      <small *ngIf="form.get('publishingHouseName').errors.required">
+      <small *ngIf="form.get('publisherName').errors.required">
         Введите название издательства:
       </small>
     </div>

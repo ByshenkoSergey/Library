@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(LibraryDataBaseContext))]
-    [Migration("20200429054703_1")]
-    partial class _1
+    [Migration("20200501043027_2")]
+    partial class _2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -312,10 +312,10 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("2b36567d-eb39-42fd-b04c-57c127f9b321"),
+                            UserId = new Guid("3dc8a6f3-7ed3-4f5d-bcd1-5491b675e0ba"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "201fb5fb-2218-4272-b067-49cf7887aa87",
+                            ConcurrencyStamp = "59cd80fd-56f6-4529-b8c3-d988c954974c",
                             Email = "pupkin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -330,10 +330,10 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("a1f9f529-69bf-496c-9257-b67f58697d85"),
+                            UserId = new Guid("52da52e2-d1a4-49d8-ac5d-ff6205c0daec"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "eea85a2c-97ff-4151-bd04-ea32e3613a8c",
+                            ConcurrencyStamp = "110c49ea-27be-4d64-89b0-2acbd1dd8855",
                             Email = "petrov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -348,10 +348,10 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            UserId = new Guid("3f60dd3d-7641-4783-b621-e82278c2dba2"),
+                            UserId = new Guid("e4ddab7d-5b54-4683-9f0d-a3bc50bceee3"),
                             AccessFailedCount = 0,
                             ApplicationUserRoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "7693ead1-9377-4bb8-9ee1-b0e8a82795d3",
+                            ConcurrencyStamp = "c31047cb-dd58-4a84-b7e6-3631a181f200",
                             Email = "ivanov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -401,25 +401,25 @@ namespace DAL.Migrations
                         new
                         {
                             RoleId = new Guid("12354898-7456-3215-4895-123654879878"),
-                            ConcurrencyStamp = "73a16c92-7128-49d3-9d2c-cad13b9721f5",
+                            ConcurrencyStamp = "94ea46c9-3e7d-4064-9ba6-dfdf886612b2",
                             RoleName = "Admin"
                         },
                         new
                         {
                             RoleId = new Guid("a75489d7-8542-315f-f961-a254892c8a32"),
-                            ConcurrencyStamp = "5b5a2ce0-7703-4707-80f1-c589ff37898d",
+                            ConcurrencyStamp = "ed906d3b-5e44-4735-8518-a97cb2309e70",
                             RoleName = "User"
                         },
                         new
                         {
                             RoleId = new Guid("a7548337-8541-515f-f961-a25489212a32"),
-                            ConcurrencyStamp = "97395931-02d1-4e2f-84f7-2a6f7343a3e6",
+                            ConcurrencyStamp = "daed8168-2801-4c7a-a57e-31deaee68d39",
                             RoleName = "SuperUser"
                         },
                         new
                         {
                             RoleId = new Guid("12359876-5423-1564-8957-8215647acdfa"),
-                            ConcurrencyStamp = "721f79fd-a595-4eae-8318-d95fb665b5f9",
+                            ConcurrencyStamp = "3c041d23-b631-4e36-9d45-e49f0527ec54",
                             RoleName = "Moderator"
                         });
                 });

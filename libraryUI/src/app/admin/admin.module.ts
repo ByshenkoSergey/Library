@@ -5,15 +5,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AdminLayoutComponent} from './shared/components/admin-layout/admin-layout.component';
 import {LoginPageComponent} from './login-page/login-page.component';
-import {BookopenPageComponent} from './bookopen-page/bookopen-page.component';
-import {PublishinghousePageComponent} from './publishinghouse-page/publishinghouse-page.component';
+import {PublisherPageComponent} from './publisher-page/publisher-page.component';
 import {AuthorPageComponent} from './author-page/author-page.component';
-import {BookAddPageComponent} from './bookadd-page/bookadd-page.component';
+import {BookAddPageComponent} from './book.add-page/book.add-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from "./shared/services/auth.guard";
 import {SearchPipe} from "./shared/Pipe/search.pipe";
-import { BookEditPageComponent } from './bookedit-page/bookedit-page.component';
+import { BookEditPageComponent } from './book.edit-page/book.edit-page.component';
+import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
 
 
 @NgModule({
@@ -21,12 +21,12 @@ import { BookEditPageComponent } from './bookedit-page/bookedit-page.component';
     AdminLayoutComponent,
     LoginPageComponent,
     DashboardPageComponent,
-    BookopenPageComponent,
-    PublishinghousePageComponent,
+    PublisherPageComponent,
     AuthorPageComponent,
     BookAddPageComponent,
     SearchPipe,
-    BookEditPageComponent
+    BookEditPageComponent,
+    BookOpenPageComponent
 
   ],
   imports: [
@@ -40,8 +40,8 @@ import { BookEditPageComponent } from './bookedit-page/bookedit-page.component';
           {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
           {path: 'login', component: LoginPageComponent},
           {path: 'dashboard', component: DashboardPageComponent, canActivate:[AuthGuard]},
-          {path: 'book/:id', component: BookopenPageComponent, canActivate:[AuthGuard] },
-          {path: 'publishing/:id', component: PublishinghousePageComponent, canActivate:[AuthGuard]},
+          {path: 'book/:id', component: BookOpenPageComponent, canActivate:[AuthGuard] },
+          {path: 'publishing/:id', component: PublisherPageComponent, canActivate:[AuthGuard]},
           {path: 'author/:id', component: AuthorPageComponent, canActivate:[AuthGuard] },
           {path: 'book', component: BookAddPageComponent, canActivate:[AuthGuard] },
           {path: 'book/edit/:id', component: BookEditPageComponent, canActivate:[AuthGuard]}

@@ -14,8 +14,8 @@ namespace DAL.Models
         public Guid AuthorId { get; set; }
         public virtual Author Author { get; set; }
 
-        public Guid PublishingHouseId { get; set; }
-        public virtual PublishingHouse PublishingHouse { get; set; }
+        public Guid PublisherId { get; set; }
+        public virtual Publisher Publisher { get; set; }
 
 
 
