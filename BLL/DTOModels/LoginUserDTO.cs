@@ -1,8 +1,10 @@
-﻿namespace BLL.DTOModels
+﻿using System.ComponentModel.DataAnnotations;
+namespace BLL.DTOModels
 {
     public class LoginUserDTO
     {
-       public string Login { get; set; }
+        public string Login { get; set; }
+
         public string Password { get; set; }
     }
 }

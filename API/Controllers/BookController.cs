@@ -21,7 +21,7 @@ namespace API_Laer
             _service = service;
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("get/lightForm/{id}")]
         public async Task<ActionResult<BookOpenDTO>> GetBookOpenDTOAsync(Guid id)
         {
             try
@@ -40,6 +40,27 @@ namespace API_Laer
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("get/form/{id}")]
+        public async Task<ActionResult<BookOpenDTO>> GetBookAddDTOAsync(Guid id)
+        {
+            try
+            {
+                var bookDTO = await _service.GetBookAddDTOAsync(id);
+
+                if (bookDTO == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(new ObjectResult(bookDTO));
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
 
         [HttpGet("gets")]
@@ -63,7 +84,7 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -77,35 +98,39 @@ namespace API_Laer
                 return BadRequest(e.Message);
             }
 
-            return Ok("Book is deleted");
+            return Ok();
         }
 
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> EditBookAsync(BookAddDTO newBookDTO, Guid id)
         {
             try
             {
                 await _service.EditBookAsync(newBookDTO, id);
-                return Ok("Edit book complite");
+                return Ok();
             }
             catch (ValidationException e)
             {
                 return BadRequest(e.Message);
             }
+            catch (NullReferenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
             try
             {
                 var id = await _service.AddBookAsync(bookDTO);
-                return Ok($"Book is added, new Id is {id}");
+                return Ok();
             }
             catch (ValidationException e)
             {

@@ -16,7 +16,7 @@ namespace BLL.Options
 
         public const string audience = "AuthClient"; // потребитель токена
 
-        public const int lifeTime = 10000; // время жизни токена 
+        public const double lifeTime = 1440; // время жизни токена 
         public SymmetricSecurityKey symmetricSecurityKey
         {
             get

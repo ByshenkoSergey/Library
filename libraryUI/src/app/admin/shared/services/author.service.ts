@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {Author} from '../_models/author';
+import {Author} from "../interfaces/interfaces";
+
 
 @Injectable()
-// tslint:disable-next-line:class-name
-export class Author_service {
+export class AuthorService {
 
   private url = `${environment.apiUrl}/author`;
 

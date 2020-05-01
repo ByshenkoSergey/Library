@@ -13,6 +13,7 @@ using BLL.Options;
 using BLL.Helper;
 using BLL.Services.Interfaces;
 using BLL.Infrastructure.Mapping;
+using BLL.Infrastructure.Exceptions;
 
 namespace BLL.Services
 {
@@ -110,11 +111,6 @@ namespace BLL.Services
             {
                 var identity = await GetIdentityAsync(userName, password);
 
-                if (identity == null)
-                {
-                    throw new ValidationException("Invalid username or password.", "");
-                }
-
                 var now = DateTime.UtcNow;
 
                 var jwt = new JwtSecurityToken(
@@ -129,14 +125,16 @@ namespace BLL.Services
                 var response = new
                 {
                     access_token = encodedJwt,
-                    username = identity.Name
+                    userLogin = identity.Name,
+                    tokenExpiration = AuthOptions.lifeTime.ToString()
+
                 };
                 var json = JsonSerializer.Serialize(response);
                 return json;
             }
-            catch (Exception)
+            catch (InvalidLogginUserException e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -146,15 +144,23 @@ namespace BLL.Services
             NewUserDTO user = null;
             foreach (var person in allUsers)
             {
-                if (person.UserLogin == userName && person.UserPassword == password)
+                if (person.UserLogin == userName)
                 {
                     user = person;
                     break;
                 }
             }
-
-            if (user != null)
+            if (user == null)
             {
+                throw new InvalidLogginUserException("User_not_foud");
+            }
+            else
+            {
+                if (user.UserPassword != password)
+                {
+                    throw new InvalidLogginUserException("Invalid_password");
+                }
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserLogin),
@@ -165,7 +171,6 @@ namespace BLL.Services
                     ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
-            return null;
         }
     }
 }

@@ -4,8 +4,7 @@ using BLL.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using BLL.DTOModels;
 using System;
-using System.ComponentModel.DataAnnotations;
-
+using BLL.Infrastructure.Exceptions;
 
 namespace API_Laer
 {
@@ -28,20 +27,18 @@ namespace API_Laer
         [HttpPost("token")]
         public async Task<IActionResult> Token(LoginUserDTO loginUser)
         {
-            try
-            {
-                var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
-                return new ObjectResult(token);
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return BadRequest();
-            }
+                try
+                {
+                    var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
+                    return Ok(token);
+                }
+                catch (BLL.Infrastructure.Exceptions.InvalidLogginUserException e)
+                {
+                    return BadRequest(e.Message);
+                }
+            
+
+            
 
         }
         [Authorize]
@@ -57,7 +54,7 @@ namespace API_Laer
                 }
                 return Created("api/account/post", $"New user is created, new user id - {id}");
             }
-            catch (NullReferenceException e)
+            catch (ValidationException e)
             {
                 return BadRequest(e.Message);
             }
@@ -71,7 +68,7 @@ namespace API_Laer
                 var user = await _userService.GetUserDTOAsync(id);
                 return Ok(user);
             }
-            catch (ValidationException e)
+            catch (BLL.Infrastructure.Exceptions.ValidationException e)
             {
                 return BadRequest(e.Message);
             }
@@ -120,13 +117,6 @@ namespace API_Laer
             }        
         }
 
-
-
-
-
-
-
-
         [Authorize]
         [HttpPost("userrole/post")]
         public async Task<IActionResult> AddNewUserRoleAsync(UserRoleDTO UserRole)
@@ -154,7 +144,7 @@ namespace API_Laer
                 var user = await _userRoleServices.GetUserRoleDTOAsync(id);
                 return Ok(user);
             }
-            catch (ValidationException e)
+            catch (BLL.Infrastructure.Exceptions.ValidationException e)
             {
                 return BadRequest(e.Message);
             }

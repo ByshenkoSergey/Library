@@ -1,5 +1,5 @@
 ﻿using BLL.DTOModels;
-using BLL.Infrastructure;
+using BLL.Infrastructure.Exceptions;
 using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
@@ -37,6 +37,26 @@ namespace BLL.Services
                 throw new ValidationException(e.Message, "");
             }
         }
+
+        public async Task<BookAddDTO> GetBookAddDTOAsync(Guid id)
+        {
+            var book = await _unit.BookRepository.GetAsync(id);
+
+            if (book == null)
+            {
+                return null;
+            }
+            try
+            {
+                return _mapper.GetMapper().Map<Book, BookAddDTO>(book);
+            }
+            catch (Exception)
+            {
+                throw new ValidationException("File address is failrule", "");
+            }
+
+        }
+       
         public async Task<BookOpenDTO> GetBookOpenDTOAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
@@ -100,6 +120,10 @@ namespace BLL.Services
                 await _unit.SaveChangeAsync();
             }
             catch (ValidationException e)
+            {
+                throw e;
+            }
+            catch (NullReferenceException e)
             {
                 throw e;
             }

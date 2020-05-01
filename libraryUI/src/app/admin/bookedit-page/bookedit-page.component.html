@@ -1,5 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="submit()" >
-  <h1>Добавление новой книги</h1>
+<div *ngIf="form;else loading">
+<form [formGroup]="form" (ngSubmit)="submit()">
 
   <div
     class="form-control"
@@ -16,23 +16,6 @@
       </small>
     </div>
   </div>
-
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('bookFileAddress').touched&&form.get('bookFileAddress').invalid}"
-  >
-    <label for="bookFileAddress"> Адрес файла </label>
-    <input id="bookFileAddress" type="text" formControlName="bookFileAddress">
-    <div
-      class="validation"
-      *ngIf="form.get('bookFileAddress').touched&&form.get('bookFileAddress').invalid"
-    >
-      <small *ngIf="form.get('bookFileAddress').errors.required">
-        Введите адрес файла:
-      </small>
-    </div>
-  </div>
-
 
   <div
     class="form-control"
@@ -83,12 +66,19 @@
   </div>
 
   <button
-    type="submit"
     class="btn btn-block btn-primary"
-    [disabled]="form.invalid"
-     >Save</button>
+    type="submit"
+    [disabled]="form.invalid|| submitted"
+  >Save</button>
+
 
 </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>
+
 
 
 

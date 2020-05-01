@@ -1,5 +1,5 @@
 ﻿using BLL.DTOModels;
-using BLL.Infrastructure;
+using BLL.Infrastructure.Exceptions;
 using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {User} from '../_models/user';
-import {UserLogin} from '../_models/user_login';
+import {User, UserLogin} from '../interfaces/interfaces';
+
 
 @Injectable()
-// tslint:disable-next-line:class-name
-export class User_service {
+export class UserService {
 
   private url = `${environment.apiUrl}/account/user`;
 

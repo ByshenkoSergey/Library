@@ -1,33 +1,29 @@
-<div class="books">
-    <h1>Список книг</h1>
-    <table class="table table-striped">
-    <thead>
-    <tr>
-      <td>Номер книги</td>
-      <td>Книга</td>
-      <td>Автор</td>
-      <td>Путь к файлу</td>
-      <td>Издательство</td>
-      <td>Год публикации</td>
-      <td>Рейтинг</td>
-      <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let b of books">
-      <ng-template [ngIf]="book?.BookId != b.BookId" >
-        <td>{{b?.BookId}}</td>
-        <td>{{b?.BookName}}</td>
-        <td>{{b?.AuthorName}}</td>
-        <td>{{b?.BookFileAddress}}</td>
-        <td>{{b?.YearOfPublishing}}</td>
-        <td>{{b?.PublishingHouseName}}</td>
-        <td>{{b?.Rating}}</td>
+<h1>Добро пожаловать</h1>
 
-      </ng-template>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-
+<h2>Список книг</h2>
+<table>
+  <thead>
+  <tr>
+    <td>Книга</td>
+    <td>Автор книги</td>
+    <td>Год публикации</td>
+    <td>Издательство</td>
+    <td>Рейтинг</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let b of books">
+    <ng-template>
+      <td>{{b?.bookName}}</td>
+      <td>{{b?.authorName}}</td>
+      <td>{{b?.yearOfPublishing}}</td>
+      <td>{{b?.publishingHouseName}}</td>
+      <td>{{b?.rating}}</td>
+      <td>
+        <button class="btn btn-sm btn-danger" (click)="delete(b)">Удалить</button>
+      </td>
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
 

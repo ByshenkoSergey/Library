@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {PublishingHouse} from '../_models/publishing_house';
+import {PublishingHouse} from "../interfaces/interfaces";
 
 @Injectable()
-// tslint:disable-next-line:class-name
-export class Publishing_house_service {
+
+export class PublishingHouseService {
 
   private url = `${environment.apiUrl}/publishinghouse`;
 

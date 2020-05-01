@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOModels;
+using BLL.Infrastructure.Exceptions;
 using DAL.Models;
 using DAL.Models.IdentityModels;
 using DAL.UnitOfWork;
