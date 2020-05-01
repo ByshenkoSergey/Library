@@ -1,9 +1,39 @@
-<nav class="navbar main">
- <h1>Library</h1>
-  </nav>
+<nav class="navbar bg-primary">
+  <h1>
+    <a routerLink="/">Library </a>
+  </h1>
+
+  <ul>
+    <div *ngIf="auth.isAuthenticate()">
+         <li routerLinkActive="active">
+              <a [routerLink]="['/admin', 'book']"  >Create</a>
+         </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate()">
+          <li  routerLinkActive="active">
+               <a [routerLink]="['/', 'dashboard']"  >Main</a>
+         </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate()">
+          <li>
+               <a href="#"(click)="logout($event)"  >Logout</a>
+          </li>
+    </div>
+
+    <li routerLinkActive="active">
+      <a [routerLink]="['/', 'register']">Register</a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a [routerLink]="['/', 'login']"  >Login</a>
+    </li>
+
+  </ul>
+</nav>
+
 <div class="container">
   <router-outlet></router-outlet>
 </div>
-
-
 

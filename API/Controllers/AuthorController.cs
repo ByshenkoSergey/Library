@@ -20,7 +20,7 @@ namespace API_Laer
             _service = service;
         }
 
-
+        [Authorize(Roles = "User")]
         [HttpGet("get/{id}")]
         public async Task<ActionResult<AuthorDTO>> GetAuthorAsync(Guid id)
         {

@@ -26,7 +26,6 @@ export class BookAddPageComponent implements OnInit {
       authorName: new FormControl(null,Validators.required),
       yearOfPublishing: new FormControl(null,Validators.required),
       publisherName: new FormControl(null,Validators.required)
-
     })
   }
 submit(){

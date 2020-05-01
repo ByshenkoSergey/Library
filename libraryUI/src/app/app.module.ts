@@ -11,6 +11,7 @@ import {AdminModule} from './admin/admin.module';
 import {SharedModule} from './shared/shared.module';
 import {JwtInterceptor} from "./shared/helper/jwt.interceptor";
 import {HomePageComponent} from "./home-page/home-page.component";
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -23,7 +24,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    HomePageComponent
+    HomePageComponent,
+    RegisterPageComponent
 
       ],
     imports: [

@@ -18,7 +18,7 @@ canActivate(
     return true
   } else{
     this.auth.logout()
-    this.router.navigate(['admin/','login'], {
+    this.router.navigate(['/','login'], {
       queryParams:{
         loginAgain: true
       }

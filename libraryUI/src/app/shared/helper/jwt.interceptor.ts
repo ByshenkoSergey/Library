@@ -29,7 +29,7 @@ export class JwtInterceptor implements HttpInterceptor {
         catchError((error: HttpErrorResponse)=>{
           if(error.status===401){
             this.Authorization.logout()
-            this.router.navigate(['/admin','login'],{
+            this.router.navigate(['/','login'],{
               queryParams:{
                 authFailed: true
               }

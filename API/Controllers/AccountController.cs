@@ -41,12 +41,17 @@ namespace API_Laer
             
 
         }
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("user/post")]
         public async Task<IActionResult> AddNewUserAsync(NewUserDTO newUser)
         {
             try
             {
+                if (newUser.UserRole == null)
+                {
+                    newUser.UserRole = "User";
+                }
+                
                 Guid id = await _userService.AddUserAsync(newUser);
                 if (id == default)
                 {

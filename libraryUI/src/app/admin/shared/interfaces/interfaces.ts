@@ -52,15 +52,14 @@ export interface Publisher {
 
 export interface User {
   userId?: number
-  userLogin?: string
-  userPassword?: string
-  userRole?: string
+  userLogin: string
+  userPassword: string
   userFirstName?: string
   userLastName?: string
   userYearsOld?: string
   phoneNumber?: string
-  email?: string
-  token?: string
+  email: string
+
 }
 
 export interface UserRole {

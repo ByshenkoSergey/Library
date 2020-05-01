@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {User, UserLogin} from '../interfaces/interfaces';
+import {Observable} from "rxjs";
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserService {
 
   private url = `${environment.apiUrl}/account/user`;
@@ -21,8 +22,9 @@ export class UserService {
     return this.http.get(this.url + '/get' + id);
   }
 
-  createUser(user: User) {
-    return this.http.post(this.url + '/post', {user}, {observe: 'response'});
+  createUser(user: User): Observable<User> {
+    console.log(user)
+    return this.http.post<User>(this.url + '/post', user);
   }
 
   updateUser(id: number, user: User) {
