@@ -24,11 +24,6 @@ namespace API_Laer
         [HttpGet("get/{id}")]
         public async Task<ActionResult<AuthorDTO>> GetAuthorAsync(Guid id)
         {
-            if (id == null)
-            {
-                return BadRequest("Id is null");
-            }
-
             var author = await _service.GetAuthorDTOAsync(id);
 
             if (author == null)
@@ -38,6 +33,19 @@ namespace API_Laer
 
             return Ok(author);
         }
+
+        [HttpGet("get")]
+        public async Task<ActionResult<AuthorDTO>> GetAuthorByNameAsync([FromBody]string name)
+        {
+            var author = await _service.GetAuthorByNameAsync(name);
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+            return Ok(author);
+        }
+
 
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]

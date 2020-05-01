@@ -32,6 +32,19 @@ namespace API_Laer
             return Ok(publishingHouse);
         }
 
+        [HttpGet("get")]
+        public async Task<ActionResult<PublishingHouseDTO>> GetPublishingHouseByNameAsync([FromBody]string name)
+        {
+            var publishingHouse = await _service.GetPublishingHouseByNameAsync(name);
+
+            if (publishingHouse == null)
+            {
+                return NotFound();
+            }
+            return Ok(publishingHouse);
+        }
+
+
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
@@ -45,8 +58,8 @@ namespace API_Laer
             {
                 return BadRequest(e.Message);
             }
-
         }
+
 
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]

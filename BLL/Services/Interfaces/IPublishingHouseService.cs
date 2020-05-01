@@ -12,5 +12,6 @@ namespace BLL.Services.Interfaces
         Task<IEnumerable<PublishingHouseDTO>> GetAllPublishingHouseDTOAsync();
         Task<PublishingHouseDTO> GetPublishingHouseDTOAsync(Guid id);
         Task<Guid> AddPublishingHouseAsync(PublishingHouseDTO publishingHouseDTO);
+        Task<PublishingHouseDTO> GetPublishingHouseByNameAsync(string publishingHouseName);
     }
 }

@@ -80,6 +80,17 @@ namespace BLL.Services
             return id;
         }
 
+        public async Task<PublishingHouseDTO> GetPublishingHouseByNameAsync(string publishingHouseName)
+        {
+            var publishingHouseId = await _unit.PublishingHouseRepository.GetModelIdAsync(publishingHouseName);
+            if (publishingHouseId == null)
+            {
+                return null;
+            }
+            var publishingHouse = await GetPublishingHouseDTOAsync(publishingHouseId);
+            return publishingHouse;
+        }
+
         public void Dispose()
         {
             _unit.Dispose();
