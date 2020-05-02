@@ -91,17 +91,32 @@ namespace BLL.Services
 
         public async Task<Guid> AddUserAsync(NewUserDTO newUserDTO)
         {
+            //           var users = await GetAllUsersDTOAsync();
+            //foreach (var user in users)
+            //{
+            //    if (user.UserLogin==newUserDTO.UserLogin)
+            //    {
+            //        throw new ValidationException("Such user login already exists", "");
+            //    }
+
+            //    if(user.Email == newUserDTO.Email)
+            //    {
+            //        throw new ValidationException("Such user email already exists", "");
+            //    }
+            //}
+            
+
             try
             {
                 var newUser = _mapper.GetMapper().Map<User>(newUserDTO);
                 _unit.UserRepository.Add(newUser);
                 await _unit.SaveChangeAsync();
-                Guid id = await _unit.UserRepository.GetModelIdAsync(newUser.UserName);
+                Guid id = await _unit.UserRepository.GetModelIdAsync(newUser.UserLogin);
                 return id;
             }
             catch (ArgumentException e)
             {
-                throw e;
+                throw new ValidationException(e.Message, "");
             }
         }
 

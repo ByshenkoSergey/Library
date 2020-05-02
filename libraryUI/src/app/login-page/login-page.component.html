@@ -11,19 +11,19 @@
 
 <div
   class="form-control"
-  [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}"
+  [ngClass]="{invalid: form.get('login').touched&&form.get('login').invalid}"
 >
-  <label for="email">Email</label>
-  <input id="email" type="email" formControlName="email">
+  <label for="login">Email</label>
+  <input id="login" type="email" formControlName="login">
   <div
         class="validation"
-        *ngIf="form.get('email').touched&&form.get('email').invalid"
+        *ngIf="form.get('login').touched&&form.get('login').invalid"
   >
-    <small *ngIf="form.get('email').errors.required">
-add Email
+    <small *ngIf="form.get('login').errors.required">
+add login
     </small>
-    <small *ngIf="form.get('email').errors.email">
-add correct Email
+    <small *ngIf="form.get('password').errors.minlength">
+      add correct login, min length 6
     </small>
 
   </div>

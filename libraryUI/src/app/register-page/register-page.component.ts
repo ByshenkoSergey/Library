@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User} from "../admin/shared/interfaces/interfaces";
 import {UserService} from "../admin/shared/services/user.service";
+import {AlertService} from "../admin/shared/services/alertService";
 
 @Component({
   selector: 'app-register-page',
@@ -16,11 +17,11 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(
     private service: UserService,
-    private router: Router) { }
+    private router: Router,
+    private alert: AlertService) { }
 
   ngOnInit() {
-    console.log('sfwerfwefwe')
-    this.form=new FormGroup({
+       this.form=new FormGroup({
       userLogin: new FormControl(null
         ,[Validators.required, Validators.minLength(9)]),
       userPassword: new FormControl(null,
@@ -33,11 +34,9 @@ export class RegisterPageComponent implements OnInit {
       phoneNumber: new FormControl(null)
 
     })
-    console.log('sfwerfwefwe')
   }
   submit(){
-    console.log('sfwerfwefwe')
-    if(this.form.invalid){
+       if(this.form.invalid){
       return
     }
 
@@ -51,12 +50,10 @@ export class RegisterPageComponent implements OnInit {
       phoneNumber:this.form.value.phoneNumber,
 
     }
-    this.service.createUser(user).subscribe( () =>{
+    this.service.createUser(user).subscribe( (response) =>{
+      console.log('I component')
       this.form.reset()
-      this.router.navigate(['/admin','login'])
-
-    })
-
+      this.router.navigate(['/','login'])})
   }
 
 

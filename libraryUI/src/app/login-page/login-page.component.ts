@@ -33,8 +33,8 @@ this.route.queryParams.subscribe( (params)=>{
 })
 
   this.form = new FormGroup( {
-    email: new FormControl(null, [
-      Validators.required, Validators.email
+    login: new FormControl(null, [
+      Validators.required, Validators.minLength(6)
     ]),
     password: new FormControl(null, [
       Validators.required, Validators.minLength(6)
@@ -49,7 +49,7 @@ this.route.queryParams.subscribe( (params)=>{
     }
     this.submitted = true;
     const  user: UserLogin = {
-      login: this.form.value.email,
+      login: this.form.value.login,
       password: this.form.value.password
     }
     this.auth.login(user).subscribe(() => {

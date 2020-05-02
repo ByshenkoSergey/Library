@@ -52,7 +52,9 @@ namespace DAL.Repository
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
+            
             return await _context.Set<T>().ToListAsync<T>();
+
         }
 
         public abstract Task<Guid> GetModelIdAsync(string name);

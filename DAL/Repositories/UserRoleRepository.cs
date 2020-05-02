@@ -17,7 +17,7 @@ namespace DAL.Repositories
             var userRoleList = await GetAllAsync();
             foreach (var userRole in userRoleList)
             {
-                if (userRole.Name == name)
+                if (userRole.RoleName == name)
                 {
                     return userRole.RoleId;
                 }

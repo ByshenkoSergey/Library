@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MainLayoutComponent} from './shared/componets/main-layout/main-layout.component';
+import {MainLayoutComponent} from './shared/components/main-layout/main-layout.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import {RegisterPageComponent} from "./register-page/register-page.component";
 import {LoginPageComponent} from "./login-page/login-page.component";

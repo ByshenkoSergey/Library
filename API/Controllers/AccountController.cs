@@ -34,7 +34,7 @@ namespace API_Laer
                 }
                 catch (BLL.Infrastructure.Exceptions.InvalidLogginUserException e)
                 {
-                    return BadRequest(e.Message);
+                    return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
                 }
             
 
@@ -55,13 +55,13 @@ namespace API_Laer
                 Guid id = await _userService.AddUserAsync(newUser);
                 if (id == default)
                 {
-                    return BadRequest("New user not added");
+                    return BadRequest(new ResponceDTO { Text = "New user not added" });
                 }
-                return Created("api/account/post", $"New user is created, new user id - {id}");
+                return Created("https://localhost:44397/api/account/user/post", new ResponceDTO { Text = "New user is created" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -73,9 +73,9 @@ namespace API_Laer
                 var user = await _userService.GetUserDTOAsync(id);
                 return Ok(user);
             }
-            catch (BLL.Infrastructure.Exceptions.ValidationException e)
+            catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -89,7 +89,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -100,11 +100,11 @@ namespace API_Laer
             try
             {
                 await _userService.EditUserAsync(id, user);
-                return Ok("Edit user is compleate");
+                return Ok(new ResponceDTO { Text = "User is correct" });
             }
             catch (ArgumentException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -114,14 +114,14 @@ namespace API_Laer
             try
             {
                 await _userService.DeleteUserAsync(id);
-                return Ok("User is deleted");
+                return Ok(new ResponceDTO { Text = "User is deleted" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }        
         }
-
+        //
         [Authorize]
         [HttpPost("userrole/post")]
         public async Task<IActionResult> AddNewUserRoleAsync(UserRoleDTO UserRole)
@@ -131,13 +131,13 @@ namespace API_Laer
                 Guid id = await _userRoleServices.AddUserRoleAsync(UserRole);
                 if (id == default)
                 {
-                    return BadRequest("New user not added");
+                    return BadRequest(new ResponceDTO { Text = "New user not added" });
                 }
-                return Created("api/account/post", $"New user is created, new user id - {id}");
+                return Created("https://localhost:44397/api/account/userrole/post", new ResponceDTO { Text = "New user role is created" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -149,9 +149,9 @@ namespace API_Laer
                 var user = await _userRoleServices.GetUserRoleDTOAsync(id);
                 return Ok(user);
             }
-            catch (BLL.Infrastructure.Exceptions.ValidationException e)
+            catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -165,7 +165,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -176,11 +176,11 @@ namespace API_Laer
             try
             {
                 await _userRoleServices.EditUserRoleAsync(id, user);
-                return Ok("Edit user is compleate");
+                return Ok(new ResponceDTO { Text = "Edit user is compleate" });
             }
             catch (ArgumentException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 
@@ -190,11 +190,11 @@ namespace API_Laer
             try
             {
                 await _userRoleServices.DeleteUserRoleAsync(id);
-                return Ok("UserRole is deleted");
+                return Ok(new ResponceDTO { Text = "UserRole is deleted"});
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Text = $"{e.Message}" });
             }
         }
 

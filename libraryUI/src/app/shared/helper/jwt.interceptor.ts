@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse} from '@angular/common/http';
+import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
 import {Router} from "@angular/router";
-import {catchError} from "rxjs/operators";
-import {Observable, throwError} from 'rxjs';
+import {Observable} from 'rxjs';
 import { AuthService } from 'src/app/admin/shared/services/auth.service';
 
 
@@ -23,20 +22,6 @@ export class JwtInterceptor implements HttpInterceptor {
         }
       })
     }
-
     return next.handle(request)
-      .pipe(
-        catchError((error: HttpErrorResponse)=>{
-          if(error.status===401){
-            this.Authorization.logout()
-            this.router.navigate(['/','login'],{
-              queryParams:{
-                authFailed: true
-              }
-            })
-          }
-         return throwError(error)
-        })
-      )
   }
 }
