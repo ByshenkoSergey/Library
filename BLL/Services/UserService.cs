@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using DAL.UnitOfWork;
 using BLL.DTOModels;
-using BLL.Infrastructure;
 using DAL.Models.IdentityModels;
 using BLL.Options;
 using BLL.Helper;
@@ -91,20 +90,20 @@ namespace BLL.Services
 
         public async Task<Guid> AddUserAsync(NewUserDTO newUserDTO)
         {
-                      var users = await GetAllUsersDTOAsync();
+            var users = await GetAllUsersDTOAsync();
             foreach (var user in users)
             {
-                if (user.UserLogin==newUserDTO.UserLogin)
+                if (user.UserLogin == newUserDTO.UserLogin)
                 {
                     throw new ValidationException("Such user login already exists", "");
                 }
 
-                if(user.Email == newUserDTO.Email)
+                if (user.Email == newUserDTO.Email)
                 {
-                   throw new ValidationException("Such user email already exists", "");
+                    throw new ValidationException("Such user email already exists", "");
                 }
             }
-            
+
 
             try
             {
@@ -124,8 +123,8 @@ namespace BLL.Services
         {
             try
             {
-                var identity = await GetIdentityAsync(userName, password);
-
+                var user = await GetUserAsync(userName, password);
+                var identity = GetIdentity(user);
                 var now = DateTime.UtcNow;
 
                 var jwt = new JwtSecurityToken(
@@ -141,7 +140,8 @@ namespace BLL.Services
                 {
                     access_token = encodedJwt,
                     userLogin = identity.Name,
-                    tokenExpiration = AuthOptions.lifeTime.ToString()
+                    tokenExpiration = AuthOptions.lifeTime.ToString(),
+                    userRole = user.UserRole
 
                 };
                 var json = JsonSerializer.Serialize(response);
@@ -153,10 +153,12 @@ namespace BLL.Services
             }
         }
 
-        private async Task<ClaimsIdentity> GetIdentityAsync(string userName, string password)
+        private async Task<NewUserDTO> GetUserAsync(string userName, string password)
         {
             var allUsers = await GetAllUsersDTOAsync();
+
             NewUserDTO user = null;
+
             foreach (var person in allUsers)
             {
                 if (person.UserLogin == userName)
@@ -167,25 +169,32 @@ namespace BLL.Services
             }
             if (user == null)
             {
-                throw new InvalidLogginUserException("User_not_foud");
+                throw new InvalidLogginUserException("User not foud");
             }
             else
             {
                 if (user.UserPassword != password)
                 {
-                    throw new InvalidLogginUserException("Invalid_password");
+                    throw new InvalidLogginUserException("Invalid password");
                 }
+            }
 
-                var claims = new List<Claim>
+            return user;
+        }
+
+        private ClaimsIdentity GetIdentity(NewUserDTO user)
+        {
+            var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserLogin),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, user.UserRole)
                 };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
-            }
+            ClaimsIdentity claimsIdentity =
+            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
         }
     }
 }
+
+
