@@ -6,6 +6,8 @@ using BLL.DTOModels;
 using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace API_Laer
 {
@@ -84,7 +86,7 @@ namespace API_Laer
 
         }
 
-       // [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -135,6 +137,31 @@ namespace API_Laer
             catch (ValidationException e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Moderator")]
+        [HttpPost("upload/post")]
+        public async Task<ActionResult> AddBookFile(IFormFile file)
+        {
+            try
+            {
+                string filePath = null;
+                if (file.Length > 0)
+                {
+                    filePath = $"BookLibrary/{file.FileName}";
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                }
+                return Ok(new ResponceDTO { Text = filePath });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new ResponceDTO { Text = e.Message });
             }
         }
     }

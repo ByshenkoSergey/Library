@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {Book, BookAdd, BookForm} from "../interfaces/interfaces";
+import {Book, BookAdd, BookForm, newResponse} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
 import { map } from 'rxjs/operators';
 
@@ -42,6 +42,29 @@ export class BookService {
         }
       }));
   }
+
+
+
+  uploadBook(data: FormData){
+   return this.http.post<any>(this.url+'/upload/post', data,
+     {reportProgress: true, observe:'events'}).pipe(map(event => {
+     switch (event.type) {
+       case HttpEventType.UploadProgress:
+          break;
+       case HttpEventType.Response:
+         return event;
+     }
+   }));
+  }
+
+
+
+
+
+
+
+
+
 
   getBook(id: number): Observable<BookAdd> {
     return this.http.get(this.url + '/get/form/' + id)

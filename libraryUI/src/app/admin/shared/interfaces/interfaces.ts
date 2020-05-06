@@ -66,3 +66,9 @@ export interface UserRole {
   roleId?: number
   roleName?: string
 }
+
+export interface newResponse {
+  text:string
+}
+
+

@@ -17,22 +17,6 @@
     </div>
   </div>
 
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('bookFileAddress').touched&&form.get('bookFileAddress').invalid}"
-  >
-    <label for="bookFileAddress"> Адрес файла </label>
-    <input id="bookFileAddress" type="text" formControlName="bookFileAddress">
-    <div
-      class="validation"
-      *ngIf="form.get('bookFileAddress').touched&&form.get('bookFileAddress').invalid"
-    >
-      <small *ngIf="form.get('bookFileAddress').errors.required">
-        Введите адрес файла:
-      </small>
-    </div>
-  </div>
-
 
   <div
     class="form-control"
@@ -82,10 +66,38 @@
     </div>
   </div>
 
-  <button
+
+
+  <label for="bookName">Загрузка книги</label>
+  <div class="form-control">
+      <input
+      style="display: none"
+      type="file"
+      (change)="onFileSelected($event)"
+      accept="text/richtext"
+
+      #fileInput>
+    <button name="" type="button" (click)="fileInput.click()">Выбрать</button>
+    <label class="text-center">{{fileName}}</label>
+    <div
+      class="validation"
+      *ngIf="(fileName==''|| (fileName!=''&&fileExtension!='.txt'))"
+    >
+      <small *ngIf="fileName==''">
+        Выберите файл.
+      </small>
+
+      <small *ngIf="fileExtension!=null&&fileExtension!='.txt'">
+        Разрешение файла не поддерживаеться, выберите файл *.txt.
+      </small>
+
+    </div>
+      </div>
+
+    <button
     type="submit"
     class="btn btn-block btn-primary"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid||submitted"
      >Save</button>
 
 </form>

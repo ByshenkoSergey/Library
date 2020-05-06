@@ -91,19 +91,19 @@ namespace BLL.Services
 
         public async Task<Guid> AddUserAsync(NewUserDTO newUserDTO)
         {
-            //           var users = await GetAllUsersDTOAsync();
-            //foreach (var user in users)
-            //{
-            //    if (user.UserLogin==newUserDTO.UserLogin)
-            //    {
-            //        throw new ValidationException("Such user login already exists", "");
-            //    }
+                      var users = await GetAllUsersDTOAsync();
+            foreach (var user in users)
+            {
+                if (user.UserLogin==newUserDTO.UserLogin)
+                {
+                    throw new ValidationException("Such user login already exists", "");
+                }
 
-            //    if(user.Email == newUserDTO.Email)
-            //    {
-            //        throw new ValidationException("Such user email already exists", "");
-            //    }
-            //}
+                if(user.Email == newUserDTO.Email)
+                {
+                   throw new ValidationException("Such user email already exists", "");
+                }
+            }
             
 
             try
