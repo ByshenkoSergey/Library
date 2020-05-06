@@ -1,6 +1,7 @@
 <div class="book" *ngIf="book$ | async as book; else loading">
   <div class="header">
     <h1>{{book.bookName}}</h1>
+    <a [href]="fileUrl" download="{{bookName}}.txt">DownloadFile</a>
   </div>
   <div class="info">
     <p>{{book.bookText}}</p>

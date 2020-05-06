@@ -4,6 +4,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {switchMap} from "rxjs/internal/operators/switchMap";
 import {BookService} from "../shared/services/book.service";
 import {Book} from "../shared/interfaces/interfaces";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-book.open-page',
@@ -13,10 +14,15 @@ import {Book} from "../shared/interfaces/interfaces";
 export class BookOpenPageComponent implements OnInit {
 
   book$: Observable<Book>
+  bookText: string
+  bookName: string
+  fileUrl: any
+
 
   constructor(
     private service: BookService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {
   }
 
@@ -26,6 +32,11 @@ export class BookOpenPageComponent implements OnInit {
         return this.service.getBookLight(params['id'])
       }))
 
-
+       this.book$.subscribe(res=>{
+      this.bookText = res.bookText
+        this.bookName = res.bookName
+           const blob = new Blob([ this.bookText ], {type:'application/octet-stream'});
+            this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+    })
   }
-}
+  }
