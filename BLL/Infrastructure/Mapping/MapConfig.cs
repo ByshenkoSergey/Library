@@ -4,6 +4,7 @@ using BLL.Infrastructure.Exceptions;
 using DAL.Models;
 using DAL.Models.IdentityModels;
 using DAL.UnitOfWork;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ namespace BLL.Infrastructure.Mapping
     {
         private IUnitOfWork _unit;
         private IMapper _mapper;
+        private IWebHostEnvironment _appEnvironment;
 
-        public MapConfig(IUnitOfWork unit, IMapper mapper)
+        public MapConfig(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment appEnvironment)
         {
             _unit = unit;
             _mapper = mapper;
+            _appEnvironment = appEnvironment;
         }
 
         public IMapper GetMapper()
@@ -30,9 +33,9 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<AuthorDTO, Author>();
                 cnf.CreateMap<Publisher, PublisherDTO>();
                 cnf.CreateMap<PublisherDTO, Publisher>();
-                cnf.CreateMap<Book, BookOpenDTO>()
-                               .ForMember("BookText", o => o.MapFrom(p => GetBookTextAsync(p.BookFileAddress).Result));
-
+                cnf.CreateMap<Book, BookFileDTO>()
+                               .ForMember("BookFilePath", o => o.MapFrom(p => GetFilePath(p.BookFileAddress)));
+                               
                 cnf.CreateMap<Book, BookFormDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
@@ -84,18 +87,12 @@ namespace BLL.Infrastructure.Mapping
         }
         #endregion
 
-        #region MapBookToBookFormDTO
-        private async Task<string> GetBookTextAsync(string bookFileAddress)
+        #region MapBookToBookOpenDTO
+        private string GetFilePath(string bookFileAddress)
         {
             try
             {
-                using (FileStream fs = new FileStream(bookFileAddress, FileMode.OpenOrCreate))
-                {
-                    using (StreamReader sr = new StreamReader(fs))
-                    {
-                        return await sr.ReadToEndAsync();
-                    }
-                }
+                return Path.Combine(_appEnvironment.ContentRootPath, bookFileAddress);
             }
             catch (Exception e)
             {
@@ -103,7 +100,7 @@ namespace BLL.Infrastructure.Mapping
             }
         }
 
-        #endregion
+       #endregion
 
         #region MapBookAddDTOToBook
         private async Task<Guid> GetPublisherIdAsync(string publisherName)

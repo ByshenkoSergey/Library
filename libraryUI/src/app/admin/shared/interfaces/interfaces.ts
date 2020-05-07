@@ -10,6 +10,7 @@ export interface BookAdd {
   authorName: string
   yearOfPublishing: string
   publisherName: string
+  contentType: string
 }
 
 export interface BookForm {
@@ -70,6 +71,11 @@ export interface UserRole {
 
 export interface newResponse {
   text:string
+}
+
+export interface  responseAfterFileAdd {
+  filePath:string
+  contentInfo: string
 }
 
 

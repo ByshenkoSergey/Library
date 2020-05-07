@@ -57,7 +57,7 @@ namespace BLL.Services
 
         }
        
-        public async Task<BookOpenDTO> GetBookOpenDTOAsync(Guid id)
+        public async Task<BookFileDTO> GetBookFileAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -67,7 +67,7 @@ namespace BLL.Services
             }
             try
             {
-                return _mapper.GetMapper().Map<Book, BookOpenDTO>(book);
+                return _mapper.GetMapper().Map<Book, BookFileDTO>(book);
             }
             catch (Exception)
             {

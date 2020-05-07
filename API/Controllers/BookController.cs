@@ -23,19 +23,19 @@ namespace API_Laer
             _service = service;
         }
 
-        [HttpGet("get/lightForm/{id}")]
-        public async Task<ActionResult<BookOpenDTO>> GetBookOpenDTOAsync(Guid id)
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<PhysicalFileResult>> GetBookFileAsync(Guid id)
         {
             try
             {
-                var bookDTO = await _service.GetBookOpenDTOAsync(id);
+                var bookFile = await _service.GetBookFileAsync(id);
 
-                if (bookDTO == null)
+                if (bookFile == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(bookDTO);
+                return PhysicalFile(bookFile.BookFilePath, bookFile.ContentType, bookFile.BookName);
             }
             catch (ValidationException e)
             {
@@ -44,7 +44,7 @@ namespace API_Laer
         }
 
         [HttpGet("get/form/{id}")]
-        public async Task<ActionResult<BookOpenDTO>> GetBookAddDTOAsync(Guid id)
+        public async Task<ActionResult<BookFileDTO>> GetBookAddDTOAsync(Guid id)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace API_Laer
 
         }
 
-        // [Authorize(Roles = "Admin")]
+         [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -104,8 +104,8 @@ namespace API_Laer
         }
 
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> EditBookAsync(BookAddDTO newBookDTO, Guid id)
         {
@@ -124,8 +124,8 @@ namespace API_Laer
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
@@ -140,28 +140,29 @@ namespace API_Laer
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("upload/post")]
         public async Task<ActionResult> AddBookFile(IFormFile file)
         {
             try
             {
+                string contentInfo = file.ContentType;
                 string filePath = null;
                 if (file.Length > 0)
                 {
-                    filePath = $"BookLibrary/{file.FileName}";
+                                        filePath = $"BookLibrary/{file.FileName}";
                     using (var stream = System.IO.File.Create(filePath))
                     {
                         await file.CopyToAsync(stream);
                     }
 
                 }
-                return Ok(new ResponceDTO { Text = filePath });
+                return Ok(new { filePath = filePath, contentInfo = contentInfo });
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Text = e.Message });
+                return BadRequest(new ResponseDTO { Text = e.Message });
             }
         }
     }
