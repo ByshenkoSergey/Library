@@ -20,7 +20,9 @@ namespace DAL.FailData
                 YearOfPublishing = "2008",
                 PublisherId = publishings[1].PublisherId,
                 AuthorId = authors[0].AuthorId,
-                Rating = 3
+                Rating = 3,
+                ContentType ="text/plain"
+                
             };
 
             yield return new Book
@@ -31,7 +33,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2010",
                 PublisherId = publishings[3].PublisherId,
                 AuthorId = authors[1].AuthorId,
-                Rating = 5
+                Rating = 5,
+                 ContentType = "text/plain"
             };
 
             yield return new Book
@@ -42,7 +45,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2001",
                 PublisherId = publishings[2].PublisherId,
                 AuthorId = authors[2].AuthorId,
-                Rating = 0
+                Rating = 0,
+                ContentType = "text/plain"
 
             };
 
@@ -54,7 +58,8 @@ namespace DAL.FailData
                 YearOfPublishing = "1994",
                 PublisherId = publishings[0].PublisherId,
                 AuthorId = authors[3].AuthorId,
-                Rating = 2
+                Rating = 2,
+                ContentType = "text/plain"
             };
 
             yield return new Book
@@ -65,7 +70,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2009",
                 PublisherId = publishings[2].PublisherId,
                 AuthorId = authors[4].AuthorId,
-                Rating = 5
+                Rating = 5,
+                ContentType = "text/plain"
 
             };
 
@@ -77,7 +83,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2012",
                 PublisherId = publishings[0].PublisherId,
                 AuthorId = authors[5].AuthorId,
-                Rating = 4
+                Rating = 4,
+                ContentType = "text/plain"
             };
 
             yield return new Book
@@ -88,7 +95,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2005",
                 PublisherId = publishings[3].PublisherId,
                 AuthorId = authors[6].AuthorId,
-                Rating = 4
+                Rating = 4,
+                ContentType = "text/plain"
 
             };
 
@@ -100,7 +108,8 @@ namespace DAL.FailData
                 YearOfPublishing = "2015",
                 PublisherId = publishings[1].PublisherId,
                 AuthorId = authors[7].AuthorId,
-                Rating = 5
+                Rating = 5,
+                ContentType = "text/plain"
             };
 
 
