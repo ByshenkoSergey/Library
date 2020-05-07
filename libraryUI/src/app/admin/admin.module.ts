@@ -14,6 +14,8 @@ import {AuthGuard} from "./shared/services/auth.guard";
 import {SearchPipe} from "./shared/Pipe/search.pipe";
 import {BookEditPageComponent} from './book.edit-page/book.edit-page.component';
 import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
+import {NgxDocViewerModule} from "ngx-doc-viewer";
+
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
     CommonModule,
     FormsModule,
     SharedModule,
+    NgxDocViewerModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {

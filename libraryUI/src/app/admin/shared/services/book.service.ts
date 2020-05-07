@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpClient, HttpEventType} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {Book, BookAdd, BookForm, newResponse} from "../interfaces/interfaces";
+import {Book, BookAdd, BookForm} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
 import { map } from 'rxjs/operators';
 
@@ -31,18 +31,9 @@ export class BookService {
      }));
        }
 
-  getBookLight(id: number): Observable<Book> {
-    return this.http.get<Book>(this.url + '/get/lightForm/' + id)
-      .pipe(map((response:any)=>{
-        return {
-          ...response,
-          bookId:response.bookId,
-          bookName:response.bookName,
-          bookText:response.bookText
+  getBookFile(id: number): Observable<any> {
+    return this.http.get<any>(this.url + '/get/' + id)
         }
-      }));
-  }
-
 
 
   uploadBook(data: FormData){
@@ -56,14 +47,6 @@ export class BookService {
      }
    }));
   }
-
-
-
-
-
-
-
-
 
 
   getBook(id: number): Observable<BookAdd> {

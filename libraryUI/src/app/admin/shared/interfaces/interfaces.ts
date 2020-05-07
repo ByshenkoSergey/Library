@@ -10,7 +10,7 @@ export interface BookAdd {
   authorName: string
   yearOfPublishing: string
   publisherName: string
-  contentType: string
+  contentType?: string
 }
 
 export interface BookForm {
@@ -39,9 +39,9 @@ export interface Author {
 }
 
 export interface Book {
-  bookId: number
   bookName: string
-  bookText?: string
+  bookFilePath: string
+  contentType: string
 }
 
 export interface Publisher {
@@ -77,5 +77,7 @@ export interface  responseAfterFileAdd {
   filePath:string
   contentInfo: string
 }
+
+
 
 

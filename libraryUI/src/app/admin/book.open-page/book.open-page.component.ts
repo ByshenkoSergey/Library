@@ -4,8 +4,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {switchMap} from "rxjs/internal/operators/switchMap";
 import {BookService} from "../shared/services/book.service";
 import {Book} from "../shared/interfaces/interfaces";
-import {DomSanitizer} from "@angular/platform-browser";
-import {AuthService} from "../shared/services/auth.service";
+
 
 @Component({
   selector: 'app-book.open-page',
@@ -14,31 +13,31 @@ import {AuthService} from "../shared/services/auth.service";
 })
 export class BookOpenPageComponent implements OnInit {
 
-  book$: Observable<Book>
-  bookText: string
+  book$: Observable<any>
   bookName: string
-  fileUrl: any
+
+  url='https://localhost:44397/BookLibrary/test.docx';
+  viewer = 'google';
+
 
 
   constructor(
     private service: BookService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private auth:AuthService
+
   ) {
   }
 
   ngOnInit() {
     this.book$ = this.route.params
       .pipe(switchMap((params: Params) => {
-        return this.service.getBookLight(params['id'])
+        return this.service.getBookFile(params['id'])
       }))
 
        this.book$.subscribe(res=>{
-      this.bookText = res.bookText
-        this.bookName = res.bookName
-           const blob = new Blob([ this.bookText ], {type:'application/octet-stream'});
-            this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+      //this.bookName = res.
+      //this.url= res.bookFilePath
+
     })
   }
   }

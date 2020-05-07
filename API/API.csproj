@@ -91,28 +91,23 @@
 
 
   <ItemGroup>
-    <None Update="BookLibrary\Black dog.txt">
+    <None Include="wwwroot\BookLibrary\Happy bird.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Black sea.txt">
+    <None Include="wwwroot\BookLibrary\Little snake.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Happy bird.txt">
+    <None Include="wwwroot\BookLibrary\Merry.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Little snake.txt">
+    <None Include="wwwroot\BookLibrary\New spring.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Merry.txt">
+    <None Include="wwwroot\BookLibrary\Square World.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\New spring.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="BookLibrary\Square World.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="BookLibrary\Нello cat.txt">
+    <None Include="wwwroot\BookLibrary\Киплинг.txt" />
+    <None Include="wwwroot\BookLibrary\Нello cat.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

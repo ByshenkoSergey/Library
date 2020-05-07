@@ -24,23 +24,30 @@ namespace API_Laer
         }
 
         [HttpGet("get/{id}")]
-        public async Task<ActionResult<PhysicalFileResult>> GetBookFileAsync(Guid id)
+        public async Task<IActionResult> GetBookFileAsync(Guid id)
         {
-            try
-            {
-                var bookFile = await _service.GetBookFileAsync(id);
 
-                if (bookFile == null)
-                {
-                    return NotFound();
-                }
+            var filepath = Path.Combine("~/BookLibrary", "Merry.txt");
+            var f = File(filepath, "text/plain", "Merry.txt");
 
-                return PhysicalFile(bookFile.BookFilePath, bookFile.ContentType, bookFile.BookName);
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok();
+            //try
+            //{
+            //    var bookFile = await _service.GetBookFileAsync(id);
+
+            //    if (bookFile == null)
+            //    {
+            //        return NotFound();
+            //    }
+
+            //    var res = File(bookFile.BookFilePath, bookFile.ContentType, bookFile.BookName);
+            //    return res;
+
+            //}
+            //catch (ValidationException e)
+            //{
+            //    return BadRequest(e.Message);
+            //}
         }
 
         [HttpGet("get/form/{id}")]
