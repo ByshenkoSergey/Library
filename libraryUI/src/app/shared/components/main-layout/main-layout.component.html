@@ -5,23 +5,6 @@
   </h1>
 
   <ul>
-    <div *ngIf="auth.isAuthenticate()">
-         <li routerLinkActive="active">
-              <a [routerLink]="['/admin', 'book']"  >Create</a>
-         </li>
-    </div>
-
-    <div *ngIf="auth.isAuthenticate()">
-          <li  routerLinkActive="active">
-               <a [routerLink]="['/', 'dashboard']"  >Main</a>
-         </li>
-    </div>
-
-    <div *ngIf="auth.isAuthenticate()">
-          <li>
-               <a href="#"(click)="logout($event)"  >Logout</a>
-          </li>
-    </div>
 
     <li routerLinkActive="active">
       <a [routerLink]="['/', 'register']">Register</a>

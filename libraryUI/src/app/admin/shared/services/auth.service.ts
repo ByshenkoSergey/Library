@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Observer, Subject, throwError} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {catchError, tap} from 'rxjs/operators';
 import { DbAuthResponse, UserLogin } from '../interfaces/interfaces';
@@ -20,6 +20,15 @@ get token(): string{
     return null;
   }
   return localStorage.getItem('token');
+}
+
+get userRole(): string {
+  const expDate = new Date(localStorage.getItem('expDate'))
+  if (new Date() > expDate) {
+    this.logout();
+    return null;
+  }
+  return localStorage.getItem('role');
 }
 
 login(user: UserLogin): Observable<any> {
@@ -42,10 +51,10 @@ private handleError(error: HttpErrorResponse){
   const message: string = error.error
 
   switch (message) {
-    case 'User_not_foud':
+    case 'User not found':
       this.error$.next('Пользователь не обнаружен')
       break
-    case 'Invalid_password':
+    case 'Invalid password':
       this.error$.next('Неверный пароль')
       break
   }
@@ -55,9 +64,10 @@ private handleError(error: HttpErrorResponse){
 
 private setToken(response: DbAuthResponse|null) {
   if(response) {
-    const expDate = new Date(new Date().getTime() + +response.tokenExpiration*60000);
+    const expDate = new Date(new Date().getTime() + +response.tokenExpiration*30000);
     localStorage.setItem('token', response.access_token);
     localStorage.setItem('expDate', expDate.toString());
+    localStorage.setItem('role', response.userRole);
   } else {
     localStorage.clear();
   }

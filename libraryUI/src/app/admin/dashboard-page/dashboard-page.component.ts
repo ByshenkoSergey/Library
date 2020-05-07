@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BookService} from "../shared/services/book.service";
 import {BookForm} from "../shared/interfaces/interfaces";
 import { Subscription } from 'rxjs';
+import {AuthService} from "../shared/services/auth.service";
 
 
 @Component({
@@ -15,9 +16,17 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   pSub: Subscription
   dSub: Subscription
   searchStr = ''
-  constructor(private service: BookService) { }
+  userRole: string
+
+
+  constructor(
+    private service: BookService,
+    private auth: AuthService) {
+
+  }
 
   ngOnInit() {
+    this.userRole = this.auth.userRole;
     this.pSub = this.service.getBooks().subscribe((data: BookForm[]) => this.books = data);
     }
 

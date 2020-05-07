@@ -11,7 +11,10 @@
     <th>Автор</th>
     <th>Год издания</th>
     <th>Издательство</th>
-    <th>Действие</th>
+    <th>Рейтинг</th>
+    <div *ngIf="userRole==('Admin'||'Moderator')">
+    <th> Действие</th>
+    </div>
 
   </tr>
   </thead>
@@ -47,15 +50,19 @@
       </button>
 
     </td>
-    <td>
-      <button
-      class="btn btn-link edit"
-      [routerLink]="['/admin','book', 'edit', book.bookId ]"
-      >
-        Изменить
-      </button>
-      <a (click)="remove(book.bookId)"> Удалить</a>
-    </td>
+      <td>{{book.rating}}</td>
+      <td >
+        <div *ngIf="userRole==('Admin'||'Moderator')">
+              <button
+                  class="btn btn-link edit"
+                   [routerLink]="['/admin','book', 'edit', book.bookId ]"
+                 >Изменить
+              </button>
+        </div>
+        <div *ngIf="userRole=='Admin'">
+               <a (click)="remove(book.bookId)" > Удалить</a>
+        </div>
+       </td>
   </tr>
   </tbody>
 </table>

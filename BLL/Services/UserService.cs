@@ -169,7 +169,7 @@ namespace BLL.Services
             }
             if (user == null)
             {
-                throw new InvalidLogginUserException("User not foud");
+                throw new InvalidLogginUserException("User not found");
             }
             else
             {

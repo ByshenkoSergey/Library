@@ -28,6 +28,7 @@ export interface DbAuthResponse {
   access_token: string
   userLogin: string
   tokenExpiration: string
+  userRole:string
 }
 
 export interface Author {

@@ -5,6 +5,7 @@ import {switchMap} from "rxjs/internal/operators/switchMap";
 import {BookService} from "../shared/services/book.service";
 import {Book} from "../shared/interfaces/interfaces";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-book.open-page',
@@ -22,7 +23,8 @@ export class BookOpenPageComponent implements OnInit {
   constructor(
     private service: BookService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private auth:AuthService
   ) {
   }
 
