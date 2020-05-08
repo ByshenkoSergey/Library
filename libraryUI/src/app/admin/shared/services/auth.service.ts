@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {catchError, tap} from 'rxjs/operators';
-import { DbAuthResponse, UserLogin } from '../interfaces/interfaces';
+import {catchError, map} from 'rxjs/operators';
+import {DbAuthResponse, ResponseObject, UserLogin} from '../interfaces/interfaces';
+import {AlertService} from "./alertService";
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +12,10 @@ export class AuthService{
 
   public error$: Subject<string>=new Subject<string>()
 
-constructor(private http: HttpClient){}
+constructor(
+  private http: HttpClient,
+  private alert: AlertService
+  ){}
 
 get token(): string{
   const  expDate = new Date(localStorage.getItem('expDate'))
@@ -31,10 +35,14 @@ get userRole(): string {
   return localStorage.getItem('role');
 }
 
-login(user: UserLogin): Observable<any> {
- return this.http.post(`${environment.apiUrl}/account/token`, user)
-   .pipe(
-     tap(this.setToken),
+login(user: UserLogin): Observable<DbAuthResponse> {
+ return this.http.post<DbAuthResponse>(`${environment.apiUrl}/user/token`, user)
+   .pipe( map ( (response:any)=>{
+       const modResponse = JSON.parse(response)
+       console.log('parser')
+       console.log(modResponse)
+     this.setToken(modResponse);
+   }),
      catchError(this.handleError.bind(this))
    );
 }
@@ -48,7 +56,7 @@ isAuthenticate(): boolean {
 }
 
 private handleError(error: HttpErrorResponse){
-  const message: string = error.error
+    const message: string = error.error
 
   switch (message) {
     case 'User not found':
@@ -63,7 +71,7 @@ private handleError(error: HttpErrorResponse){
 }
 
 private setToken(response: DbAuthResponse|null) {
-  if(response) {
+    if(response) {
     const expDate = new Date(new Date().getTime() + +response.tokenExpiration*30000);
     localStorage.setItem('token', response.access_token);
     localStorage.setItem('expDate', expDate.toString());

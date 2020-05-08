@@ -10,15 +10,20 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AdminModule} from './admin/admin.module';
 import {SharedModule} from './shared/shared.module';
 import {JwtInterceptor} from "./shared/helper/jwt.interceptor";
-import {HomePageComponent} from "./home-page/home-page.component";
 import { RegisterPageComponent } from './register-page/register-page.component';
+import {ErrorInterceptor} from "./shared/helper/error.interceptor";
+import {HomePageComponent} from "./home-page/home-page.component";
 
 
-const INTERCEPTOR_PROVIDER: Provider = {
+const INTERCEPTOR_PROVIDER: Provider = [{
   provide: HTTP_INTERCEPTORS,
   multi: true,
   useClass: JwtInterceptor
- }
+ },{
+  provide: HTTP_INTERCEPTORS,
+  multi: true,
+  useClass: ErrorInterceptor
+}]
 
 @NgModule({
   declarations: [

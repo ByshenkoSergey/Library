@@ -68,8 +68,13 @@ export interface UserRole {
   roleName?: string
 }
 
-export interface newResponse {
-  text:string
+export interface Response {
+  message:string
+  }
+
+export interface ResponseObject {
+  object: any
+  message:string
 }
 
 

@@ -48,6 +48,7 @@ namespace API.Controllers
             try
             {
                 var userRole = await _userRoleServices.GetUserRoleDTOAsync(id);
+
                 return Ok(new ResponseObjectDTO { ResponseObject = userRole, Message = "Request successful" });
             }
             catch (ValidationException e)

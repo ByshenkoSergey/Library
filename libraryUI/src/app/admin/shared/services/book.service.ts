@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {Book, BookAdd, BookForm, newResponse} from "../interfaces/interfaces";
+import {Book, BookAdd, BookForm, ResponseObject} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
 import { map } from 'rxjs/operators';
 
@@ -14,19 +14,19 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<BookForm[]> {
-     return this.http.get(this.url + '/gets')
+     return this.http.get<BookForm[]>(this.url + '/gets')
       .pipe(map((response:{[key: string]:any})=>{
-       let list:{[key: string]:any} = response["value"]
-         return Object.keys(list).map(key=>({
-         ...list[key],
-          bookId:list[key].bookId,
-          bookName:list[key].bookName,
-          bookFileAddress:list[key].bookFileAddress,
-          authorName:list[key].authorName,
-           authorId:list[key].authorId,
-          yearOfPublishing:list[key].yearOfPublishing,
-           publisherName:list[key].publisherName,
-           publisherId:list[key].publisherId
+        console.log(response)
+        return Object.keys(response).map(key=>({
+         ...response[key],
+          bookId:response[key].bookId,
+          bookName:response[key].bookName,
+          bookFileAddress:response[key].bookFileAddress,
+          authorName:response[key].authorName,
+           authorId:response[key].authorId,
+          yearOfPublishing:response[key].yearOfPublishing,
+           publisherName:response[key].publisherName,
+           publisherId:response[key].publisherId
         }))
      }));
        }
@@ -56,15 +56,6 @@ export class BookService {
      }
    }));
   }
-
-
-
-
-
-
-
-
-
 
   getBook(id: number): Observable<BookAdd> {
     return this.http.get(this.url + '/get/form/' + id)

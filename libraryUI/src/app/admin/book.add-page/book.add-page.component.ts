@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 
 import {BookService} from "../shared/services/book.service";
-import {BookAdd, newResponse} from '../shared/interfaces/interfaces';
+import {BookAdd, Response} from '../shared/interfaces/interfaces';
 import {AlertService} from "../shared/services/alertService";
 
 
@@ -18,7 +18,7 @@ export class BookAddPageComponent implements OnInit {
   form: FormGroup;
   file: any;
   fileName: string;
-  response: newResponse;
+  response: Response;
   fileExtension: string;
   submitted = true;
 
@@ -54,7 +54,7 @@ submit(){
 
     const book: BookAdd={
      bookName: this.form.value.bookName,
-      bookFileAddress: this.response.text,
+      bookFileAddress: this.response.message,
       authorName: this.form.value.authorName,
       yearOfPublishing: this.form.value.yearOfPublishing,
       publisherName: this.form.value.publisherName,

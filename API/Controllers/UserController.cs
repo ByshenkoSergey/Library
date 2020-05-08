@@ -29,7 +29,8 @@ namespace API_Laer
             try
             {
                 var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
-                return Ok(new ResponseObjectDTO { ResponseObject = token, Message = "Request successful" });
+                return Ok(new ResponseObjectDTO  { ResponseObject = token, Message = "Request successful" });
+                
             }
             catch (InvalidLogginUserException e)
             {

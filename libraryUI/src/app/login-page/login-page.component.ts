@@ -52,7 +52,7 @@ this.route.queryParams.subscribe( (params)=>{
       login: this.form.value.login,
       password: this.form.value.password
     }
-    this.auth.login(user).subscribe(() => {
+     this.auth.login(user).subscribe(() => {
      this.form.reset()
      this.router.navigate(['/admin', 'dashboard'])
       this.submitted=false
