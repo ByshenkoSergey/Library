@@ -20,7 +20,6 @@ namespace API_Laer
             _service = service;
         }
 
-        [Authorize(Roles = "User")]
         [HttpGet("get/{id}")]
         public async Task<ActionResult<AuthorDTO>> GetAuthorAsync(Guid id)
         {
@@ -28,25 +27,14 @@ namespace API_Laer
 
             if (author == null)
             {
-                return NotFound("Author not found!");
+                return NotFound(new ResponceDTO { Message = "Author not found" });
             }
 
-            return Ok(author);
-        }
-
-        [HttpGet("get")]
-        public async Task<ActionResult<AuthorDTO>> GetAuthorByNameAsync([FromBody]string name)
-        {
-            var author = await _service.GetAuthorByNameAsync(name);
-
-            if (author == null)
-            {
-                return NotFound();
-            }
-            return Ok(author);
+            return Ok(new ResponseObjectDTO { ResponseObject = author, Message = "Request successful" });
         }
 
 
+        [Authorize(Roles = "SuperUser")]
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
@@ -54,11 +42,12 @@ namespace API_Laer
         {
             try
             {
-                return Ok(await _service.GetAllAuthorDTOAsync());
+                var authorList = await _service.GetAllAuthorDTOAsync();
+                return Ok(new ResponseObjectDTO { ResponseObject = authorList, Message = "Request successful" });
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -70,11 +59,12 @@ namespace API_Laer
         {
             try
             {
-                return Ok(await _service.InsertAuthorAsync(authorDTO));
+                var id = await _service.InsertAuthorAsync(authorDTO);
+                return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "Author added" });
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -87,11 +77,11 @@ namespace API_Laer
             try
             {
                 await _service.EditAuthorAsync(id, authorDTO);
-                return Ok("Update is complite");
+                return Ok(new ResponceDTO { Message = "Update is complite" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -103,11 +93,11 @@ namespace API_Laer
             try
             {
                 await _service.DeleteAuthorAsync(id);
-                return Ok("Author is delete");
+                return Ok(new ResponceDTO { Message = "Author is delete"});
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
         }
     }
