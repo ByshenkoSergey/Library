@@ -1,4 +1,3 @@
-using API.Infrastructure;
 using AutoMapper;
 using BLL.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -29,8 +28,7 @@ namespace API_Laer
             //NewConnectionHomePC
             services.AddBLServises(Configuration.GetConnectionString("NewConnectionHomePC"), 
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
-
-            services.AddAPILaerServices();
+                       
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
           
         }

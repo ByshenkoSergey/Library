@@ -106,7 +106,7 @@ namespace API_Laer
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
-        public async Task<ActionResult> PutBookAsync(BookAddDTO newBookDTO, Guid id)
+        public async Task<ActionResult> PutBookAsync(Guid id, BookAddDTO newBookDTO)
         {
             try
             {

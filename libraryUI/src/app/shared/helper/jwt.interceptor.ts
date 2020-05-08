@@ -16,7 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
     if(this.Authorization.isAuthenticate())
     {
-      request = request.clone({
+        request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.Authorization.token}`
         }

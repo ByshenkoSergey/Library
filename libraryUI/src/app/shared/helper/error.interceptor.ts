@@ -30,7 +30,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         if(responseObject!=null) {
           console.log('if')
           const modEvent = event.clone({body: responseObject});
+          console.log(modEvent)
+          console.log("next")
           return modEvent;
+
+
         }
         }}),catchError(err => {
 

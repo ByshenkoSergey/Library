@@ -21,9 +21,12 @@ namespace BLL.Infrastructure
             services.AddScoped<IAuthOptions, AuthOptions>(c => new AuthOptions(key));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMapConfig, MapConfig>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRoleService, UserRoleService>();
-            services.AddDbContext<LibraryDataBaseContext>(c => c.UseSqlServer(connectionString), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IPublisherService, PublisherService>();
+            services.AddDbContext<LibraryDataBaseContext>(c => c.UseSqlServer(connectionString), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
             services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<LibraryDataBaseContext>();
 
             services.AddAuthentication(x =>

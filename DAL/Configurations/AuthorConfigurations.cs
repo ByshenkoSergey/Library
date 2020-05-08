@@ -10,7 +10,7 @@ namespace DAL.Configurations
         {
             builder.HasKey(k => k.AuthorId);
             builder.Property(p => p.AuthorName).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.AuthorBiography).HasMaxLength(100);
+            builder.Property(p => p.AuthorBiography).HasMaxLength(2000);
             builder.HasMany(o => o.Books).WithOne(m => m.Author).OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -30,8 +30,9 @@ export class BookEditPageComponent implements OnInit, OnDestroy {
       switchMap((params: Params) => {
         return this.service.getBook(params['id'])
       })
-    ).subscribe((book:BookAdd)=>{
+    ).subscribe((book:any)=>{
       this.book=book
+      console.log(book)
       this.form = new FormGroup({
             bookName: new FormControl(book.bookName, Validators.required),
             authorName: new FormControl(book.authorName, Validators.required),
@@ -49,12 +50,14 @@ this.submitted = true
     const book:BookAdd = {
   bookId: this.book.bookId,
   bookName: this.form.value.bookName,
+      bookFileAddress: this.book.bookFileAddress,
   authorName: this.form.value.authorName,
   yearOfPublishing: this.form.value.yearOfPublishing,
-  publisherName: this.form.value.publisherName,
-  bookFileAddress: this.book.bookFileAddress
+  publisherName: this.form.value.publisherName
+
   }
-    this.uSub=this.service.updateBook(book).subscribe(()=>{
+console.log(book)
+this.uSub=this.service.updateBook(book).subscribe(()=>{
   this.submitted = false
   this.router.navigate(['/admin', 'dashboard']);
 })

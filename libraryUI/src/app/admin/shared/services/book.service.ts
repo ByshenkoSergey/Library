@@ -16,7 +16,6 @@ export class BookService {
   getBooks(): Observable<BookForm[]> {
      return this.http.get<BookForm[]>(this.url + '/gets')
       .pipe(map((response:{[key: string]:any})=>{
-        console.log(response)
         return Object.keys(response).map(key=>({
          ...response[key],
           bookId:response[key].bookId,
@@ -60,14 +59,13 @@ export class BookService {
   getBook(id: number): Observable<BookAdd> {
     return this.http.get(this.url + '/get/form/' + id)
       .pipe(map((response:any)=>{
-                const book = response["value"]
-            return {
-        ...book,
+           return {
+        ...response,
         bookId:id,
-        bookName:book.bookName,
-        authorName:book.authorName,
-        yearOfPublishing:book.yearOfPublishing,
-        publisherName:book.publisherName
+        bookName:response.bookName,
+        authorName:response.authorName,
+        yearOfPublishing:response.yearOfPublishing,
+        publisherName:response.publisherName
       }
     }));
   }
@@ -76,8 +74,12 @@ export class BookService {
     return this.http.post<BookAdd>(this.url + '/post', book)
   }
 
-  updateBook(book: BookAdd): Observable<BookAdd> {
-    return this.http.put<BookAdd>(this.url + '/put/'+ book.bookId, book);
+  updateBook(book: BookAdd): Observable<void> {
+    console.log(book.bookId)
+    return this.http.put<void>(this.url + '/put/'+ book.bookId, {book}).pipe(map(res=>{
+      console.log(res)
+      return res
+    }));
   }
 
   deleteBook(id: number):Observable<void> {
