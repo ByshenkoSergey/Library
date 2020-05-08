@@ -32,11 +32,7 @@ namespace API_Laer
 
             services.AddAPILaerServices();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSpaStaticFiles(configuration =>
-                {
-                    configuration.RootPath = "ClientApp/dist";
-                });
-
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,18 +67,7 @@ namespace API_Laer
                 endpoints.MapControllers();
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
-
-
-
+            
         }
     }
 }
