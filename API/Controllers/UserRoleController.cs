@@ -47,8 +47,8 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userRoleServices.GetUserRoleDTOAsync(id);
-                return Ok(new ResponseObjectDTO { ResponseObject = user, Message = "Request successful" });
+                var userRole = await _userRoleServices.GetUserRoleDTOAsync(id);
+                return Ok(new ResponseObjectDTO { ResponseObject = userRole, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
@@ -62,8 +62,8 @@ namespace API.Controllers
         {
             try
             {
-                var users = await _userRoleServices.GetAllUserRoleDTOAsync();
-                return Ok(new ResponseObjectDTO { ResponseObject = users, Message = "Request successful" });
+                var userRoles = await _userRoleServices.GetAllUserRoleDTOAsync();
+                return Ok(new ResponseObjectDTO { ResponseObject = userRoles, Message = "Request successful" });
             }
             catch (Exception e)
             {
