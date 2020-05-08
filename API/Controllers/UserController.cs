@@ -12,37 +12,33 @@ namespace API_Laer
     [ApiController]
     [Route("api/[controller]")]
 
-    public class AccountController : ControllerBase
+    public class UserController : ControllerBase
     {
         private IUserService _userService;
-        private IUserRoleService _userRoleServices;
 
-        public AccountController(IUserService userService, IUserRoleService userRoleServices)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _userRoleServices = userRoleServices;
+
         }
 
         [AllowAnonymous]
         [HttpPost("token")]
         public async Task<IActionResult> Token(LoginUserDTO loginUser)
         {
-                try
-                {
-                    var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
-                    return Ok(token);
-                }
-                catch (BLL.Infrastructure.Exceptions.InvalidLogginUserException e)
-                {
-                    return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
-                }
-            
-
-            
+            try
+            {
+                var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
+                return Ok(new ResponseObjectDTO { ResponseObject = token, Message = "Request successful" });
+            }
+            catch (InvalidLogginUserException e)
+            {
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
+            }
 
         }
         [AllowAnonymous]
-        [HttpPost("user/post")]
+        [HttpPost("post")]
         public async Task<IActionResult> AddNewUserAsync(NewUserDTO newUser)
         {
             try
@@ -51,31 +47,30 @@ namespace API_Laer
                 {
                     newUser.UserRole = "User";
                 }
-                
-                Guid id = await _userService.AddUserAsync(newUser);
+                var id = await _userService.AddUserAsync(newUser);
                 if (id == default)
                 {
-                    return BadRequest(new ResponseDTO { Text = "New user not added" });
+                    return BadRequest(new ResponseDTO { Message = "User not added" });
                 }
-                return Created("https://localhost:44397/api/account/user/post", new ResponseDTO { Text = "New user is created" });
+                return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "User is added" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
-        [HttpGet("user/get/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetUserAsync(Guid id)
         {
             try
             {
                 var user = await _userService.GetUserDTOAsync(id);
-                return Ok(user);
+                return Ok(new ResponseObjectDTO { ResponseObject = user, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -85,44 +80,41 @@ namespace API_Laer
             try
             {
                 var users = await _userService.GetAllUsersDTOAsync();
-                return Ok(users);
+                return Ok(new ResponseObjectDTO { ResponseObject = users, Message = "Request successful" });
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
-        [Authorize]
-        [HttpPut("user/put/{id}")]
+        [HttpPut("put/{id}")]
         public async Task<IActionResult> EditUserAsync(Guid id, NewUserDTO user)
         {
             try
             {
                 await _userService.EditUserAsync(id, user);
-                return Ok(new ResponseDTO { Text = "User is correct" });
+                return Ok(new ResponseDTO { Message = "User is puted" });
             }
             catch (ArgumentException e)
             {
-                return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
-        [HttpDelete("user/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
             try
             {
                 await _userService.DeleteUserAsync(id);
-                return Ok(new ResponseDTO { Text = "User is deleted" });
+                return Ok(new ResponseDTO { Message = "User is delete" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(new ResponseDTO { Text = $"{e.Message}" });
-            }        
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
+            }
         }
-        //
-      
 
     }
 
