@@ -29,10 +29,10 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "pupkin@gmail.com",
+                UserLogin = "admin",
                 UserFirstName = "Vova",
                 UserLastName = "Pupkin",
-                UserPassword = "11111111",
+                UserPassword = "admin",
                 UserYearsOld = "19",
                 PhoneNumber = "095-987-35-67",
                 Email = "pupkin@gmail.com",
@@ -42,10 +42,10 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "petrov@gmail.com",
+                UserLogin = "moderator",
                 UserFirstName = "Sergey",
                 UserLastName = "Petrov",
-                UserPassword = "22222222",
+                UserPassword = "moderator",
                 UserYearsOld = "31",
                 PhoneNumber = "095-987-00-12",
                 Email = "petrov@gmail.com",
@@ -55,14 +55,27 @@ namespace DAL.FailData
             yield return new User
             {
                 UserId = Guid.NewGuid(),
-                UserLogin = "ivanov@gmail.com",
+                UserLogin = "user",
                 UserFirstName = "Taras",
                 UserLastName = "Ivanov",
-                UserPassword = "33333333",
+                UserPassword = "user",
                 UserYearsOld = "52",
                 PhoneNumber = "095-989-11-11",
                 Email = "ivanov@gmail.com",
                 ApplicationUserRoleId = GetUserRoleGuid("User"),
+            };
+
+            yield return new User
+            {
+                UserId = Guid.NewGuid(),
+                UserLogin = "superuser",
+                UserFirstName = "Andrey",
+                UserLastName = "Sidorov",
+                UserPassword = "superuser",
+                UserYearsOld = "52",
+                PhoneNumber = "095-989-12-12",
+                Email = "sidorov@gmail.com",
+                ApplicationUserRoleId = GetUserRoleGuid("SuperUser"),
             };
 
 
