@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace API_Laer
 {
     [Authorize]
@@ -23,28 +24,18 @@ namespace API_Laer
         [HttpGet("get/{id}")]
         public async Task<ActionResult<PublisherDTO>> GetPublisherAsync(Guid id)
         {
-            var Publisher = await _service.GetPublisherDTOAsync(id);
+            var publisher = await _service.GetPublisherDTOAsync(id);
 
-            if (Publisher == null)
+            if (publisher == null)
             {
-                return NotFound();
+                return NotFound(new ResponceDTO { Message = "Publisher not found"});
             }
-            return Ok(Publisher);
-        }
-
-        [HttpGet("get")]
-        public async Task<ActionResult<PublisherDTO>> GetPublisherByNameAsync([FromBody]string name)
-        {
-            var Publisher = await _service.GetPublisherByNameAsync(name);
-
-            if (Publisher == null)
-            {
-                return NotFound();
-            }
-            return Ok(Publisher);
+            return Ok(new ResponseObjectDTO{ ResponseObject = publisher, Message = "Request successful" });
         }
 
 
+
+        [Authorize(Roles = "SuperUser")]
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
@@ -52,11 +43,12 @@ namespace API_Laer
         {
             try
             {
-                return Ok(await _service.GetAllPublisherDTOAsync());
+                var publisherList = await _service.GetAllPublisherDTOAsync();
+                return Ok(new ResponseObjectDTO { ResponseObject = publisherList, Message = "Request successful" });
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -68,11 +60,12 @@ namespace API_Laer
         {
             try
             {
-                return Ok(await _service.AddPublisherAsync(PublisherDTO));
+                var id = await _service.AddPublisherAsync(PublisherDTO);
+                return Ok(new { requestObject = id, message = "Publisher added" });
             }
-            catch (Exception e)// to do conkreate error
+            catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -84,11 +77,11 @@ namespace API_Laer
             try
             {
                 await _service.EditPublisherAsync(id, PublisherDTO);
-                return Ok("Update is complite");
+                return Ok(new ResponceDTO { Message = "Publisher is puted" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -100,11 +93,11 @@ namespace API_Laer
             try
             {
                 await _service.DeletePublisherAsync(id);
-                return Ok("Publishing house is delete");
+                return Ok(new ResponceDTO { Message = "Publisher is delete" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
             }
         }
 
