@@ -7,8 +7,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Reflection.Metadata;
 
 namespace API_Laer
 {

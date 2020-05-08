@@ -9,7 +9,7 @@ namespace BLL.Services.Interfaces
     {
         Task<Guid> AddUserRoleAsync(UserRoleDTO userRoleDTO);
         Task DeleteUserRoleAsync(Guid id);
-        Task EditUserRoleAsync(Guid id, UserRoleDTO userRoleDTO);
+        Task PutUserRoleAsync(Guid id, UserRoleDTO userRoleDTO);
         Task<IEnumerable<UserRoleDTO>> GetAllUserRoleDTOAsync();
         Task<UserRoleDTO> GetUserRoleDTOAsync(Guid id);
     }
