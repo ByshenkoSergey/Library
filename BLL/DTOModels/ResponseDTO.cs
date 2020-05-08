@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL.DTOModels
 {
-   public class ResponceDTO
+   public class ResponseDTO
     {
         public string Message { get; set; }
     }

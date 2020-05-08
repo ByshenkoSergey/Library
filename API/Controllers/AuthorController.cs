@@ -27,7 +27,7 @@ namespace API_Laer
 
             if (author == null)
             {
-                return NotFound(new ResponceDTO { Message = "Author not found" });
+                return NotFound(new ResponseDTO { Message = "Author not found" });
             }
 
             return Ok(new ResponseObjectDTO { ResponseObject = author, Message = "Request successful" });
@@ -47,7 +47,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -64,7 +64,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -77,11 +77,11 @@ namespace API_Laer
             try
             {
                 await _service.EditAuthorAsync(id, authorDTO);
-                return Ok(new ResponceDTO { Message = "Update is complite" });
+                return Ok(new ResponseDTO { Message = "Update is complite" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -93,11 +93,11 @@ namespace API_Laer
             try
             {
                 await _service.DeleteAuthorAsync(id);
-                return Ok(new ResponceDTO { Message = "Author is delete"});
+                return Ok(new ResponseDTO { Message = "Author is delete"});
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
     }

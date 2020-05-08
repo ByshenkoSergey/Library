@@ -28,7 +28,7 @@ namespace API_Laer
 
             if (publisher == null)
             {
-                return NotFound(new ResponceDTO { Message = "Publisher not found"});
+                return NotFound(new ResponseDTO { Message = "Publisher not found"});
             }
             return Ok(new ResponseObjectDTO{ ResponseObject = publisher, Message = "Request successful" });
         }
@@ -48,7 +48,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -65,7 +65,7 @@ namespace API_Laer
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -77,11 +77,11 @@ namespace API_Laer
             try
             {
                 await _service.EditPublisherAsync(id, PublisherDTO);
-                return Ok(new ResponceDTO { Message = "Publisher is puted" });
+                return Ok(new ResponseDTO { Message = "Publisher is puted" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
         }
@@ -93,11 +93,11 @@ namespace API_Laer
             try
             {
                 await _service.DeletePublisherAsync(id);
-                return Ok(new ResponceDTO { Message = "Publisher is delete" });
+                return Ok(new ResponseDTO { Message = "Publisher is delete" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(new ResponceDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 

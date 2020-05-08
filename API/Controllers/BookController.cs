@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Reflection.Metadata;
 
 namespace API_Laer
 {
@@ -28,18 +29,18 @@ namespace API_Laer
         {
             try
             {
-                var bookDTO = await _service.GetBookOpenDTOAsync(id);
+                var book = await _service.GetBookOpenDTOAsync(id);
 
-                if (bookDTO == null)
+                if (book == null)
                 {
-                    return NotFound();
+                    return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
-                return Ok(bookDTO);
+                return Ok(new ResponseObjectDTO { ResponseObject = book, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -48,18 +49,18 @@ namespace API_Laer
         {
             try
             {
-                var bookDTO = await _service.GetBookAddDTOAsync(id);
+                var book = await _service.GetBookAddDTOAsync(id);
 
-                if (bookDTO == null)
+                if (book == null)
                 {
-                    return NotFound();
+                    return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
-                return Ok(new ObjectResult(bookDTO));
+                return Ok(new ResponseObjectDTO { ResponseObject = book, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -74,19 +75,19 @@ namespace API_Laer
 
                 if (books == null)
                 {
-                    return NotFound();
+                    return NotFound(new ResponseDTO { Message="Books not found"});
                 }
 
-                return Ok(new ObjectResult(books));
+                return Ok(new ResponseObjectDTO{ ResponseObject = books, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
         }
 
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -97,51 +98,51 @@ namespace API_Laer
             catch (ValidationException e)
             {
 
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
-            return Ok();
+            return Ok(new ResponseDTO { Message = "Book is delete" });
         }
 
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
-        public async Task<ActionResult> EditBookAsync(BookAddDTO newBookDTO, Guid id)
+        public async Task<ActionResult> PutBookAsync(BookAddDTO newBookDTO, Guid id)
         {
             try
             {
                 await _service.EditBookAsync(newBookDTO, id);
-                return Ok();
+                return Ok(new ResponseDTO { Message = "Book is puted"});
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
             catch (NullReferenceException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
             try
             {
                 var id = await _service.AddBookAsync(bookDTO);
-                return Ok();
+                return Ok(new ResponseObjectDTO {ResponseObject=id, Message = "Book info added" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpPost("upload/post")]
         public async Task<ActionResult> AddBookFile(IFormFile file)
         {
@@ -157,11 +158,11 @@ namespace API_Laer
                     }
 
                 }
-                return Ok(new ResponceDTO { Text = filePath });
+                return Ok(new ResponseObjectDTO { ResponseObject = filePath, Message="Book file added" });
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponceDTO { Text = e.Message });
+                return BadRequest(new ResponseDTO {  Message = e.Message });
             }
         }
     }
