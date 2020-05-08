@@ -34,10 +34,10 @@ this.route.queryParams.subscribe( (params)=>{
 
   this.form = new FormGroup( {
     login: new FormControl(null, [
-      Validators.required, Validators.minLength(6)
+      Validators.required, Validators.minLength(4)
     ]),
     password: new FormControl(null, [
-      Validators.required, Validators.minLength(6)
+      Validators.required, Validators.minLength(4)
     ])
 
   });
