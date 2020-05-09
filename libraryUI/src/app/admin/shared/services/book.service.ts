@@ -74,9 +74,9 @@ export class BookService {
     return this.http.post<BookAdd>(this.url + '/post', book)
   }
 
-  updateBook(book: BookAdd): Observable<void> {
+  updateBook(book: BookAdd): Observable<BookAdd> {
     console.log(book.bookId)
-    return this.http.put<void>(this.url + '/put/'+ book.bookId, {book}).pipe(map(res=>{
+    return this.http.put<BookAdd>(this.url + '/put/'+ book.bookId, {book}).pipe(map(res=>{
       console.log(res)
       return res
     }));
