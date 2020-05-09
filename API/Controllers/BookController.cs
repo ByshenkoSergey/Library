@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace API_Laer
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/book")]
     [ApiController]
     public class BookController : ControllerBase

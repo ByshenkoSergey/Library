@@ -18,7 +18,7 @@ export class BookAddPageComponent implements OnInit {
   form: FormGroup;
   file: any;
   fileName: string;
-  response: Response;
+  fileAddress: string;
   fileExtension: string;
   submitted = true;
 
@@ -31,6 +31,7 @@ export class BookAddPageComponent implements OnInit {
     private alert: AlertService) { }
 
   ngOnInit() {
+     console.log('init')
     this.form=new FormGroup({
       bookName: new FormControl(null,Validators.required),
       authorName: new FormControl(null,Validators.required),
@@ -44,17 +45,20 @@ submit(){
      if(this.form.invalid){
        return
     }
+  console.log('submit')
+  console.log(this.file)
 
   const formData = new FormData();
      formData.append('file', this.file);
-    return this.service.uploadBook(formData).subscribe((event: any) => {
-      if (typeof (event) === 'object') {
-        this.response = event.body;
-        console.log(this.response)
+  console.log("formData")
+  console.log(formData)
+    return this.service.uploadBook(formData).subscribe((res) => {
+             this.fileAddress = res;
+        console.log(this.fileAddress)
 
     const book: BookAdd={
      bookName: this.form.value.bookName,
-      bookFileAddress: this.response.message,
+      bookFileAddress: this.fileAddress,
       authorName: this.form.value.authorName,
       yearOfPublishing: this.form.value.yearOfPublishing,
       publisherName: this.form.value.publisherName,
@@ -66,7 +70,7 @@ submit(){
       this.router.navigate(['/admin','dashboard'])
       this.alert.success(`book is added`)
     })
-      }
+
     });
 }
 

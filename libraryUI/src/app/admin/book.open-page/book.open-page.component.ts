@@ -17,6 +17,7 @@ export class BookOpenPageComponent implements OnInit {
   book$: Observable<Book>
   bookText: string
   bookName: string
+  userRole: string
   fileUrl: any
 
 
@@ -25,10 +26,10 @@ export class BookOpenPageComponent implements OnInit {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private auth:AuthService
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
+    this.userRole = this.auth.userRole
     this.book$ = this.route.params
       .pipe(switchMap((params: Params) => {
         return this.service.getBookLight(params['id'])

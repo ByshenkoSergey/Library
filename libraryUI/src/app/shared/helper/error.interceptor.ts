@@ -9,6 +9,9 @@ import {AlertService} from 'src/app/admin/shared/services/alertService';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
+
+  modEvent:any
+
   constructor(
     private authService: AuthService,
     private router:Router,
@@ -27,15 +30,18 @@ export class ErrorInterceptor implements HttpInterceptor {
           const responseObject = event.body['responseObject']
         console.log('object')
         console.log(responseObject)
-        if(responseObject!=null) {
+         if(responseObject!=null) {
           console.log('if')
-          const modEvent = event.clone({body: responseObject});
-          console.log(modEvent)
+          this.modEvent = event.clone({body: responseObject});
+          console.log(this.modEvent)
           console.log("next")
-          return modEvent;
-
-
+          return this.modEvent;
         }
+      else {
+           console.log('null')
+           this.modEvent = event.clone({body: 'ok'});
+           return this.modEvent;
+         }
         }}),catchError(err => {
 
       if (err.status === 401) {

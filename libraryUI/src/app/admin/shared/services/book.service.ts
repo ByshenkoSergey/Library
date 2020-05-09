@@ -33,6 +33,8 @@ export class BookService {
   getBookLight(id: number): Observable<Book> {
     return this.http.get<Book>(this.url + '/get/lightForm/' + id)
       .pipe(map((response:any)=>{
+        console.log("response")
+        console.log(response)
         return {
           ...response,
           bookId:response.bookId,
@@ -44,16 +46,9 @@ export class BookService {
 
 
 
-  uploadBook(data: FormData){
-   return this.http.post<any>(this.url+'/upload/post', data,
-     {reportProgress: true, observe:'events'}).pipe(map(event => {
-     switch (event.type) {
-       case HttpEventType.UploadProgress:
-          break;
-       case HttpEventType.Response:
-         return event;
-     }
-   }));
+  uploadBook(data: FormData):Observable<any>{
+   return this.http.post<FormData>(this.url+'/upload/post', data)
+   ;
   }
 
   getBook(id: number): Observable<BookAdd> {
@@ -70,16 +65,13 @@ export class BookService {
     }));
   }
 
-  create(book: BookAdd): Observable<BookAdd> {
-    return this.http.post<BookAdd>(this.url + '/post', book)
+  create(book: BookAdd): Observable<any> {
+    return this.http.post<any>(this.url + '/post', book)
   }
 
-  updateBook(book: BookAdd): Observable<BookAdd> {
+  updateBook(book: BookAdd): Observable<void> {
     console.log(book.bookId)
-    return this.http.put<BookAdd>(this.url + '/put/'+ book.bookId, {book}).pipe(map(res=>{
-      console.log(res)
-      return res
-    }));
+    return this.http.put<void>(this.url + '/put/'+ book.bookId, book);
   }
 
   deleteBook(id: number):Observable<void> {
