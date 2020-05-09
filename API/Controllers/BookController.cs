@@ -103,9 +103,8 @@ namespace API_Laer
         }
 
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
-        [HttpPut("put/{id}")]
+       [Authorize(Roles = "Admin, Moderator")]
+       [HttpPut("put/{id}")]
         public async Task<ActionResult> PutBookAsync(Guid id, BookAddDTO newBookDTO)
         {
             try
@@ -123,8 +122,7 @@ namespace API_Laer
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
@@ -139,8 +137,7 @@ namespace API_Laer
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost("upload/post")]
         public async Task<ActionResult> AddBookFile(IFormFile file)
         {

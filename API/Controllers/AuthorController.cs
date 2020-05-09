@@ -34,9 +34,7 @@ namespace API_Laer
         }
 
 
-        [Authorize(Roles = "SuperUser")]
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator, SuperUser")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthorAsync()
         {
@@ -52,8 +50,7 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult<int>> PostAuthorDTOAsync(AuthorDTO authorDTO)
         {
@@ -69,8 +66,7 @@ namespace API_Laer
         }
 
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutAuthorDTOAsync(Guid id, AuthorDTO authorDTO)
         {
