@@ -2,7 +2,6 @@ using AutoMapper;
 using BLL.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +21,7 @@ namespace API_Laer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddControllers();
             //DefaultConnection
@@ -29,7 +29,6 @@ namespace API_Laer
             services.AddBLServises(Configuration.GetConnectionString("NewConnectionHomePC"), 
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
                        
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
           
         }
 

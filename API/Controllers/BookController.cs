@@ -105,12 +105,12 @@ namespace API_Laer
 
         [Authorize(Roles = "Admin")]
         [Authorize(Roles = "Moderator")]
-        [HttpPut("put/{id}")]
-        public async Task<ActionResult> PutBookAsync(Guid id, BookAddDTO newBookDTO)
+       [HttpPut("put/{id}")]
+        public async Task<ActionResult> PutBookAsync(Guid id, [FromBody]BookAddDTO book)
         {
             try
             {
-                await _service.EditBookAsync(newBookDTO, id);
+                await _service.EditBookAsync(book, id);
                 return Ok(new ResponseDTO { Message = "Book is puted"});
             }
             catch (ValidationException e)
