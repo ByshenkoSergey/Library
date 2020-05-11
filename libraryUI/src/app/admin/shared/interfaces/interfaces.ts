@@ -6,10 +6,11 @@ export interface UserLogin {
 export interface BookAdd {
   bookId?: any
   bookName: string
-  bookFileAddress: string
   authorName: string
   yearOfPublishing: string
   publisherName: string
+  fileType: string
+  filePath: string
 }
 
 export interface BookForm {
@@ -26,7 +27,7 @@ export interface BookForm {
 
 export interface DbAuthResponse {
   access_token: string
-  userLogin: string
+  userId: any
   tokenExpiration: string
   userRole:string
 }
@@ -37,10 +38,10 @@ export interface Author {
   authorBiography: string
 }
 
-export interface Book {
-  bookId: number
-  bookName: string
-  bookText?: string
+export interface BookFile {
+  fileName: string
+  file: any
+  filePath: string
 }
 
 export interface Publisher {
@@ -59,6 +60,7 @@ export interface User {
   userLastName?: string
   userYearsOld?: string
   phoneNumber?: string
+  userRole:string
   email: string
 
 }

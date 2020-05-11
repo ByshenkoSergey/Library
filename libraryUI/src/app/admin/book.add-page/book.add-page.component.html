@@ -1,106 +1,104 @@
-<form [formGroup]="form" (ngSubmit)="submit()" >
-  <h1>Добавление новой книги</h1>
-
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('bookName').touched&&form.get('bookName').invalid}"
-  >
-    <label for="bookName">Название книги </label>
-    <input id="bookName" type="text" formControlName="bookName">
-    <div
-      class="validation"
-      *ngIf="form.get('bookName').touched&&form.get('bookName').invalid"
-    >
-      <small *ngIf="form.get('bookName').errors.required">
-        Введите название книги:
-      </small>
+<div class="bookAdd">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-control">
+    <div class="textHeader">
+      <h1>Add new book</h1>
     </div>
-  </div>
-
-
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('authorName').touched&&form.get('authorName').invalid}"
-  >
-    <label for="authorName">Имя автора </label>
-    <input id="authorName" type="text" formControlName="authorName">
-    <div
-      class="validation"
-      *ngIf="form.get('authorName').touched&&form.get('authorName').invalid"
-    >
-      <small *ngIf="form.get('authorName').errors.required">
-        Введите имя автора:
-      </small>
+    <div [ngClass]="{invalid: form.get('bookName').touched&&form.get('bookName').invalid}">
+      <label for="bookName" class="formText"> Book name </label>
+      <input id="bookName" type="text" formControlName="bookName">
+      <div
+        class="validation"
+        *ngIf="form.get('bookName').touched&&form.get('bookName').invalid"
+      >
+        <small *ngIf="form.get('bookName').errors.required">
+          Add book name:
+        </small>
+      </div>
     </div>
-  </div>
 
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid}"
-  >
-    <label for="yearOfPublishing">год издательства </label>
-    <input id="yearOfPublishing" type="text" formControlName="yearOfPublishing">
-    <div
-      class="validation"
-      *ngIf="form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid"
-    >
-      <small *ngIf="form.get('yearOfPublishing').errors.required">
-        Введите год издания:
-      </small>
+
+    <div [ngClass]="{invalid: form.get('authorName').touched&&form.get('authorName').invalid}">
+      <label for="authorName" class="formText">Author name </label>
+      <input id="authorName" type="text" formControlName="authorName">
+      <div
+        class="validation"
+        *ngIf="form.get('authorName').touched&&form.get('authorName').invalid"
+      >
+        <small *ngIf="form.get('authorName').errors.required">
+          Add author name:
+        </small>
+      </div>
     </div>
-  </div>
 
-  <div
-    class="form-control"
-    [ngClass]="{invalid: form.get('publisherName').touched&&form.get('publisherName').invalid}"
-  >
-    <label for="publisherName">Название издательства </label>
-    <input id="publisherName" type="text" formControlName="publisherName">
     <div
-      class="validation"
-      *ngIf="form.get('publisherName').touched&&form.get('publisherName').invalid"
+      [ngClass]="{invalid: form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid}"
     >
-      <small *ngIf="form.get('publisherName').errors.required">
-        Введите название издательства:
-      </small>
+      <label for="yearOfPublishing" class="formText"> Year of publishing </label>
+      <input id="yearOfPublishing" type="text" formControlName="yearOfPublishing">
+      <div
+        class="validation"
+        *ngIf="form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid"
+      >
+        <small *ngIf="form.get('yearOfPublishing').errors.required">
+          Add year of publishing:
+        </small>
+      </div>
     </div>
-  </div>
+
+    <div
+      [ngClass]="{invalid: form.get('publisherName').touched&&form.get('publisherName').invalid}"
+    >
+      <label for="publisherName" class="formText">Publisher name </label>
+      <input id="publisherName" type="text" formControlName="publisherName">
+      <div
+        class="validation"
+        *ngIf="form.get('publisherName').touched&&form.get('publisherName').invalid"
+      >
+        <small *ngIf="form.get('publisherName').errors.required">
+          Add publisher name:
+        </small>
+      </div>
+    </div>
 
 
-
-  <label for="bookName">Загрузка книги</label>
-  <div class="form-control">
+    <div class="upload">
+      <label for="uploadBtn" class="formText">Upload book</label>
       <input
-      style="display: none"
-      type="file"
-      (change)="onFileSelected($event)"
-      accept="text/plain"
+        style="display: none"
+        type="file"
+        (change)="onFileSelected($event)"
+        accept="text/plain"
 
-      #fileInput>
-    <button name="" type="button" (click)="fileInput.click()">Выбрать</button>
-    <label class="text-center">{{fileName}}</label>
-    <div
-      class="validation"
-      *ngIf="(fileName==''|| (fileName!=''&&fileExtension!='.txt'))"
-    >
-      <small *ngIf="fileName==''">
-        Выберите файл.
-      </small>
+        #fileInput>
 
-      <small *ngIf="fileExtension!=null&&fileExtension!='.txt'">
-        Разрешение файла не поддерживаеться, выберите файл *.txt.
-      </small>
-
-    </div>
+      <div class="uploadBtn" id="uploadBtn">
+        <button class="btn btn-white" type="button" (click)="fileInput.click()">Select</button>
       </div>
 
+      <label class="formText">{{fileName}}</label>
+      <div
+        class="validation"
+        *ngIf="(fileName==''|| (fileName!=''&&fileExtension!='.txt'))"
+      >
+        <small *ngIf="fileName==''">
+          Select file.
+        </small>
+
+        <small *ngIf="fileExtension!=null&&fileExtension!='.txt'">
+          File resolution not supported, select * .txt file.
+        </small>
+
+      </div>
+    </div>
+
     <button
-    type="submit"
-    class="btn btn-block btn-primary"
-    [disabled]="form.invalid||submitted"
-     >Save</button>
+      type="submit"
+      class="btn btn-block btn-primary"
+      [disabled]="form.invalid||submitted"
+    >Save
+    </button>
 
-</form>
-
+  </form>
+</div>
 
 

@@ -1,21 +1,23 @@
-<form [formGroup]="form" (ngSubmit)="submit()" >
-  <h1>Добавление новой пользователя</h1>
-
+<div class="register-page">
+<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+  <div class="textHeader">
+  <h1>Add new User</h1>
+  </div>
   <div
     class="form-control"
     [ngClass]="{invalid: form.get('userLogin').touched&&form.get('userLogin').invalid}"
   >
-    <label for="userLogin">Логин* </label>
+    <label for="userLogin" class="formText">Login* </label>
     <input id="userLogin" type="text" formControlName="userLogin">
     <div
       class="validation"
       *ngIf="form.get('userLogin').touched&&form.get('userLogin').invalid"
     >
       <small *ngIf="form.get('userLogin').errors.required">
-        Введите логин:
+        Enter login:
       </small>
       <small *ngIf="form.get('userLogin').errors.minlength">
-        Введите правельный логин, минимальная длина 9
+        Enter correct login, minimum length 9
       </small>
     </div>
   </div>
@@ -24,17 +26,17 @@
     class="form-control"
     [ngClass]="{invalid: form.get('userPassword').touched&&form.get('userPassword').invalid}"
   >
-    <label for="userPassword">Пароль* </label>
+    <label for="userPassword" class="formText">Password* </label>
     <input id="userPassword" type="text" formControlName="userPassword">
     <div
       class="validation"
       *ngIf="form.get('userPassword').touched&&form.get('userPassword').invalid"
     >
       <small *ngIf="form.get('userPassword').errors.required">
-        Введите пароль:
+        Enter password:
       </small>
       <small *ngIf="form.get('userPassword').errors.minlength">
-        Введите правельный пароль, минимальная длина 9
+        Enter the correct password, minimum length 9
       </small>
     </div>
   </div>
@@ -43,7 +45,7 @@
     class="form-control"
     [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}"
   >
-    <label for="email">Email* </label>
+    <label for="email"class="formText">Email* </label>
     <input id="email" type="text" formControlName="email">
     <div
       class="validation"
@@ -61,14 +63,14 @@
   <div
     class="form-control"
       >
-    <label for="userFirstName">Имя пользователя </label>
+    <label for="userFirstName"class="formText">First name </label>
     <input id="userFirstName" type="text" formControlName="userFirstName">
     </div>
 
   <div
     class="form-control"
       >
-    <label for="userLastName"> Фамилия пользователя </label>
+    <label for="userLastName"class="formText"> Last name </label>
     <input id="userLastName" type="text" formControlName="userLastName">
     </div>
 
@@ -76,14 +78,14 @@
   <div
     class="form-control"
       >
-    <label for="userYearsOld">Возраст пользователя</label>
+    <label for="userYearsOld"class="formText">Years old</label>
     <input id="userYearsOld" type="text" formControlName="userYearsOld">
     </div>
 
   <div
     class="form-control"
      >
-    <label for="phoneNumber">номер телефона</label>
+    <label for="phoneNumber"class="formText">Phone number</label>
     <input id="phoneNumber" type="text" formControlName="phoneNumber">
     </div>
 
@@ -95,7 +97,7 @@
   >Save</button>
 
 </form>
-
+</div>
 
 
 

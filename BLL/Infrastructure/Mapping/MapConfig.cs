@@ -30,9 +30,7 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<AuthorDTO, Author>();
                 cnf.CreateMap<Publisher, PublisherDTO>();
                 cnf.CreateMap<PublisherDTO, Publisher>();
-                cnf.CreateMap<Book, BookOpenDTO>()
-                               .ForMember("BookText", o => o.MapFrom(p => GetBookTextAsync(p.BookFileAddress).Result));
-
+               
                 cnf.CreateMap<Book, BookFormDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
@@ -82,27 +80,6 @@ namespace BLL.Infrastructure.Mapping
             }
             return roleId;
         }
-        #endregion
-
-        #region MapBookToBookFormDTO
-        private async Task<string> GetBookTextAsync(string bookFileAddress)
-        {
-            try
-            {
-                using (FileStream fs = new FileStream(bookFileAddress, FileMode.OpenOrCreate))
-                {
-                    using (StreamReader sr = new StreamReader(fs))
-                    {
-                        return await sr.ReadToEndAsync();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         #endregion
 
         #region MapBookAddDTOToBook
@@ -164,7 +141,6 @@ namespace BLL.Infrastructure.Mapping
             }
         }
         #endregion
-
 
         #region MapBooksToBooksFromDTO
         private async Task<string> GetPublisherNameAsync(Guid publisherId)

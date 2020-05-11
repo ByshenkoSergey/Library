@@ -1,7 +1,7 @@
-<app-alert></app-alert>
+
 <nav class="navbar bg-primary">
   <h1>
-    <a routerLink="/admin/dashboard">Welcome to Library {{auth.userRole}}</a>
+    <a routerLink="/admin/dashboard">Welcome to Library {{auth.userRole}} </a>
     </h1>
 
   <ul *ngIf="auth.isAuthenticate()">
@@ -14,13 +14,15 @@
       <a [routerLink]="['/admin', 'dashboard']"  >Main</a>
     </li>
     <li routerLinkActive="active">
-      <a [routerLink]="['/admin', 'profile']"  >Profile</a>
+      <a [routerLink]="['/admin','user','edit',auth.Id]"  >Profile</a>
     </li>
     <li>
       <a href="#"(click)="logout($event)"  >Logout</a>
     </li>
       </ul>
 </nav>
+
+<app-alert></app-alert>
 
 <div class="container">
   <router-outlet></router-outlet>

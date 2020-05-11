@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BookService} from "../shared/services/book.service";
 import {BookForm} from "../shared/interfaces/interfaces";
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 import {AuthService} from "../shared/services/auth.service";
 
 
@@ -15,6 +15,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   books: BookForm[]
   pSub: Subscription
   dSub: Subscription
+  config: any
   searchStr = ''
   userRole: string
 
@@ -27,21 +28,33 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userRole = this.auth.userRole;
-    this.pSub = this.service.getBooks().subscribe((data: BookForm[]) => this.books = data);
-    }
+    this.pSub = this.service.getBooks().subscribe((data: BookForm[]) => {
+      this.books = data
 
-ngOnDestroy(){
-    if(this.pSub){
+      this.config = {
+        itemsPerPage: 5,
+        currentPage: 1,
+        totalItems: data.length
+        }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.pSub) {
       this.pSub.unsubscribe()
     }
-    if(this.dSub){
+    if (this.dSub) {
       this.dSub.unsubscribe()
     }
-}
+  }
 
   remove(id: number) {
-this.dSub = this.service.deleteBook(id).subscribe(()=>{
-  this.books = this.books.filter(book=>book.bookId!==id)
-})
+    this.dSub = this.service.deleteBook(id).subscribe(() => {
+      this.books = this.books.filter(book => book.bookId !== id)
+    })
+  }
+
+  pageChanged(event) {
+    this.config.currentPage = event;
   }
 }

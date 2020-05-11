@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User} from "../admin/shared/interfaces/interfaces";
 import {UserService} from "../admin/shared/services/user.service";
-import {AlertService} from "../admin/shared/services/alertService";
+import { AuthService } from '../admin/shared/services/auth.service';
 
 @Component({
   selector: 'app-register-page',
@@ -18,7 +18,7 @@ export class RegisterPageComponent implements OnInit {
   constructor(
     private service: UserService,
     private router: Router,
-    private alert: AlertService) { }
+    private auth: AuthService) { }
 
   ngOnInit() {
        this.form=new FormGroup({
@@ -48,6 +48,7 @@ export class RegisterPageComponent implements OnInit {
       userLastName:this.form.value.userLastName ,
       userYearsOld:this.form.value.userYearsOld,
       phoneNumber:this.form.value.phoneNumber,
+      userRole:this.auth.userRole
 
     }
     this.service.createUser(user).subscribe( (response) =>{

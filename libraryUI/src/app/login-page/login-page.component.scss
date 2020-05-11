@@ -1,4 +1,16 @@
-form{
-  max-width: 400px;
-  margin: 0 auto;
+.authForm {
+  width: 460px;
+  height: 320px;
+  background-color: rgba(225,225,225,0.8);
+  margin: 60px auto 0 auto;
+  border: 2px solid #ccc;
+  border-radius: 15px ;
+  form{
+    width: 400px;
+    height: 200px;
+    margin-left: 30px;
+    margin-top: 15px;
+  }
+
+
 }

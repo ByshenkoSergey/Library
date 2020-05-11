@@ -14,6 +14,8 @@ import {AuthGuard} from "./shared/services/auth.guard";
 import {SearchPipe} from "./shared/Pipe/search.pipe";
 import {BookEditPageComponent} from './book.edit-page/book.edit-page.component';
 import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
     BookAddPageComponent,
     SearchPipe,
     BookEditPageComponent,
-    BookOpenPageComponent
+    BookOpenPageComponent,
+    ProfilePageComponent
 
   ],
   imports: [
@@ -34,6 +37,7 @@ import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, children: [
@@ -44,7 +48,8 @@ import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
           {path: 'publishing/:id', component: PublisherPageComponent, canActivate:[AuthGuard]},
           {path: 'author/:id', component: AuthorPageComponent, canActivate:[AuthGuard] },
           {path: 'book', component: BookAddPageComponent, canActivate:[AuthGuard] },
-          {path: 'book/edit/:id', component: BookEditPageComponent, canActivate:[AuthGuard]}
+          {path: 'book/edit/:id', component: BookEditPageComponent, canActivate:[AuthGuard]},
+          {path: 'user/edit/:id', component:ProfilePageComponent, canActivate:[AuthGuard]}
         ]
       }
     ])

@@ -4,10 +4,12 @@ using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+
 
 namespace BLL.Services
 {
@@ -15,13 +17,14 @@ namespace BLL.Services
     {
         private IUnitOfWork _unit;
         private IMapConfig _mapper;
+        private IWebHostEnvironment _appEnvironment;
 
-        public BookService(IUnitOfWork unit, IMapConfig mapper)
+        public BookService(IUnitOfWork unit, IMapConfig mapper, IWebHostEnvironment appEnvironment)
         {
             _unit = unit;
             _mapper = mapper;
+            _appEnvironment = appEnvironment;
         }
-
 
         public async Task DeleteBookAsync(Guid id)
         {
@@ -29,7 +32,7 @@ namespace BLL.Services
             {
                 var book = await _unit.BookRepository.GetAsync(id);
                 _unit.BookRepository.Delete(id);
-                DeleteBookFile(book.BookFileAddress);
+                DeleteBookFile(book.FilePath);
                 await _unit.SaveChangeAsync();
             }
             catch (NullReferenceException e)
@@ -57,7 +60,7 @@ namespace BLL.Services
 
         }
        
-        public async Task<BookOpenDTO> GetBookOpenDTOAsync(Guid id)
+        public async Task<FileDTO> GetBookFileDTOAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -67,11 +70,14 @@ namespace BLL.Services
             }
             try
             {
-                return _mapper.GetMapper().Map<Book, BookOpenDTO>(book);
+                string path = Path.Combine(_appEnvironment.ContentRootPath, book.FilePath);
+                byte[] mas = await File.ReadAllBytesAsync(path);
+                var file = new FileDTO {FilePath = path, FileName = book.BookName, File = mas };
+                return file;
             }
             catch (Exception)
             {
-                throw new ValidationException("File address is failrule", "");
+                throw new ValidationException("Download is failrule", "");
             }
 
         }
@@ -88,7 +94,7 @@ namespace BLL.Services
         }
         public async Task<Guid> AddBookAsync(BookAddDTO newBookDTO)
         {
-            if (!newBookDTO.BookFileAddress.EndsWith(".txt"))
+            if (!newBookDTO.FilePath.EndsWith(".txt"))
             {
                 throw new ValidationException("Format file is not validate", "");
             }

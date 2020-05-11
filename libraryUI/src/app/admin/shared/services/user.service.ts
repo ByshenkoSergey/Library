@@ -11,7 +11,7 @@ import {ok} from "assert";
 @Injectable({providedIn: 'root'})
 export class UserService {
 
-  private url = `${environment.apiUrl}/account/user`;
+  private url = `${environment.apiUrl}/user`;
 
   constructor(private http: HttpClient) {
   }
@@ -22,17 +22,14 @@ export class UserService {
 
   getUser(id: number) {
 
-    return this.http.get(this.url + '/get' + id);
+    return this.http.get(this.url + '/get/' + id);
   }
 
   createUser(user: User): Observable<User> {
         return this.http.post<User>(this.url + '/post', user).pipe(catchError(err=>{
          if(err.status==201)
           {
-            console.log('I service ok')
-            console.log(err)
-            console.log('ok')
-           throw err.status=ok('ok')
+            throw err.status=ok('ok')
          }
          console.log('no')
           throw err
@@ -41,14 +38,12 @@ export class UserService {
 
   updateUser(id: number, user: User) {
 
-    return this.http.put(this.url + '/put' + id, {user});
+    return this.http.put(this.url + '/put/' + id, user);
   }
 
   deleteUser(id: number) {
     return this.http.delete(this.url + '/delete' + id);
   }
 
-  GetToken(userLogin: UserLogin) {
-    return this.http.post(this.url + '/token', {userLogin}, {observe: 'response'});
-  }
+
 }

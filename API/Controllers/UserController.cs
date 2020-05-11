@@ -8,7 +8,7 @@ using BLL.Infrastructure.Exceptions;
 
 namespace API_Laer
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
 
@@ -75,6 +75,7 @@ namespace API_Laer
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("user/get")]
         public async Task<IActionResult> GetAllUserAsync()
         {

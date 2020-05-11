@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace API_Laer
 {
-   // [Authorize]
+    [Authorize]
     [Route("api/book")]
     [ApiController]
     public class BookController : ControllerBase
@@ -22,19 +22,19 @@ namespace API_Laer
             _service = service;
         }
 
-        [HttpGet("get/lightForm/{id}")]
-        public async Task<ActionResult<BookOpenDTO>> GetBookOpenDTOAsync(Guid id)
+        [HttpGet("get/file/{id}")]
+        public async Task<ActionResult<FileDTO>> GetBookOpenDTOAsync(Guid id)
         {
             try
             {
-                var book = await _service.GetBookOpenDTOAsync(id);
+                var bookFile = await _service.GetBookFileDTOAsync(id);
 
-                if (book == null)
+                if (bookFile == null)
                 {
                     return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
-                return Ok(new ResponseObjectDTO { ResponseObject = book, Message = "Request successful" });
+                return Ok(new ResponseObjectDTO { ResponseObject = bookFile, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
@@ -43,7 +43,7 @@ namespace API_Laer
         }
 
         [HttpGet("get/form/{id}")]
-        public async Task<ActionResult<BookOpenDTO>> GetBookAddDTOAsync(Guid id)
+        public async Task<ActionResult<BookAddDTO>> GetBookAddDTOAsync(Guid id)
         {
             try
             {
@@ -73,10 +73,10 @@ namespace API_Laer
 
                 if (books == null)
                 {
-                    return NotFound(new ResponseDTO { Message="Books not found"});
+                    return NotFound(new ResponseDTO { Message = "Books not found" });
                 }
 
-                return Ok(new ResponseObjectDTO{ ResponseObject = books, Message = "Request successful" });
+                return Ok(new ResponseObjectDTO { ResponseObject = books, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
@@ -110,7 +110,7 @@ namespace API_Laer
             try
             {
                 await _service.EditBookAsync(newBookDTO, id);
-                return Ok(new ResponseDTO { Message = "Book is puted"});
+                return Ok(new ResponseDTO { Message = "Book is puted" });
             }
             catch (ValidationException e)
             {
@@ -129,7 +129,7 @@ namespace API_Laer
             try
             {
                 var id = await _service.AddBookAsync(bookDTO);
-                return Ok(new ResponseObjectDTO {ResponseObject=id, Message = "Book info added" });
+                return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "Book info added" });
             }
             catch (ValidationException e)
             {
@@ -143,8 +143,9 @@ namespace API_Laer
         {
             try
             {
+                string fileType = file.ContentType;
                 string filePath = null;
-                if (file.Length > 0)
+                if (file!=null)
                 {
                     filePath = $"BookLibrary/{file.FileName}";
                     using (var stream = System.IO.File.Create(filePath))
@@ -153,11 +154,11 @@ namespace API_Laer
                     }
 
                 }
-                return Ok(new ResponseObjectDTO { ResponseObject = filePath, Message="Book file added" });
+                return Ok(new ResponseObjectDTO { ResponseObject =new { filePath = filePath, fileType = fileType }, Message = "Book file added" });
             }
             catch (Exception e)
             {
-                return BadRequest(new ResponseDTO {  Message = e.Message });
+                return BadRequest(new ResponseDTO { Message = e.Message });
             }
         }
     }

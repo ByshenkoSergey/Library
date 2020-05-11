@@ -1,5 +1,9 @@
+<div class="authForm">
 <form class="card" [formGroup]="form" (ngSubmit)="submit()" >
-  <h2> Авторизация</h2>
+
+  <div class="textHeader">
+  <h2> Login form</h2>
+  </div>
 
   <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
     {{error}}
@@ -13,7 +17,7 @@
   class="form-control"
   [ngClass]="{invalid: form.get('login').touched&&form.get('login').invalid}"
 >
-  <label for="login">Email</label>
+  <label for="login" class="formText">Login</label>
   <input id="login" type="email" formControlName="login">
   <div
         class="validation"
@@ -33,7 +37,7 @@ add login
     class="form-control"
     [ngClass]="{invalid: form.get('password').touched&&form.get('password').invalid}"
   >
-    <label for="password">Password</label>
+    <label for="password"class="formText">Password</label>
     <input id="password" type="password" formControlName="password">
     <div
     class="validation"
@@ -55,3 +59,4 @@ add login
 [disabled]="form.invalid||submitted"
 >login</button>
 </form>
+</div>

@@ -3,8 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {catchError, map} from 'rxjs/operators';
-import {DbAuthResponse, ResponseObject, UserLogin} from '../interfaces/interfaces';
-import {AlertService} from "./alertService";
+import {DbAuthResponse,  UserLogin} from '../interfaces/interfaces';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,8 +13,7 @@ export class AuthService{
 
 constructor(
   private http: HttpClient,
-  private alert: AlertService
-  ){}
+   ){}
 
 get token(): string{
   const  expDate = new Date(localStorage.getItem('expDate'))
@@ -24,6 +22,15 @@ get token(): string{
     return null;
   }
   return localStorage.getItem('token');
+}
+
+get Id(): string{
+  const expDate = new Date(localStorage.getItem('expDate'))
+  if (new Date() > expDate) {
+    this.logout();
+    return null;
+  }
+   return localStorage.getItem('id');
 }
 
 get userRole(): string {
@@ -39,9 +46,7 @@ login(user: UserLogin): Observable<DbAuthResponse> {
  return this.http.post<DbAuthResponse>(`${environment.apiUrl}/user/token`, user)
    .pipe( map ( (response:any)=>{
        const modResponse = JSON.parse(response)
-       console.log('parser')
-       console.log(modResponse)
-     this.setToken(modResponse);
+       this.setToken(modResponse);
    }),
      catchError(this.handleError.bind(this))
    );
@@ -76,7 +81,8 @@ private setToken(response: DbAuthResponse|null) {
     localStorage.setItem('token', response.access_token);
     localStorage.setItem('expDate', expDate.toString());
     localStorage.setItem('role', response.userRole);
-  } else {
+    localStorage.setItem('id', response.userId.toString());
+    } else {
     localStorage.clear();
   }
 }

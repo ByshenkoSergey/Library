@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {Book, BookAdd, BookForm, ResponseObject} from "../interfaces/interfaces";
+import {BookAdd, BookFile, BookForm} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
 import { map } from 'rxjs/operators';
 
@@ -11,13 +11,13 @@ export class BookService {
 
   private url = `${environment.apiUrl}/book`;
 
-  constructor(private http: HttpClient) {}
+   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<BookForm[]> {
      return this.http.get<BookForm[]>(this.url + '/gets')
       .pipe(map((response:{[key: string]:any})=>{
         return Object.keys(response).map(key=>({
-         ...response[key],
+          ...response[key],
           bookId:response[key].bookId,
           bookName:response[key].bookName,
           bookFileAddress:response[key].bookFileAddress,
@@ -30,16 +30,16 @@ export class BookService {
      }));
        }
 
-  getBookLight(id: number): Observable<Book> {
-    return this.http.get<Book>(this.url + '/get/lightForm/' + id)
-      .pipe(map((response:any)=>{
+  getBookFile(id: number): Observable<BookFile> {
+    return this.http.get<BookFile>(this.url + '/get/file/' + id)
+      .pipe(map((response:BookFile)=>{
         console.log("response")
         console.log(response)
         return {
           ...response,
-          bookId:response.bookId,
-          bookName:response.bookName,
-          bookText:response.bookText
+          fileName:response.fileName,
+          filePath:response.filePath,
+          file:response.file
         }
       }));
   }
@@ -47,8 +47,7 @@ export class BookService {
 
 
   uploadBook(data: FormData):Observable<any>{
-   return this.http.post<FormData>(this.url+'/upload/post', data)
-   ;
+   return this.http.post<FormData>(this.url+'/upload/post', data);
   }
 
   getBook(id: number): Observable<BookAdd> {

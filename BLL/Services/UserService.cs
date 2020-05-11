@@ -44,7 +44,7 @@ namespace BLL.Services
             }
 
             var userDTO = _mapper.GetMapper().Map<NewUserDTO>(user);
-            return userDTO.WithoutPassword();
+            return userDTO;
         }
 
 
@@ -119,11 +119,11 @@ namespace BLL.Services
             }
         }
 
-        public async Task<string> GetTokenAsync(string userName, string password)
+        public async Task<string> GetTokenAsync(string userLogin, string password)
         {
             try
             {
-                var user = await GetUserAsync(userName, password);
+                var user = await GetUserAsync(userLogin, password);
                 var identity = GetIdentity(user);
                 var now = DateTime.UtcNow;
 
@@ -139,7 +139,7 @@ namespace BLL.Services
                 var response = new
                 {
                     access_token = encodedJwt,
-                    userLogin = identity.Name,
+                    userId= await GetUserIdAsync(userLogin),
                     tokenExpiration = AuthOptions.lifeTime.ToString(),
                     userRole = user.UserRole
 
@@ -151,6 +151,25 @@ namespace BLL.Services
             {
                 throw e;
             }
+            catch (ValidationException e)
+            {
+                throw e;
+            }
+
+        }
+
+        private async Task<Guid> GetUserIdAsync(string userLogin)
+        {
+            var userList = await GetAllUsersDTOAsync();
+            foreach (var user in userList)
+            {
+                if (user.UserLogin == userLogin)
+                {
+                    return user.UserId;
+                }
+            }
+            throw new ValidationException("User not found", "");
+
         }
 
         private async Task<NewUserDTO> GetUserAsync(string userName, string password)

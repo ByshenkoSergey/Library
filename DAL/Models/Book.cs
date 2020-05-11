@@ -6,9 +6,10 @@ namespace DAL.Models
     {
         public Guid BookId { get; set; }
         public string BookName { get; set; }
-        public string BookFileAddress { get; set; }
         public string YearOfPublishing { get; set; }
         public int Rating { get; set; }
+        public string FileType { get; set; }
+        public string FilePath { get; set; }
 
 
         public Guid AuthorId { get; set; }

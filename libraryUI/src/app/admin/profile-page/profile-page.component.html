@@ -1,0 +1,114 @@
+<div *ngIf="form;else loading" class="profilePage">
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-control">
+
+    <div [ngClass]="{invalid: form.get('userLogin').touched&&form.get('userLogin').invalid}">
+      <label for="userLogin">Login </label>
+      <input id="userLogin" type="text" formControlName="userLogin">
+      <div
+        class="validation"
+        *ngIf="form.get('userLogin').touched&&form.get('userLogin').invalid"
+      >
+        <small *ngIf="form.get('userLogin').errors.required">
+          Введите название книги:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('userPassword').touched&&form.get('userPassword').invalid}">
+      <label for="userPassword">Password </label>
+      <input id="userPassword" type="text" formControlName="userPassword">
+      <div
+        class="validation"
+        *ngIf="form.get('userPassword').touched&&form.get('userPassword').invalid"
+      >
+        <small *ngIf="form.get('userPassword').errors.required">
+          Введите имя автора:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('userFirstName').touched&&form.get('userFirstName').invalid}" >
+      <label for="userFirstName">First name </label>
+      <input id="userFirstName" type="text" formControlName="userFirstName">
+      <div
+        class="validation"
+        *ngIf="form.get('userFirstName').touched&&form.get('userFirstName').invalid"
+      >
+        <small *ngIf="form.get('userFirstName').errors.required">
+          Введите год издания:
+        </small>
+      </div>
+    </div>
+
+
+    <div [ngClass]="{invalid: form.get('userLastName').touched&&form.get('userLastName').invalid}" >
+      <label for="userLastName">Last name </label>
+      <input id="userLastName" type="text" formControlName="userLastName">
+      <div
+        class="validation"
+        *ngIf="form.get('userLastName').touched&&form.get('userLastName').invalid"
+      >
+        <small *ngIf="form.get('userLastName').errors.required">
+          Введите название издательства:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('userYearsOld').touched&&form.get('userYearsOld').invalid}" >
+      <label for="userYearsOld"> userYearsOld </label>
+      <input id="userYearsOld" type="text" formControlName="userYearsOld">
+      <div
+        class="validation"
+        *ngIf="form.get('userYearsOld').touched&&form.get('userYearsOld').invalid"
+      >
+        <small *ngIf="form.get('userYearsOld').errors.required">
+          Введите название издательства:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('phoneNumber').touched&&form.get('phoneNumber').invalid}" >
+      <label for="phoneNumber">Phone number </label>
+      <input id="phoneNumber" type="text" formControlName="phoneNumber">
+      <div
+        class="validation"
+        *ngIf="form.get('phoneNumber').touched&&form.get('phoneNumber').invalid"
+      >
+        <small *ngIf="form.get('phoneNumber').errors.required">
+          Введите название издательства:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}" >
+      <label for="email">Email </label>
+      <input id="email" type="text" formControlName="email">
+      <div
+        class="validation"
+        *ngIf="form.get('email').touched&&form.get('email').invalid"
+      >
+        <small *ngIf="form.get('email').errors.required">
+          Введите название издательства:
+        </small>
+      </div>
+    </div>
+    <div>
+      <label>User role - {{role}}</label>
+      <label>User id - {{id}}</label>
+    </div>
+
+    <button
+      class="btn btn-block btn-primary"
+      type="submit"
+      [disabled]="form.invalid|| submitted"
+    >Save
+    </button>
+
+
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>
+
