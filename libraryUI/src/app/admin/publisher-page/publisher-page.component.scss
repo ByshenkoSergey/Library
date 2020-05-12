@@ -1,20 +1,19 @@
-.publisher{
-  .header{
-    margin-top: 40px;
-    h1{
-      color: #662672;
-    }
-    .tell{
-      margin-top: 10px;
-    }
+.Publisher{
+  padding: 10px 25px 20px 25px;
+  background-color: rgba(255, 255, 255, 0.73);
+  margin: 50px auto 0 auto;
+    max-width: 800px;
+  color: black;
+  border-radius: 10px;
+
+  .Header{
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .info{
-    margin-top: 20px;
-    strong {
-      margin-right: 2rem;
-    }
+
+  .Info{
+    margin-top: 15px;
   }
+
 }

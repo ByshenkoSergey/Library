@@ -1,7 +1,6 @@
-<div class="register-page">
-<form [formGroup]="form" (ngSubmit)="submit()" class="form">
+<form [formGroup]="form" (ngSubmit)="submit()" class="RegisterForm">
   <div class="textHeader">
-  <h1>Add new User</h1>
+    <h1>Add new User</h1>
   </div>
   <div
     class="form-control"
@@ -45,59 +44,69 @@
     class="form-control"
     [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}"
   >
-    <label for="email"class="formText">Email* </label>
+    <label for="email" class="formText">Email* </label>
     <input id="email" type="text" formControlName="email">
     <div
       class="validation"
       *ngIf="form.get('email').touched&&form.get('email').invalid"
     >
       <small *ngIf="form.get('email').errors.required">
-        Введите Email:
+        Add Email:
       </small>
       <small *ngIf="form.get('email').errors.email">
-        введите правельный Email
+        Add correct Email
       </small>
     </div>
   </div>
 
   <div
     class="form-control"
-      >
-    <label for="userFirstName"class="formText">First name </label>
-    <input id="userFirstName" type="text" formControlName="userFirstName">
-    </div>
+  >
+    <label for="userFirstName" class="formText">First name </label>
+    <input id="userFirstName" type="text" maxlength="50" formControlName="userFirstName">
+  </div>
 
   <div
     class="form-control"
-      >
-    <label for="userLastName"class="formText"> Last name </label>
-    <input id="userLastName" type="text" formControlName="userLastName">
-    </div>
+  >
+    <label for="userLastName" class="formText"> Last name </label>
+    <input id="userLastName" type="text" maxlength="50" formControlName="userLastName">
+  </div>
 
 
   <div
     class="form-control"
-      >
-    <label for="userYearsOld"class="formText">Years old</label>
-    <input id="userYearsOld" type="text" formControlName="userYearsOld">
+  >
+    <label for="userYearsOld" class="formText">Years old</label>
+    <input id="userYearsOld" type="text" pattern="\d{0,2}" maxlength="2" formControlName="userYearsOld">
+    <div
+      class="validation"
+      *ngIf="form.get('userYearsOld').touched&&form.get('userYearsOld').invalid"
+    >
+      <small *ngIf="form.get('userYearsOld').errors.pattern">
+        Only numbers can be used
+      </small>
     </div>
+  </div>
 
   <div
     class="form-control"
-     >
-    <label for="phoneNumber"class="formText">Phone number</label>
-    <input id="phoneNumber" type="text" formControlName="phoneNumber">
-    </div>
+  >
+    <label for="phoneNumber" class="formText">Phone number</label>
+    <input id="phoneNumber" type="text" maxlength="50" formControlName="phoneNumber">
+  </div>
 
 
   <button
     type="submit"
     class="btn btn-block btn-primary"
     [disabled]="form.invalid"
-  >Save</button>
+  >Save
+  </button>
+
 
 </form>
-</div>
+
 
 
 

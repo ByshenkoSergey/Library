@@ -1,16 +1,7 @@
-.authForm {
-  width: 460px;
-  height: 320px;
-  background-color: rgba(225,225,225,0.8);
-  margin: 60px auto 0 auto;
-  border: 2px solid #ccc;
-  border-radius: 15px ;
-  form{
-    width: 400px;
-    height: 200px;
-    margin-left: 30px;
-    margin-top: 15px;
-  }
-
-
+.card {
+  background-color: rgba(255, 255, 255, 0.73);
+  margin: 50px auto 0 auto;
+  padding: 10px 25px 10px 25px ;
+  max-width: 400px;
+  border-radius: 10px;
 }

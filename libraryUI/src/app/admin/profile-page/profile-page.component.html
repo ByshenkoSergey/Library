@@ -1,100 +1,101 @@
 <div *ngIf="form;else loading" class="profilePage">
+
   <form [formGroup]="form" (ngSubmit)="submit()" class="form-control">
 
+    <div class="textHeader">
+      <h1>User profile</h1>
+    </div>
+
     <div [ngClass]="{invalid: form.get('userLogin').touched&&form.get('userLogin').invalid}">
-      <label for="userLogin">Login </label>
-      <input id="userLogin" type="text" formControlName="userLogin">
+      <label for="userLogin" class="formText">Login* </label>
+      <input id="userLogin" type="text" pattern="^[A-Za-z0-9]*$"   formControlName="userLogin">
       <div
         class="validation"
         *ngIf="form.get('userLogin').touched&&form.get('userLogin').invalid"
       >
-        <small *ngIf="form.get('userLogin').errors.required">
-          Введите название книги:
+        <small *ngIf="form.get('userLogin').errors.pattern">
+          add correct login, only latin letters and numbers, min length 4:
         </small>
+
+        <small *ngIf="form.get('userLogin').errors.required">
+          Add login:
+        </small>
+
       </div>
     </div>
 
     <div [ngClass]="{invalid: form.get('userPassword').touched&&form.get('userPassword').invalid}">
-      <label for="userPassword">Password </label>
+      <label for="userPassword" class="formText">Password* </label>
       <input id="userPassword" type="text" formControlName="userPassword">
       <div
         class="validation"
         *ngIf="form.get('userPassword').touched&&form.get('userPassword').invalid"
       >
         <small *ngIf="form.get('userPassword').errors.required">
-          Введите имя автора:
+          Add password:
+        </small>
+        <small *ngIf="form.get('userPassword').errors.pattern">
+          add correct password, min length 4
         </small>
       </div>
     </div>
 
-    <div [ngClass]="{invalid: form.get('userFirstName').touched&&form.get('userFirstName').invalid}" >
-      <label for="userFirstName">First name </label>
-      <input id="userFirstName" type="text" formControlName="userFirstName">
-      <div
-        class="validation"
-        *ngIf="form.get('userFirstName').touched&&form.get('userFirstName').invalid"
-      >
-        <small *ngIf="form.get('userFirstName').errors.required">
-          Введите год издания:
-        </small>
-      </div>
-    </div>
-
-
-    <div [ngClass]="{invalid: form.get('userLastName').touched&&form.get('userLastName').invalid}" >
-      <label for="userLastName">Last name </label>
-      <input id="userLastName" type="text" formControlName="userLastName">
-      <div
-        class="validation"
-        *ngIf="form.get('userLastName').touched&&form.get('userLastName').invalid"
-      >
-        <small *ngIf="form.get('userLastName').errors.required">
-          Введите название издательства:
-        </small>
-      </div>
-    </div>
-
-    <div [ngClass]="{invalid: form.get('userYearsOld').touched&&form.get('userYearsOld').invalid}" >
-      <label for="userYearsOld"> userYearsOld </label>
-      <input id="userYearsOld" type="text" formControlName="userYearsOld">
-      <div
-        class="validation"
-        *ngIf="form.get('userYearsOld').touched&&form.get('userYearsOld').invalid"
-      >
-        <small *ngIf="form.get('userYearsOld').errors.required">
-          Введите название издательства:
-        </small>
-      </div>
-    </div>
-
-    <div [ngClass]="{invalid: form.get('phoneNumber').touched&&form.get('phoneNumber').invalid}" >
-      <label for="phoneNumber">Phone number </label>
-      <input id="phoneNumber" type="text" formControlName="phoneNumber">
-      <div
-        class="validation"
-        *ngIf="form.get('phoneNumber').touched&&form.get('phoneNumber').invalid"
-      >
-        <small *ngIf="form.get('phoneNumber').errors.required">
-          Введите название издательства:
-        </small>
-      </div>
-    </div>
-
-    <div [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}" >
-      <label for="email">Email </label>
+    <div [ngClass]="{invalid: form.get('email').touched&&form.get('email').invalid}">
+      <label for="email" class="formText">Email* </label>
       <input id="email" type="text" formControlName="email">
       <div
         class="validation"
         *ngIf="form.get('email').touched&&form.get('email').invalid"
       >
         <small *ngIf="form.get('email').errors.required">
-          Введите название издательства:
+          Add Email:
+        </small>
+        <small *ngIf="form.get('email').errors.email">
+          add correct Email:
         </small>
       </div>
     </div>
-    <div>
-      <label>User role - {{role}}</label>
-      <label>User id - {{id}}</label>
+
+    <div [ngClass]="{invalid: form.get('userFirstName').touched&&form.get('userFirstName').invalid}">
+      <label for="userFirstName" class="formText">First name </label>
+      <input id="userFirstName" type="text" maxlength="50" formControlName="userFirstName">
+     </div>
+
+    <div [ngClass]="{invalid: form.get('userLastName').touched&&form.get('userLastName').invalid}">
+      <label for="userLastName" class="formText">Last name </label>
+      <input id="userLastName" type="text" maxlength="50" formControlName="userLastName">
+     </div>
+
+    <div [ngClass]="{invalid: form.get('userYearsOld').touched&&form.get('userYearsOld').invalid}">
+      <label for="userYearsOld" class="formText"> User years old </label>
+      <input id="userYearsOld" type="text" maxlength="2" formControlName="userYearsOld">
+      <div
+        class="validation"
+        *ngIf="form.get('userYearsOld').touched&&form.get('userYearsOld').invalid"
+      >
+       <small *ngIf="form.get('userYearsOld').errors.pattern">
+          Only numbers can be used
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('phoneNumber').touched&&form.get('phoneNumber').invalid}">
+      <label for="phoneNumber" class="formText">Phone number </label>
+      <input id="phoneNumber" type="text" formControlName="phoneNumber">
+      <div
+        class="validation"
+        *ngIf="form.get('phoneNumber').touched&&form.get('phoneNumber').invalid"
+      >
+        <small *ngIf="form.get('phoneNumber').errors.pattern">
+          Enter the phone in the format - +38(000) 000-00-00
+        </small>
+
+      </div>
+    </div>
+
+    <div class="FormInfo">
+      <label class="role">User role - {{role}}</label>
+      <label class="id">User id - {{id}}</label>
     </div>
 
     <button

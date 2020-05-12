@@ -1,15 +1,15 @@
-<div *ngIf="form;else loading" class="EditBook">
-  <form [formGroup]="form" (ngSubmit)="submit()" class="form-control">
+<div *ngIf="form;else loading" >
+  <form [formGroup]="form" (ngSubmit)="submit()" class="BookEdit">
 
     <div class="textHeader">
       <h2>Edit book form</h2>
     </div>
     <div
-
+      class="form-control"
       [ngClass]="{invalid: form.get('bookName').touched&&form.get('bookName').invalid}"
     >
       <label for="bookName" class="formText">Book name </label>
-      <input id="bookName" type="text" formControlName="bookName">
+      <input id="bookName" type="text" maxlength="50" formControlName="bookName">
       <div
         class="validation"
         *ngIf="form.get('bookName').touched&&form.get('bookName').invalid"
@@ -21,10 +21,11 @@
     </div>
 
     <div
+      class="form-control"
       [ngClass]="{invalid: form.get('authorName').touched&&form.get('authorName').invalid}"
     >
       <label for="authorName"class="formText">Author name</label>
-      <input id="authorName" type="text" formControlName="authorName">
+      <input id="authorName" type="text"  maxlength="50" formControlName="authorName">
       <div
         class="validation"
         *ngIf="form.get('authorName').touched&&form.get('authorName').invalid"
@@ -36,10 +37,11 @@
     </div>
 
     <div
+      class="form-control"
            [ngClass]="{invalid: form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid}"
     >
       <label for="yearOfPublishing"class="formText">Year of publishing </label>
-      <input id="yearOfPublishing" type="text" formControlName="yearOfPublishing">
+      <input id="yearOfPublishing" type="text" pattern="\d{4,}" maxlength="4" formControlName="yearOfPublishing">
       <div
         class="validation"
         *ngIf="form.get('yearOfPublishing').touched&&form.get('yearOfPublishing').invalid"
@@ -47,14 +49,18 @@
         <small *ngIf="form.get('yearOfPublishing').errors.required">
          Add year of publishing:
         </small>
+        <small *ngIf="form.get('yearOfPublishing').errors.pattern">
+          Only numbers can be used
+        </small>
       </div>
     </div>
 
     <div
+      class="form-control"
            [ngClass]="{invalid: form.get('publisherName').touched&&form.get('publisherName').invalid}"
     >
       <label for="publisherName"class="formText">Publisher name </label>
-      <input id="publisherName" type="text" formControlName="publisherName">
+      <input id="publisherName" type="text" maxlength="50" formControlName="publisherName">
       <div
         class="validation"
         *ngIf="form.get('publisherName').touched&&form.get('publisherName').invalid"

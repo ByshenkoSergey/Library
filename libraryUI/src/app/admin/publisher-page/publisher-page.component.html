@@ -1,17 +1,13 @@
-<div class="publisher" *ngIf="publisher$ | async as publisher; else loading">
+<div class="Publisher" *ngIf="publisher$ | async as publisher; else loading">
 
-  <div class="header">
-  <div class="name">
+  <div class="Header">
     <h1>{{publisher.publisherName}}</h1>
-  </div>
-    <div class="tell">
     <p>{{publisher.publisherTellNumber}}</p>
   </div>
-  </div>
-  <div class="email">
+  <div class="Email">
     <p>{{publisher.publisherEmail}}</p>
   </div>
-  <div class="info">
+  <div class="Info">
     <p>{{publisher.publisherInfo}}</p>
   </div>
 

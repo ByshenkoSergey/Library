@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {switchMap} from "rxjs/internal/operators/switchMap";
@@ -25,8 +25,9 @@ export class BookOpenPageComponent implements OnInit {
     private service: BookService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private auth:AuthService
-  ) { }
+    private auth: AuthService
+  ) {
+  }
 
   ngOnInit() {
     this.userRole = this.auth.userRole
@@ -35,13 +36,13 @@ export class BookOpenPageComponent implements OnInit {
         return this.service.getBookFile(params['id'])
       }))
 
-         this.book$.subscribe(res=>{
-         console.log('res')
-         console.log(res)
-           this.bookFile = res.file
-         this.bookName = res.fileName
-         this.fileUrl = res.filePath
+    this.book$.subscribe(res => {
+      console.log('res')
+      console.log(res)
+      this.bookFile = res.file
+      this.bookName = res.fileName
+      this.fileUrl = res.filePath
 
     })
   }
-  }
+}
