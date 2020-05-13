@@ -59,8 +59,8 @@ namespace BLL.Services
             }
 
         }
-       
-        public async Task<FileDTO> GetBookFileDTOAsync(Guid id)
+
+        public async Task<string> GetBookFileAddressAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -70,9 +70,9 @@ namespace BLL.Services
             }
             try
             {
-                string path = Path.Combine(_appEnvironment.ContentRootPath, book.FilePath);
-                byte[] mas = await File.ReadAllBytesAsync(path);
-                var file = new FileDTO {FilePath = path, FileName = book.BookName, File = mas };
+                var file = Path.Combine(Directory.GetCurrentDirectory(),
+                            "BookLibrary","Square World.txt");
+
                 return file;
             }
             catch (Exception)

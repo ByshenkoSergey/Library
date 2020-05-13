@@ -23,22 +23,24 @@ namespace API_Laer
         }
 
         [HttpGet("get/file/{id}")]
-        public async Task<ActionResult<FileDTO>> GetBookOpenDTOAsync(Guid id)
+        public async Task<ActionResult<ResponseObjectDTO>> GetBookOpenDTOAsync(Guid id)
         {
             try
             {
-                var bookFile = await _service.GetBookFileDTOAsync(id);
+                var bookAddress = await _service.GetBookFileAddressAsync(id);
 
-                if (bookFile == null)
+                if (bookAddress == null)
                 {
-                    return NotFound(new ResponseDTO { Message = "Book not found" });
+                    // return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
-                return Ok(new ResponseObjectDTO { ResponseObject = bookFile, Message = "Request successful" });
+                return new ResponseObjectDTO {ResponseObject = PhysicalFile(bookAddress, "text/plain"), Message = "ok" };
+           
+               // return Ok(new ResponseObjectDTO { ResponseObject = bookAddress, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
+                return null; //BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 

@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {ActivatedRoute, Params} from "@angular/router";
-import {switchMap} from "rxjs/internal/operators/switchMap";
+import {ActivatedRoute} from "@angular/router";
 import {BookService} from "../shared/services/book.service";
 import {BookFile} from "../shared/interfaces/interfaces";
 import {DomSanitizer} from "@angular/platform-browser";
 import {AuthService} from "../shared/services/auth.service";
+
 
 @Component({
   selector: 'app-book.open-page',
@@ -14,12 +13,11 @@ import {AuthService} from "../shared/services/auth.service";
 })
 export class BookOpenPageComponent implements OnInit {
 
-  book$: Observable<BookFile>
-  bookFile: string
-  bookName: string
+  book: any
+  bookFile: BookFile
+  params: any
   userRole: string
-  fileUrl: any
-
+  id: any
 
   constructor(
     private service: BookService,
@@ -31,18 +29,30 @@ export class BookOpenPageComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = this.auth.userRole
-    this.book$ = this.route.params
-      .pipe(switchMap((params: Params) => {
-        return this.service.getBookFile(params['id'])
-      }))
-
-    this.book$.subscribe(res => {
+    this.params = this.route.params
+    this.id = this.params['value'].id
+    this.service.getF('https://localhost:44397/Square World.txt').subscribe(res=>{
       console.log('res')
       console.log(res)
-      this.bookFile = res.file
-      this.bookName = res.fileName
-      this.fileUrl = res.filePath
+    })
+
+    this.service.getBookFile(this.id).subscribe(res => {
+      //this.bookFile = res
+
+    //console.log('this.bookFile');
+   // console.log(res);
+
+    const blob = new File([this.bookFile.file], this.bookFile.fileName,{type: 'text/plain'});
+
+    let fileReader = new FileReader();
+
+      fileReader.onload = (e) => {
+       // console.log(fileReader.result);
+      }
+      fileReader.readAsDataURL(blob)
 
     })
+
+
   }
 }

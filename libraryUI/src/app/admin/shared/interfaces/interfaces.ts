@@ -42,6 +42,7 @@ export interface BookFile {
   fileName: string
   file: any
   filePath: string
+  fileType:string
 }
 
 export interface Publisher {

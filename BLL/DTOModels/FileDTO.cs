@@ -8,6 +8,6 @@ namespace BLL.DTOModels
         public string FileName { get; set; }
         public object File { get; set; }
         public string FilePath { get; set; }
-              
+        public string FileType { get; set; }
     }
 }

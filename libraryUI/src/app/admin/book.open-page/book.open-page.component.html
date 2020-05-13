@@ -1,14 +1,11 @@
 
-<div class="book" *ngIf="book$ | async as book; else loading">
+<div class="book" >
   <div class="textHeader">
-  <h1>{{bookName}}</h1>
+
   </div>
     <div *ngIf="userRole==('Admin'||'SuperUser'||'Moderator')">
-      <a [href]="fileUrl" download="{{bookName}}.txt">DownloadFile</a>
+
     </div>
   </div>
 
 
-<ng-template #loading>
-  <div class="text-center">Loading...</div>
-</ng-template>

@@ -31,19 +31,12 @@ export class BookService {
        }
 
   getBookFile(id: number): Observable<BookFile> {
-    return this.http.get<BookFile>(this.url + '/get/file/' + id)
-      .pipe(map((response:BookFile)=>{
-        console.log("response")
-        console.log(response)
-        return {
-          ...response,
-          fileName:response.fileName,
-          filePath:response.filePath,
-          file:response.file
-        }
-      }));
-  }
+    return this.http.get<BookFile>(this.url + '/get/file/' + id);
+    }
 
+  getF(path: string): Observable<File> {
+    return this.http.get<File>(path, {responseType: 'blob' as 'json' });
+  }
 
 
   uploadBook(data: FormData):Observable<any>{
@@ -69,7 +62,6 @@ export class BookService {
   }
 
   updateBook(book: BookAdd): Observable<void> {
-    console.log(book.bookId)
     return this.http.put<void>(this.url + '/put/'+ book.bookId, book);
   }
 
