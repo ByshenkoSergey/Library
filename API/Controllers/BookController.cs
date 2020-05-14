@@ -7,6 +7,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace API_Laer
 {
@@ -16,31 +18,31 @@ namespace API_Laer
     public class BookController : ControllerBase
     {
         private IBookService _service;
+        private IWebHostEnvironment _appEnvironment;
 
-        public BookController(IBookService service)
+        public BookController(IBookService service, IWebHostEnvironment appEnvironment)
         {
             _service = service;
+            _appEnvironment = appEnvironment;
         }
 
         [HttpGet("get/file/{id}")]
-        public async Task<ActionResult<ResponseObjectDTO>> GetBookOpenDTOAsync(Guid id)
+        public async Task<IActionResult> GetBookAsync(Guid id)
         {
             try
             {
-                var bookAddress = await _service.GetBookFileAddressAsync(id);
+                var bookFile = await _service.GetBookFileAsync(id);
 
-                if (bookAddress == null)
+                if (bookFile == null)
                 {
-                    // return NotFound(new ResponseDTO { Message = "Book not found" });
+                    return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
-                return new ResponseObjectDTO {ResponseObject = PhysicalFile(bookAddress, "text/plain"), Message = "ok" };
-           
-               // return Ok(new ResponseObjectDTO { ResponseObject = bookAddress, Message = "Request successful" });
+                return File(bookFile.File, bookFile.FileType, bookFile.FileName);
             }
             catch (ValidationException e)
             {
-                return null; //BadRequest(new ResponseDTO { Message = $"{e.Message}" });
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
 
@@ -145,18 +147,22 @@ namespace API_Laer
         {
             try
             {
-                string fileType = file.ContentType;
                 string filePath = null;
-                if (file!=null)
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "BookLibrary");
+                if (!Directory.Exists(uploads))
                 {
-                    filePath = $"BookLibrary/{file.FileName}";
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-
+                    Directory.CreateDirectory(uploads);
                 }
-                return Ok(new ResponseObjectDTO { ResponseObject =new { filePath = filePath, fileType = fileType }, Message = "Book file added" });
+                if (file.Length > 0)
+                {
+                    filePath = Path.Combine(uploads, file.FileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                }
+
+                return Ok(new ResponseObjectDTO { ResponseObject = new { filePath = filePath, fileType = file.ContentType }, Message = "Book file added" });
             }
             catch (Exception e)
             {

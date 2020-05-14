@@ -25,6 +25,7 @@ const INTERCEPTOR_PROVIDER: Provider = [{
   useClass: ErrorInterceptor
 }]
 
+
 @NgModule({
   declarations: [
     AppComponent,

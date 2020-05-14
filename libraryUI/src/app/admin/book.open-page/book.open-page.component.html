@@ -1,11 +1,15 @@
-
-<div class="book" >
+<div class="book">
   <div class="textHeader">
-
+    <h1>{{bookName}}</h1>
   </div>
-    <div *ngIf="userRole==('Admin'||'SuperUser'||'Moderator')">
-
-    </div>
+  <div *ngIf="userRole==('Admin'||'SuperUser'||'Moderator')">
+    <button
+      [disabled]="disabled"
+      class="button download"
+      [ngClass]="{'disabled': disabled}"
+      (click)="download()">download
+    </button>
   </div>
+</div>
 
 

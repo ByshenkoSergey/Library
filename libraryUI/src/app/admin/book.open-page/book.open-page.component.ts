@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {BookService} from "../shared/services/book.service";
-import {BookFile} from "../shared/interfaces/interfaces";
 import {DomSanitizer} from "@angular/platform-browser";
 import {AuthService} from "../shared/services/auth.service";
+import {HttpEventType} from "@angular/common/http";
+import {ProgressStatus, ProgressStatusEnum} from "../shared/interfaces/interfaces";
 
 
 @Component({
@@ -13,11 +14,16 @@ import {AuthService} from "../shared/services/auth.service";
 })
 export class BookOpenPageComponent implements OnInit {
 
-  book: any
-  bookFile: BookFile
+  @Input() public disabled: boolean;
+  @Input() public fileName: string;
+  @Output() public downloadStatus: EventEmitter<ProgressStatus>;
+
+  bookText: any
+  downloadedFile: any
   params: any
   userRole: string
   id: any
+  bookName: any;
 
   constructor(
     private service: BookService,
@@ -25,34 +31,53 @@ export class BookOpenPageComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private auth: AuthService
   ) {
+    this.downloadStatus = new EventEmitter<ProgressStatus>();
   }
 
   ngOnInit() {
     this.userRole = this.auth.userRole
     this.params = this.route.params
     this.id = this.params['value'].id
-    this.service.getF('https://localhost:44397/Square World.txt').subscribe(res=>{
-      console.log('res')
-      console.log(res)
-    })
+    this.downloadStatus.emit({status: ProgressStatusEnum.START});
+    this.service.getBookFile(this.id).subscribe(data => {
+        this.downloadedFile = data
+        switch (data.type) {
+          case HttpEventType.DownloadProgress:
+            this.downloadStatus.emit({
+              status: ProgressStatusEnum.IN_PROGRESS,
+              percentage: Math.round((data.loaded / data.total) * 100)
+            });
+            break;
+          case HttpEventType.Response:
+            this.downloadStatus.emit({status: ProgressStatusEnum.COMPLETE});
+            this.downloadedFile = new Blob([data.body], {type: data.body.type});
+            let fileReader = new FileReader();
 
-    this.service.getBookFile(this.id).subscribe(res => {
-      //this.bookFile = res
+            fileReader.onload = () => {
+              this.bookText = fileReader.result;
+              this.bookName = data
+            }
+            fileReader.readAsText(this.downloadedFile)
 
-    //console.log('this.bookFile');
-   // console.log(res);
-
-    const blob = new File([this.bookFile.file], this.bookFile.fileName,{type: 'text/plain'});
-
-    let fileReader = new FileReader();
-
-      fileReader.onload = (e) => {
-       // console.log(fileReader.result);
+            break;
+        }
+      },
+      error => {
+        this.downloadStatus.emit({status: ProgressStatusEnum.ERROR});
       }
-      fileReader.readAsDataURL(blob)
-
-    })
-
+    );
 
   }
+
+  download() {
+    const a = document.createElement('a');
+    a.setAttribute('style', 'display:none;');
+    document.body.appendChild(a);
+    a.download = this.fileName;
+    a.href = URL.createObjectURL(this.downloadedFile);
+    a.target = '_blank';
+    a.click();
+    document.body.removeChild(a);
+  }
 }
+

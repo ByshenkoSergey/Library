@@ -12,7 +12,7 @@ namespace BLL.Services.Interfaces
         Task<BookAddDTO> GetBookAddDTOAsync(Guid id);
         Task EditBookAsync(BookAddDTO newBookDTO, Guid bookId);
         Task<IEnumerable<BookFormDTO>> GetAllBooksFormDTOAsync();
-        Task<string> GetBookFileAddressAsync(Guid id);
+        Task<FileDTO> GetBookFileAsync(Guid id);
         Task<Guid> AddBookAsync(BookAddDTO newBookDTO);
     }
 }

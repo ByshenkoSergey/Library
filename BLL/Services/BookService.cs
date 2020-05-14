@@ -60,7 +60,7 @@ namespace BLL.Services
 
         }
 
-        public async Task<string> GetBookFileAddressAsync(Guid id)
+        public async Task<FileDTO> GetBookFileAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -70,10 +70,21 @@ namespace BLL.Services
             }
             try
             {
-                var file = Path.Combine(Directory.GetCurrentDirectory(),
-                            "BookLibrary","Square World.txt");
+                var filePath = book.FilePath;
+                if (!File.Exists(filePath))
+                {
+                    return null;
+                }
 
-                return file;
+                var memory = new MemoryStream();
+                
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+
+                return new FileDTO {File=memory,FileType = book.FileType,FileName=book.BookName };
             }
             catch (Exception)
             {

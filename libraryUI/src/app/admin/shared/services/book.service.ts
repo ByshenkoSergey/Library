@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpRequest} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {BookAdd, BookFile, BookForm} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
@@ -30,13 +30,18 @@ export class BookService {
      }));
        }
 
-  getBookFile(id: number): Observable<BookFile> {
-    return this.http.get<BookFile>(this.url + '/get/file/' + id);
+  getBookFile(id: number): Observable<HttpEvent<Blob>> {
+    return this.http.request(new HttpRequest(
+      'GET',
+      this.url + '/get/file/' + id,
+      null,
+      {
+        reportProgress: true,
+        responseType: 'blob'
+      }
+      ));
     }
 
-  getF(path: string): Observable<File> {
-    return this.http.get<File>(path, {responseType: 'blob' as 'json' });
-  }
 
 
   uploadBook(data: FormData):Observable<any>{

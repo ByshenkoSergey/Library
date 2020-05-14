@@ -68,10 +68,6 @@
   </Target>
 
   <ItemGroup>
-    <Content Remove="wwwroot\Square World.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app.component.ts" />
     <None Remove="ClientApp\src\app.module.ts" />
     <None Remove="ClientApp\src\app\bookapp\bookservice.ts" />
@@ -94,36 +90,24 @@
 
 
   <ItemGroup>
-    <None Update="BookLibrary\Black dog.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="BookLibrary\Black sea.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="BookLibrary\Happy bird.txt">
+    <None Include="wwwroot\BookLibrary\Cap.txt" />
+    <None Include="wwwroot\BookLibrary\Cat Jek.txt" />
+    <None Include="wwwroot\BookLibrary\Happy bird.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Little snake.txt">
+    <None Include="wwwroot\BookLibrary\Little snake.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Merry.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="BookLibrary\New spring.txt">
+    <None Include="wwwroot\BookLibrary\New spring.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Square World.txt">
+    <None Include="wwwroot\BookLibrary\Square World.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="BookLibrary\Нello cat.txt">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <None Include="wwwroot\Square World.txt">
+    <None Include="wwwroot\BookLibrary\test.txt" />
+    <None Include="wwwroot\BookLibrary\tests.txt" />
+    <None Include="wwwroot\BookLibrary\Киплинг.txt" />
+    <None Include="wwwroot\BookLibrary\Нello cat.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
