@@ -15,7 +15,6 @@ import {ProgressStatus, ProgressStatusEnum} from "../shared/interfaces/interface
 export class BookOpenPageComponent implements OnInit {
 
   @Input() public disabled: boolean;
-  @Input() public fileName: string;
   @Output() public downloadStatus: EventEmitter<ProgressStatus>;
 
   bookText: any
@@ -39,6 +38,9 @@ export class BookOpenPageComponent implements OnInit {
     this.params = this.route.params
     this.id = this.params['value'].id
     this.downloadStatus.emit({status: ProgressStatusEnum.START});
+    this.service.getBook(this.id).subscribe(res => {
+      this.bookName = res.bookName
+     })
     this.service.getBookFile(this.id).subscribe(data => {
         this.downloadedFile = data
         switch (data.type) {
@@ -55,7 +57,6 @@ export class BookOpenPageComponent implements OnInit {
 
             fileReader.onload = () => {
               this.bookText = fileReader.result;
-              this.bookName = data
             }
             fileReader.readAsText(this.downloadedFile)
 
@@ -73,7 +74,7 @@ export class BookOpenPageComponent implements OnInit {
     const a = document.createElement('a');
     a.setAttribute('style', 'display:none;');
     document.body.appendChild(a);
-    a.download = this.fileName;
+    a.download = this.bookName;
     a.href = URL.createObjectURL(this.downloadedFile);
     a.target = '_blank';
     a.click();

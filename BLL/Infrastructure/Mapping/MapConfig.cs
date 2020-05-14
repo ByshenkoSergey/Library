@@ -38,7 +38,8 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<BookAddDTO, Book>()
                                .ForMember("PublisherId", opt => opt.MapFrom(p => GetPublisherIdAsync(p.PublisherName).Result))
                                .ForMember("AuthorId", opt => opt.MapFrom(p => GetAuthorIdAsync(p.AuthorName).Result))
-                               .ForMember("Rating", opt => opt.MapFrom(p => 0));
+                               .ForMember("Rating", opt => opt.MapFrom(p => 0))
+                               .ForMember("BookName", opt => opt.MapFrom(p => p.BookName+".txt"));
 
                 cnf.CreateMap<Book, BookAddDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))

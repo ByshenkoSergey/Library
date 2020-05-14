@@ -16,6 +16,11 @@ import {BookEditPageComponent} from './book.edit-page/book.edit-page.component';
 import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import { PublishersPageComponent } from './publishers-page/publishers-page.component';
+import { AuthorsPageComponent } from './authors-page/authors-page.component';
+import { UsersPageComponent } from './users-page/users-page.component';
+import {UserRolesPageComponent} from "./user.roles-page/user.roles-page.component";
+
 
 
 @NgModule({
@@ -29,7 +34,11 @@ import {NgxPaginationModule} from "ngx-pagination";
     SearchPipe,
     BookEditPageComponent,
     BookOpenPageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    PublishersPageComponent,
+    AuthorsPageComponent,
+    UsersPageComponent,
+    UserRolesPageComponent
 
   ],
   imports: [
@@ -49,7 +58,12 @@ import {NgxPaginationModule} from "ngx-pagination";
           {path: 'author/:id', component: AuthorPageComponent, canActivate:[AuthGuard] },
           {path: 'book', component: BookAddPageComponent, canActivate:[AuthGuard] },
           {path: 'book/edit/:id', component: BookEditPageComponent, canActivate:[AuthGuard]},
-          {path: 'user/edit/:id', component:ProfilePageComponent, canActivate:[AuthGuard]}
+          {path: 'user/edit/:id', component:ProfilePageComponent, canActivate:[AuthGuard]},
+          {path: 'authors', component:AuthorsPageComponent, canActivate:[AuthGuard]},
+          {path: 'publishers', component:PublishersPageComponent, canActivate:[AuthGuard]},
+          {path: 'users', component:UsersPageComponent, canActivate:[AuthGuard]},
+          {path: 'userroles', component:UserRolesPageComponent, canActivate:[AuthGuard]},
+
         ]
       }
     ])

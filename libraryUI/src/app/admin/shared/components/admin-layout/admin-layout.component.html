@@ -7,9 +7,34 @@
 
 
   <ul *ngIf="auth.isAuthenticate()">
-    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Admin'||'Moderator')">
+
+    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Admin')">
+      <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'userroles']" >Role catalog </a>
+      </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Admin')">
+      <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'users']" >User catalog </a>
+      </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Moderator')">
+      <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'publishers']" >Publisher catalog </a>
+      </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Moderator')">
+      <li routerLinkActive="active">
+        <a [routerLink]="['/admin', 'authors']" >Author catalog </a>
+      </li>
+    </div>
+
+    <div *ngIf="auth.isAuthenticate() && auth.userRole==('Moderator')">
         <li routerLinkActive="active">
-           <a [routerLink]="['/admin', 'book']"  >Create</a>
+           <a [routerLink]="['/admin', 'book']"  >Add book</a>
         </li>
     </div>
     <li routerLinkActive="active">

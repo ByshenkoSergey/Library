@@ -2,14 +2,18 @@
   <div class="textHeader">
     <h1>{{bookName}}</h1>
   </div>
-  <div *ngIf="userRole==('Admin'||'SuperUser'||'Moderator')">
+  <div *ngIf="userRole=='Admin'||userRole=='SuperUser'||userRole=='Moderator'">
     <button
       [disabled]="disabled"
-      class="button download"
+      class="btn-danger"
       [ngClass]="{'disabled': disabled}"
       (click)="download()">download
     </button>
   </div>
+  <div class="formText">
+    <p>{{bookText}}</p>
+  </div>
+
 </div>
 
 

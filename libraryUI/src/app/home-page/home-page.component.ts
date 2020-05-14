@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../admin/shared/services/book.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +11,15 @@ import { BookService } from '../admin/shared/services/book.service';
 export class HomePageComponent implements OnInit {
 
 
-  constructor() {
+  constructor(private router: Router) {
+  }
+
+  routeLogin(){
+    this.router.navigate(['/','login'])
+  }
+
+  routeRegister(){
+    this.router.navigate(['/','register'])
   }
 
   ngOnInit() {

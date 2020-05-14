@@ -2,8 +2,8 @@
   <input type="text" placeholder="Search" [(ngModel)]="searchStr">
 </div>
 
-<div class="dashboardForm">
-  <table>
+<div class="dashboardForm" *ngIf="userRole=='Moderator' else userTable">
+  <table class="adminTable" >
     <thead>
     <tr class="formText">
       <th>#</th>
@@ -12,7 +12,7 @@
       <th>Year of publishing</th>
       <th>Publisher</th>
       <th>Rating</th>
-      <th *ngIf="userRole==('Admin'||'Moderator')"> Doing</th>
+      <th> Doing</th>
 
     </tr>
     </thead>
@@ -51,21 +51,80 @@
       </td>
       <td>{{book.rating}}</td>
       <td>
-        <div *ngIf="userRole==('Admin'||'Moderator')">
+
+
           <button
             class="btn btn-link edit"
             [routerLink]="['/admin','book', 'edit', book.bookId ]"
           >Change
           </button>
-        </div>
-        <div *ngIf="userRole=='Admin'">
+
+
           <a (click)="remove(book.bookId)"> Delete</a>
-        </div>
+
+
       </td>
     </tr>
     </tbody>
   </table>
 
-    <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
-
+  <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
 </div>
+
+
+<ng-template #userTable>
+
+  <div class="userTable">
+  <table   >
+    <thead>
+    <tr class="formText">
+      <th>#</th>
+      <th>Book</th>
+      <th>Author</th>
+      <th>Year of publishing</th>
+      <th>Publisher</th>
+      <th>Rating</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let book of books|paginate: config| searchBooks: searchStr; let idx = index">
+      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+
+      <td>
+        <button
+          class="btn btn-link "
+          [routerLink]="['/admin','book', book.bookId ]"
+        >
+          {{book.bookName}}
+        </button>
+      </td>
+
+      <td>
+        <button
+          class="btn btn-link open"
+          [routerLink]="['/admin','author', book.authorId ]"
+        >
+          {{book.authorName}}
+        </button>
+
+      </td>
+      <td>{{book.yearOfPublishing}}</td>
+      <td>
+        <button
+          class="btn btn-link open"
+          [routerLink]="['/admin','publishing', book.publisherId ]"
+        >
+          {{book.publisherName}}
+        </button>
+
+      </td>
+      <td>{{book.rating}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+</ng-template>
