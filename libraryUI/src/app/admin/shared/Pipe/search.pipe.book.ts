@@ -4,7 +4,7 @@ import {BookForm} from "../interfaces/interfaces";
 @Pipe({
   name: 'searchBooks'
 })
-export class SearchPipe implements  PipeTransform{
+export class SearchPipeBook implements  PipeTransform{
   transform(books: BookForm[], search = ''): BookForm[] {
     if(!search.trim()){
       return books

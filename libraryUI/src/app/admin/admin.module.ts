@@ -11,7 +11,7 @@ import {BookAddPageComponent} from './book.add-page/book.add-page.component';
 import {DashboardPageComponent} from './dashboard-page/dashboard-page.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from "./shared/services/auth.guard";
-import {SearchPipe} from "./shared/Pipe/search.pipe";
+import {SearchPipeBook} from "./shared/Pipe/search.pipe.book";
 import {BookEditPageComponent} from './book.edit-page/book.edit-page.component';
 import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
@@ -20,6 +20,8 @@ import { PublishersPageComponent } from './publishers-page/publishers-page.compo
 import { AuthorsPageComponent } from './authors-page/authors-page.component';
 import { UsersPageComponent } from './users-page/users-page.component';
 import {UserRolesPageComponent} from "./user.roles-page/user.roles-page.component";
+import {SearchPipePublisher} from "./shared/Pipe/search.pipe.publisher";
+import {SearchPipeAuthor} from "./shared/Pipe/search.pipe.author";
 
 
 
@@ -31,7 +33,9 @@ import {UserRolesPageComponent} from "./user.roles-page/user.roles-page.componen
     PublisherPageComponent,
     AuthorPageComponent,
     BookAddPageComponent,
-    SearchPipe,
+    SearchPipeBook,
+    SearchPipePublisher,
+    SearchPipeAuthor,
     BookEditPageComponent,
     BookOpenPageComponent,
     ProfilePageComponent,

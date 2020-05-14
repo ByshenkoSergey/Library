@@ -1,1 +1,73 @@
-<p>publishers-page works!</p>
+<div class="publisher-search">
+  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+</div>
+
+
+publisherName?: string
+publisherInfo?: string
+publisherTellNumber?: string
+publisherEmail?: string
+
+<div class="publisherForm" *ngIf="userRole=='Moderator'">
+  <table>
+    <thead>
+    <tr class="formText">
+      <th>#</th>
+      <th>Publisher name</th>
+      <th>Publisher phone</th>
+      <th>Publisher Email</th>
+      <th>Publisher info</th>
+      <th> Doing</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let publisher of publishers|paginate: config| SearchPipeBook: searchStr; let idx = index">
+      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+
+      <td>
+              {{publisher.}}
+
+      </td>
+
+      <td>
+        <button
+          class="btn btn-link open"
+          [routerLink]="['/admin','author', book.authorId ]"
+        >
+          {{book.authorName}}
+        </button>
+
+      </td>
+      <td>{{book.yearOfPublishing}}</td>
+      <td>
+        <button
+          class="btn btn-link open"
+          [routerLink]="['/admin','publishing', book.publisherId ]"
+        >
+          {{book.publisherName}}
+        </button>
+
+      </td>
+      <td>{{book.rating}}</td>
+      <td>
+
+
+        <button
+          class="btn btn-link edit"
+          [routerLink]="['/admin','book', 'edit', book.bookId ]"
+        >Change
+        </button>
+
+
+        <a (click)="remove(book.bookId)"> Delete</a>
+
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
+</div>
