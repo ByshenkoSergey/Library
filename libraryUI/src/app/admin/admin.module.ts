@@ -24,6 +24,9 @@ import {SearchPublisherPipe} from "./shared/Pipe/search.publisher.pipe";
 import {PublisherEditPageComponent} from "./publisher.edit-page/publisher.edit-page.component";
 import {SearchAuthorPipe} from "./shared/Pipe/search.author.pipe";
 import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.component';
+import {SearchUserRolePipe} from "./shared/Pipe/search.user.role.pipe";
+import { UserRoleEditPageComponent } from './user.role.edit-page/user.role-page.component';
+
 
 
 @NgModule({
@@ -37,6 +40,7 @@ import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.compo
     SearchBookPipe,
     SearchPublisherPipe,
     SearchAuthorPipe,
+    SearchUserRolePipe,
     BookEditPageComponent,
     BookOpenPageComponent,
     ProfilePageComponent,
@@ -45,7 +49,9 @@ import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.compo
     UsersPageComponent,
     UserRolesPageComponent,
     PublisherEditPageComponent,
-    AuthorEditPageComponent
+    AuthorEditPageComponent,
+    UserRolesPageComponent,
+    UserRoleEditPageComponent
 
   ],
   imports: [
@@ -72,6 +78,7 @@ import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.compo
           {path: 'userroles', component: UserRolesPageComponent, canActivate: [AuthGuard]},
           {path: 'publisher/edit/:id', component: PublisherEditPageComponent, canActivate: [AuthGuard]},
           {path: 'author/edit/:id', component: AuthorEditPageComponent, canActivate: [AuthGuard]},
+          {path: 'userrole/edit/:id', component: UserRoleEditPageComponent, canActivate: [AuthGuard]},
 
         ]
       }

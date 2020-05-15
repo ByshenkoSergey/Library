@@ -1,1 +1,22 @@
-<p>user.roles-page works!</p>
+
+<div class="userRoleForm" *ngIf="userRole=='Admin'">
+  <table>
+    <thead>
+    <tr class="formText">
+      <th>#</th>
+      <th>User role name</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let role of userRoles; let idx = index">
+      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+
+      <td>{{role.roleName}}</td>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>

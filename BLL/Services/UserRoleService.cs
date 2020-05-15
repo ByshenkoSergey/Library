@@ -48,7 +48,8 @@ namespace BLL.Services
 
         public async Task<IEnumerable<UserRoleDTO>> GetAllUserRoleDTOAsync()
         {
-            return _mapper.GetMapper().Map<IEnumerable<UserRole>, IEnumerable<UserRoleDTO>>(await _unit.UserRoleRepository.GetAllAsync());
+            var res = _mapper.GetMapper().Map<IEnumerable<UserRole>, IEnumerable<UserRoleDTO>>(await _unit.UserRoleRepository.GetAllAsync());
+            return res;
         }
 
         public async Task PutUserRoleAsync(Guid id, UserRoleDTO userRoleDTO)

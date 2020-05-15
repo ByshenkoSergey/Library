@@ -21,44 +21,8 @@ namespace API.Controllers
         {
            _userRoleServices = userRoleServices;
         }
-
-
-        
-        [HttpPost("post")]
-        public async Task<IActionResult> AddNewUserRoleAsync(UserRoleDTO UserRole)
-        {
-            try
-            {
-                Guid id = await _userRoleServices.AddUserRoleAsync(UserRole);
-                if (id == default)
-                {
-                    return BadRequest(new ResponseDTO { Message = "User role not added" });
-                }
-                return Ok(new ResponseObjectDTO { ResponseObject = id,Message = "User role is created" });
-            }
-            catch (NullReferenceException e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
-        
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetUserRoleAsync(Guid id)
-        {
-            try
-            {
-                var userRole = await _userRoleServices.GetUserRoleDTOAsync(id);
-
-                return Ok(new ResponseObjectDTO { ResponseObject = userRole, Message = "Request successful" });
-            }
-            catch (ValidationException e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
-
-        
-        [HttpGet("get")]
+               
+        [HttpGet("gets")]
         public async Task<IActionResult> GetAllUserRoleAsync()
         {
             try
@@ -72,33 +36,6 @@ namespace API.Controllers
             }
         }
 
-        
-        [HttpPut("put/{id}")]
-        public async Task<IActionResult> PutUserRoleAsync(Guid id, UserRoleDTO user)
-        {
-            try
-            {
-                await _userRoleServices.PutUserRoleAsync(id, user);
-                return Ok(new ResponseDTO { Message = "User is puted" });
-            }
-            catch (ArgumentException e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
-
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteUserRole(Guid id)
-        {
-            try
-            {
-                await _userRoleServices.DeleteUserRoleAsync(id);
-                return Ok(new ResponseDTO { Message = "User role is deleted" });
-            }
-            catch (NullReferenceException e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
+      
     }
 }

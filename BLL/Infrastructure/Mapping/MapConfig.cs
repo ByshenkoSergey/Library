@@ -26,11 +26,11 @@ namespace BLL.Infrastructure.Mapping
             _mapper = new MapperConfiguration(cnf =>
             {
                 cnf.CreateMap<Author, AuthorDTO>();
-                cnf.CreateMap<User, NewUserDTO>();
                 cnf.CreateMap<AuthorDTO, Author>();
                 cnf.CreateMap<Publisher, PublisherDTO>();
                 cnf.CreateMap<PublisherDTO, Publisher>();
-               
+                cnf.CreateMap<UserRole, UserRoleDTO>();
+                
                 cnf.CreateMap<Book, BookFormDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
@@ -51,7 +51,8 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<NewUserDTO, User>()
                                 .ForMember("ApplicationUserRoleId", opt => opt.MapFrom(p => GetUserRoleId(p.UserRole).Result));
 
-
+                
+                                
 
             }).CreateMapper();
             return _mapper;

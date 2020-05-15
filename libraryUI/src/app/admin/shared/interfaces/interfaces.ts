@@ -67,8 +67,8 @@ export interface User {
 }
 
 export interface UserRole {
-  roleId?: number
-  roleName?: string
+  roleName: string
+  roleInfo:string
 }
 
 export interface Response {
