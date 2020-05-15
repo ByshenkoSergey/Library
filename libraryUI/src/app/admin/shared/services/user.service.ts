@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import {User, UserLogin} from '../interfaces/interfaces';
+import {User} from '../interfaces/interfaces';
 import {Observable} from "rxjs";
 import {catchError, map} from 'rxjs/operators';
-import {error} from "@angular/compiler/src/util";
 import {ok} from "assert";
 
 
@@ -20,9 +19,9 @@ export class UserService {
     return this.http.get(this.url + '/gets');
   }
 
-  getUser(id: number) {
+  getUser(id: number):Observable<User> {
 
-    return this.http.get(this.url + '/get/' + id);
+    return this.http.get<User>(this.url + '/get/' + id);
   }
 
   createUser(user: User): Observable<User> {
@@ -36,13 +35,12 @@ export class UserService {
         } ))
   }
 
-  updateUser(id: number, user: User) {
-
-    return this.http.put(this.url + '/put/' + id, user);
+  updateUser(user: User):Observable<any> {
+    return this.http.put<any>(this.url + '/put/' + user.userId, user);
   }
 
-  deleteUser(id: number) {
-    return this.http.delete(this.url + '/delete' + id);
+  deleteUser(id: number):Observable<any> {
+    return this.http.delete<any>(this.url + '/delete/' + id);
   }
 
 

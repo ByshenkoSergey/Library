@@ -63,7 +63,7 @@ export interface User {
   phoneNumber?: string
   userRole:string
   email: string
-
+  
 }
 
 export interface UserRole {

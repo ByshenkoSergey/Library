@@ -5,15 +5,17 @@
     <tr class="formText">
       <th>#</th>
       <th>User role name</th>
+      <th>User role info</th>
 
     </tr>
     </thead>
     <tbody>
 
     <tr *ngFor="let role of userRoles; let idx = index">
-      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+      <td>{{ idx + 1}}</td>
 
       <td>{{role.roleName}}</td>
+      <td>{{role.roleInfo}}</td>
 
     </tr>
     </tbody>

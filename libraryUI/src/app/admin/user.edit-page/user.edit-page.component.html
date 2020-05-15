@@ -1,0 +1,30 @@
+<form [formGroup]="form" class="editUser" (ngSubmit)="submit()">
+  <div class="textHeader">
+    <h2>Edit user role</h2>
+  </div>
+
+  <label for="userRole" class="formText"> User role </label>
+
+  <select formControlName="userRole" id="userRole">
+
+    <option value='User'>User</option>
+
+    <option value='SuperUser'>SuperUser</option>
+
+    <option value='Moderator'>Moderator</option>
+
+    <option value='Admin'>Admin</option>
+
+  </select>
+
+  <div class="saveButton">
+    <button
+      class="btn btn-primary"
+      type="submit"
+      >Save
+    </button>
+  </div>
+
+</form>
+
+

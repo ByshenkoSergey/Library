@@ -24,8 +24,11 @@ import {SearchPublisherPipe} from "./shared/Pipe/search.publisher.pipe";
 import {PublisherEditPageComponent} from "./publisher.edit-page/publisher.edit-page.component";
 import {SearchAuthorPipe} from "./shared/Pipe/search.author.pipe";
 import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.component';
-import {SearchUserRolePipe} from "./shared/Pipe/search.user.role.pipe";
-import { UserRoleEditPageComponent } from './user.role.edit-page/user.role-page.component';
+import {SearchUserPipe} from "./shared/Pipe/search.user.pipe";
+import { UserEditPageComponent } from './user.edit-page/user.edit-page.component';
+
+
+
 
 
 
@@ -40,7 +43,7 @@ import { UserRoleEditPageComponent } from './user.role.edit-page/user.role-page.
     SearchBookPipe,
     SearchPublisherPipe,
     SearchAuthorPipe,
-    SearchUserRolePipe,
+    SearchUserPipe,
     BookEditPageComponent,
     BookOpenPageComponent,
     ProfilePageComponent,
@@ -51,7 +54,8 @@ import { UserRoleEditPageComponent } from './user.role.edit-page/user.role-page.
     PublisherEditPageComponent,
     AuthorEditPageComponent,
     UserRolesPageComponent,
-    UserRoleEditPageComponent
+    UserEditPageComponent
+
 
   ],
   imports: [
@@ -71,14 +75,14 @@ import { UserRoleEditPageComponent } from './user.role.edit-page/user.role-page.
           {path: 'author/:id', component: AuthorPageComponent, canActivate: [AuthGuard]},
           {path: 'book', component: BookAddPageComponent, canActivate: [AuthGuard]},
           {path: 'book/edit/:id', component: BookEditPageComponent, canActivate: [AuthGuard]},
-          {path: 'user/edit/:id', component: ProfilePageComponent, canActivate: [AuthGuard]},
+          {path: 'profile/edit/:id', component: ProfilePageComponent, canActivate: [AuthGuard]},
           {path: 'authors', component: AuthorsPageComponent, canActivate: [AuthGuard]},
           {path: 'publishers', component: PublishersPageComponent, canActivate: [AuthGuard]},
           {path: 'users', component: UsersPageComponent, canActivate: [AuthGuard]},
           {path: 'userroles', component: UserRolesPageComponent, canActivate: [AuthGuard]},
           {path: 'publisher/edit/:id', component: PublisherEditPageComponent, canActivate: [AuthGuard]},
           {path: 'author/edit/:id', component: AuthorEditPageComponent, canActivate: [AuthGuard]},
-          {path: 'userrole/edit/:id', component: UserRoleEditPageComponent, canActivate: [AuthGuard]},
+          {path: 'user/edit/:id', component: UserEditPageComponent, canActivate: [AuthGuard]},
 
         ]
       }

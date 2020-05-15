@@ -1,1 +1,57 @@
-<p>users-page works!</p>
+<div class="usersPage">
+<div class="user-search">
+  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+</div>
+
+<div class="userForm" *ngIf="userRole=='Admin'">
+  <table>
+    <thead>
+    <tr class="formText">
+      <th>#</th>
+      <th>User login</th>
+      <th>User Role</th>
+      <th>User Email</th>
+      <th>User phone number</th>
+      <th>User years old</th>
+      <th>User first name</th>
+      <th>User last name</th>
+      <th> Doing</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let user of users|paginate: config| searchUsers: searchStr; let idx = index">
+      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+
+      <td>{{user.userLogin}}</td>
+
+      <td>{{user.userRole}}</td>
+
+      <td>{{user.email}}</td>
+
+      <td>{{user.phoneNumber}}</td>
+
+      <td>{{user.userYearsOld}}</td>
+
+      <td>{{user.userFirstName}}</td>
+
+      <td>{{user.userLastName}}</td>
+
+      <td>
+        <button
+          class="btn btn-link edit"
+          [routerLink]="['/admin','user', 'edit', user.userId ]"
+        >Change
+        </button>
+
+        <a (click)="remove(user.userId)"> Delete</a>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
+</div>
+</div>

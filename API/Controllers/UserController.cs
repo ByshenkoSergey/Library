@@ -76,7 +76,7 @@ namespace API_Laer
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("user/get")]
+        [HttpGet("gets")]
         public async Task<IActionResult> GetAllUserAsync()
         {
             try

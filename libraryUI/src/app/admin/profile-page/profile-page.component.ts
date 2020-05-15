@@ -74,7 +74,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
     }
     console.log(user)
-    this.uSub = this.service.updateUser(this.id, user).subscribe(() => {
+    this.uSub = this.service.updateUser(user).subscribe(() => {
       this.submitted = false
       this.router.navigate(['/admin', 'dashboard']);
     })
