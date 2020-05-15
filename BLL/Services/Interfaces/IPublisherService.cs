@@ -11,7 +11,5 @@ namespace BLL.Services.Interfaces
         Task EditPublisherAsync(Guid id, PublisherDTO publisherDTO );
         Task<IEnumerable<PublisherDTO>> GetAllPublisherDTOAsync();
         Task<PublisherDTO> GetPublisherDTOAsync(Guid id);
-        Task<Guid> AddPublisherAsync(PublisherDTO publisherDTO);
-        Task<PublisherDTO> GetPublisherByNameAsync(string publisherName);
-    }
+       }
 }

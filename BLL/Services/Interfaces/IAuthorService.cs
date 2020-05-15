@@ -11,7 +11,5 @@ namespace BLL.Services.Interfaces
         Task DeleteAuthorAsync(Guid id);
         Task<IEnumerable<AuthorDTO>> GetAllAuthorDTOAsync();
         Task EditAuthorAsync(Guid id, AuthorDTO authorDTO);
-        Task<Guid> InsertAuthorAsync(AuthorDTO authorDTO);
-        Task<AuthorDTO> GetAuthorByNameAsync(string authorName);
     }
 }

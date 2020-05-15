@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../shared/services/auth.service";
-import { PublisherService } from '../shared/services/publisher.service';
+import {PublisherService} from '../shared/services/publisher.service';
 import {Publisher} from "../shared/interfaces/interfaces";
 import {Subscription} from "rxjs";
 
@@ -18,8 +18,11 @@ export class PublishersPageComponent implements OnInit, OnDestroy {
   searchStr = ''
   userRole: string
 
-  constructor(private service: PublisherService,
-              private auth: AuthService) { }
+  constructor(
+    private service: PublisherService,
+    private auth: AuthService
+  ) {
+  }
 
   ngOnInit() {
 

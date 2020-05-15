@@ -2,9 +2,9 @@ import {Pipe, PipeTransform} from "@angular/core";
 import {Publisher} from "../interfaces/interfaces";
 
 @Pipe({
-  name: 'searchBooks'
+  name: 'searchPublishers'
 })
-export class SearchPipePublisher implements  PipeTransform{
+export class SearchPublisherPipe implements  PipeTransform{
   transform(publishers: Publisher[], search = ''): Publisher[] {
     if(!search.trim()){
       return publishers

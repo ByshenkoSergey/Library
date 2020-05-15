@@ -1,1 +1,40 @@
-<p>authors-page works!</p>
+<div class="author-search">
+  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+</div>
+
+<div class="authorForm" *ngIf="userRole=='Moderator'">
+  <table>
+    <thead>
+    <tr class="formText">
+      <th>#</th>
+      <th>Author name</th>
+      <th>Author biography</th>
+      <th> Doing</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let author of authors|paginate: config| searchAuthors: searchStr; let idx = index">
+      <td>{{ config.itemsPerPage * (config.currentPage - 1) + idx + 1}}</td>
+
+      <td>{{author.authorName}}</td>
+
+      <td>{{author.authorBiography}}</td>
+
+      <td>
+        <button
+          class="btn btn-link edit"
+          [routerLink]="['/admin','author', 'edit', author.authorId ]"
+        >Change
+        </button>
+
+        <a (click)="remove(author.authorId)"> Delete</a>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls class="Pag" (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

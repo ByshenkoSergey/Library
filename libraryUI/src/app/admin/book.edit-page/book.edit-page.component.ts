@@ -49,7 +49,8 @@ export class BookEditPageComponent implements OnInit, OnDestroy {
     this.submitted = true
     const book: BookAdd = {
       bookId: this.book.bookId,
-      bookName: this.form.value.bookName, filePath: this.book.filePath,
+      bookName: this.form.value.bookName,
+      filePath: this.book.filePath,
       authorName: this.form.value.authorName,
       yearOfPublishing: this.form.value.yearOfPublishing,
       publisherName: this.form.value.publisherName,

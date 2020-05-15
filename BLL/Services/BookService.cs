@@ -17,13 +17,12 @@ namespace BLL.Services
     {
         private IUnitOfWork _unit;
         private IMapConfig _mapper;
-        private IWebHostEnvironment _appEnvironment;
 
-        public BookService(IUnitOfWork unit, IMapConfig mapper, IWebHostEnvironment appEnvironment)
+
+        public BookService(IUnitOfWork unit, IMapConfig mapper)
         {
             _unit = unit;
             _mapper = mapper;
-            _appEnvironment = appEnvironment;
         }
 
         public async Task DeleteBookAsync(Guid id)
@@ -77,14 +76,14 @@ namespace BLL.Services
                 }
 
                 var memory = new MemoryStream();
-                
+
                 using (var stream = new FileStream(filePath, FileMode.Open))
                 {
                     await stream.CopyToAsync(memory);
                 }
                 memory.Position = 0;
 
-                return new FileDTO {File=memory,FileType = book.FileType,FileName=book.BookName };
+                return new FileDTO { File = memory, FileType = book.FileType, FileName = book.BookName };
             }
             catch (Exception)
             {

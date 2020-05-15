@@ -1,0 +1,95 @@
+<div *ngIf="form;else loading" >
+  <form [formGroup]="form" (ngSubmit)="submit()" class="Form-control">
+
+    <div class="textHeader">
+      <h2>Edit publisher form</h2>
+    </div>
+    <div [ngClass]="{invalid: form.get('publisherName').touched&&form.get('publisherName').invalid}">
+      <label for="publisherName" class="formText">Publisher name </label>
+      <input id="publisherName" type="text" maxlength="50" formControlName="publisherName">
+      <div
+        class="validation"
+        *ngIf="form.get('publisherName').touched&&form.get('publisherName').invalid"
+      >
+        <small *ngIf="form.get('publisherName').errors.required">
+          Add publisher name:
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('publisherPhone').touched&&form.get('publisherPhone').invalid}">
+      <label for="publisherPhone" class="formText">Publisher phone</label>
+      <input id="publisherPhone" type="text"
+             maxlength="50"
+             pattern="(^(?!\+.*\(.*\).*\-\-.*$)(?!\+.*\(.*\).*\-$)(\+[0-9]{1,3}\([0-9]{1,3}\)[0-9]{1}([-0-9]{0,8})?([0-9]{0,1})?)$)|(^[0-9]{1,4}$)"
+             formControlName="publisherPhone">
+      <div
+        class="validation"
+        *ngIf="form.get('publisherPhone').touched&&form.get('publisherPhone').invalid"
+      >
+        <small *ngIf="form.get('publisherPhone').errors.required">
+          Add publisher phone:
+        </small>
+
+        <small *ngIf="form.get('publisherPhone').errors.pattern">
+          Add correct phone number
+        </small>
+
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('publisherEmail').touched&&form.get('publisherEmail').invalid}" >
+      <label for="publisherEmail" class="formText">Publisher Email</label>
+      <input id="publisherEmail" type="text"
+             pattern="^(?!.*@.*@.*$)(?!.*@.*\-\-.*\..*$)(?!.*@.*\-\..*$)(?!.*@.*\-$)(.*@.+(\..{1,11})?)$"
+             formControlName="publisherEmail">
+      <div
+        class="validation"
+        *ngIf="form.get('publisherEmail').touched&&form.get('publisherEmail').invalid"
+      >
+        <small *ngIf="form.get('publisherEmail').errors.required">
+          Add publisher Email:
+        </small>
+        <small *ngIf="form.get('publisherEmail').errors.pattern">
+          Add correct Email
+        </small>
+      </div>
+    </div>
+
+    <div [ngClass]="{invalid: form.get('publisherInfo').touched&&form.get('publisherInfo').invalid}">
+      <label for="publisherInfo" class="formText">Publisher info </label>
+      <textarea
+        class="textArea"
+        name="comment"
+        id="publisherInfo"
+        type="text"
+        formControlName="publisherInfo"
+        cols="40"
+        rows="3"
+        maxlength="5000"
+      ></textarea>
+      <div
+        class="validation"
+        *ngIf="form.get('publisherInfo').touched&&form.get('publisherInfo').invalid"
+      >
+        <small *ngIf="form.get('publisherInfo').errors.required">
+          Add publisher info:
+        </small>
+      </div>
+
+    </div>
+    <div class="saveButton">
+      <button
+        class="btn btn-block btn-primary"
+        type="submit"
+        [disabled]="form.invalid|| submitted"
+      >Save
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

@@ -1,10 +1,10 @@
 import {Pipe, PipeTransform} from "@angular/core";
-import {Author} from "../interfaces/interfaces";
+import {Author, BookForm} from "../interfaces/interfaces";
 
 @Pipe({
-  name: 'searchBooks'
+  name: 'searchAuthors'
 })
-export class SearchPipeAuthor implements  PipeTransform{
+export class SearchAuthorPipe implements  PipeTransform{
   transform(authors: Author[], search = ''): Author[] {
     if(!search.trim()){
       return authors

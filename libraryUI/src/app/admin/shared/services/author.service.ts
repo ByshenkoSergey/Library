@@ -30,14 +30,11 @@ export class AuthorService {
     }));
   }
 
-  createAuthor(author: Author) {
-    return this.http.post(this.url + '/post', {author}, {observe: 'response'});
+  updateAuthor(author: Author): Observable<any> {
+    return this.http.put<any>(this.url + '/put/' + author.authorId, author);
   }
-  updateAuthor(id: number, author: Author) {
 
-    return this.http.put(this.url + '/put' + id, {author});
-  }
   deleteAuthor(id: number) {
-    return this.http.delete(this.url + '/delete' + id);
+    return this.http.delete(this.url + '/delete/' + id);
   }
 }

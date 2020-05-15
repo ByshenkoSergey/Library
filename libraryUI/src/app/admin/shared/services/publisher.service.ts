@@ -32,14 +32,10 @@ export class PublisherService {
       }));
   }
 
-  createPublisher(publisher: Publisher) {
-    return this.http.post(this.url + '/post', publisher, {observe: 'response'});
+  updatePublisher(publisher: Publisher):Observable<void> {
+    return this.http.put<void>(this.url + '/put/' + publisher.publisherId, publisher);
   }
-  updatePublisher(publisher: Publisher) {
-
-    return this.http.put(this.url + '/put', publisher);
-  }
-  deletePublisher(id: number) {
-    return this.http.delete(this.url + '/delete' + id);
+  deletePublisher(id: number):Observable<void> {
+    return this.http.delete<void>(this.url + '/delete/' + id);
   }
 }

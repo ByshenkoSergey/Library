@@ -35,7 +35,7 @@ namespace API_Laer
 
 
 
-        [Authorize(Roles = "Admin, Moderator, SuperUser")]
+        [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublisherAsync()
         {
@@ -50,23 +50,8 @@ namespace API_Laer
             }
         }
 
-
-        [Authorize(Roles = "Admin, Moderator")]
-        [HttpPost("post")]
-        public async Task<ActionResult<int>> PostPublisherDTOAsync(PublisherDTO PublisherDTO)
-        {
-            try
-            {
-                var id = await _service.AddPublisherAsync(PublisherDTO);
-                return Ok(new { requestObject = id, message = "Publisher added" });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
-
-        [Authorize(Roles = "Admin, Moderator")]
+        
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutPublisherDTOAsync(Guid id, PublisherDTO PublisherDTO)
         {
@@ -82,7 +67,7 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeletePublisherDTOAsync(Guid id)
         {

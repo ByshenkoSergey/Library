@@ -11,18 +11,19 @@ import {BookAddPageComponent} from './book.add-page/book.add-page.component';
 import {DashboardPageComponent} from './dashboard-page/dashboard-page.component';
 import {SharedModule} from '../shared/shared.module';
 import {AuthGuard} from "./shared/services/auth.guard";
-import {SearchPipeBook} from "./shared/Pipe/search.pipe.book";
+import {SearchBookPipe} from "./shared/Pipe/search.book.pipe";
 import {BookEditPageComponent} from './book.edit-page/book.edit-page.component';
 import {BookOpenPageComponent} from './book.open-page/book.open-page.component';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
+import {ProfilePageComponent} from './profile-page/profile-page.component';
 import {NgxPaginationModule} from "ngx-pagination";
-import { PublishersPageComponent } from './publishers-page/publishers-page.component';
-import { AuthorsPageComponent } from './authors-page/authors-page.component';
-import { UsersPageComponent } from './users-page/users-page.component';
+import {PublishersPageComponent} from './publishers-page/publishers-page.component';
+import {AuthorsPageComponent} from './authors-page/authors-page.component';
+import {UsersPageComponent} from './users-page/users-page.component';
 import {UserRolesPageComponent} from "./user.roles-page/user.roles-page.component";
-import {SearchPipePublisher} from "./shared/Pipe/search.pipe.publisher";
-import {SearchPipeAuthor} from "./shared/Pipe/search.pipe.author";
-
+import {SearchPublisherPipe} from "./shared/Pipe/search.publisher.pipe";
+import {PublisherEditPageComponent} from "./publisher.edit-page/publisher.edit-page.component";
+import {SearchAuthorPipe} from "./shared/Pipe/search.author.pipe";
+import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.component';
 
 
 @NgModule({
@@ -33,16 +34,18 @@ import {SearchPipeAuthor} from "./shared/Pipe/search.pipe.author";
     PublisherPageComponent,
     AuthorPageComponent,
     BookAddPageComponent,
-    SearchPipeBook,
-    SearchPipePublisher,
-    SearchPipeAuthor,
+    SearchBookPipe,
+    SearchPublisherPipe,
+    SearchAuthorPipe,
     BookEditPageComponent,
     BookOpenPageComponent,
     ProfilePageComponent,
     PublishersPageComponent,
     AuthorsPageComponent,
     UsersPageComponent,
-    UserRolesPageComponent
+    UserRolesPageComponent,
+    PublisherEditPageComponent,
+    AuthorEditPageComponent
 
   ],
   imports: [
@@ -56,17 +59,19 @@ import {SearchPipeAuthor} from "./shared/Pipe/search.pipe.author";
         path: '', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: 'src/app/login', pathMatch: 'full'},
 
-          {path: 'dashboard', component: DashboardPageComponent, canActivate:[AuthGuard]},
-          {path: 'book/:id', component: BookOpenPageComponent, canActivate:[AuthGuard] },
-          {path: 'publishing/:id', component: PublisherPageComponent, canActivate:[AuthGuard]},
-          {path: 'author/:id', component: AuthorPageComponent, canActivate:[AuthGuard] },
-          {path: 'book', component: BookAddPageComponent, canActivate:[AuthGuard] },
-          {path: 'book/edit/:id', component: BookEditPageComponent, canActivate:[AuthGuard]},
-          {path: 'user/edit/:id', component:ProfilePageComponent, canActivate:[AuthGuard]},
-          {path: 'authors', component:AuthorsPageComponent, canActivate:[AuthGuard]},
-          {path: 'publishers', component:PublishersPageComponent, canActivate:[AuthGuard]},
-          {path: 'users', component:UsersPageComponent, canActivate:[AuthGuard]},
-          {path: 'userroles', component:UserRolesPageComponent, canActivate:[AuthGuard]},
+          {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
+          {path: 'book/:id', component: BookOpenPageComponent, canActivate: [AuthGuard]},
+          {path: 'publishing/:id', component: PublisherPageComponent, canActivate: [AuthGuard]},
+          {path: 'author/:id', component: AuthorPageComponent, canActivate: [AuthGuard]},
+          {path: 'book', component: BookAddPageComponent, canActivate: [AuthGuard]},
+          {path: 'book/edit/:id', component: BookEditPageComponent, canActivate: [AuthGuard]},
+          {path: 'user/edit/:id', component: ProfilePageComponent, canActivate: [AuthGuard]},
+          {path: 'authors', component: AuthorsPageComponent, canActivate: [AuthGuard]},
+          {path: 'publishers', component: PublishersPageComponent, canActivate: [AuthGuard]},
+          {path: 'users', component: UsersPageComponent, canActivate: [AuthGuard]},
+          {path: 'userroles', component: UserRolesPageComponent, canActivate: [AuthGuard]},
+          {path: 'publisher/edit/:id', component: PublisherEditPageComponent, canActivate: [AuthGuard]},
+          {path: 'author/edit/:id', component: AuthorEditPageComponent, canActivate: [AuthGuard]},
 
         ]
       }
@@ -74,6 +79,6 @@ import {SearchPipeAuthor} from "./shared/Pipe/search.pipe.author";
   ],
   exports: [RouterModule],
   providers: [AuthGuard]
-  })
+})
 export class AdminModule {
 }

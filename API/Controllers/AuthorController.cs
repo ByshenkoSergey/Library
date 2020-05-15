@@ -34,7 +34,7 @@ namespace API_Laer
         }
 
 
-        [Authorize(Roles = "Admin, Moderator, SuperUser")]
+        [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthorAsync()
         {
@@ -50,23 +50,9 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
-        [HttpPost("post")]
-        public async Task<ActionResult<int>> PostAuthorDTOAsync(AuthorDTO authorDTO)
-        {
-            try
-            {
-                var id = await _service.InsertAuthorAsync(authorDTO);
-                return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "Author added" });
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-        }
+       
 
-
-        [Authorize(Roles = "Admin, Moderator")]
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutAuthorDTOAsync(Guid id, AuthorDTO authorDTO)
         {
@@ -82,7 +68,7 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteAuthorDTOAsync(Guid id)
         {

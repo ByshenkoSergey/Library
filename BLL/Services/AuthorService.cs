@@ -1,5 +1,4 @@
 ﻿using BLL.DTOModels;
-using BLL.Infrastructure.Exceptions;
 using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
@@ -69,26 +68,6 @@ namespace BLL.Services
             {
                 throw e;
             }
-        }
-
-        public async Task<Guid> InsertAuthorAsync(AuthorDTO authorDTO)
-        {
-            var author = _mapper.GetMapper().Map<Author>(authorDTO);
-            _unit.AuthorRepository.Add(author);
-            await _unit.SaveChangeAsync();
-            return await _unit.AuthorRepository.GetModelIdAsync(author.AuthorName);
-        }
-
-
-        public async Task<AuthorDTO> GetAuthorByNameAsync(string authorName)
-        {
-            var authorId = await _unit.AuthorRepository.GetModelIdAsync(authorName);
-            if (authorId == null)
-            {
-                throw new ValidationException("Author not found","");
-            }
-            var author = await GetAuthorDTOAsync(authorId);
-            return author;
         }
 
     }

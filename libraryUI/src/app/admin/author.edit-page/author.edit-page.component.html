@@ -1,0 +1,58 @@
+<div *ngIf="form;else loading" >
+  <form [formGroup]="form" (ngSubmit)="submit()" class="Form-control">
+
+    <div class="textHeader">
+      <h2>Edit author form</h2>
+    </div>
+    <div [ngClass]="{invalid: form.get('authorName').touched&&form.get('authorName').invalid}">
+      <label for="authorName" class="formText">Author name </label>
+      <input id="authorName" type="text" maxlength="50" formControlName="authorName">
+      <div
+        class="validation"
+        *ngIf="form.get('authorName').touched&&form.get('authorName').invalid"
+      >
+        <small *ngIf="form.get('authorName').errors.required">
+          Add author name:
+        </small>
+      </div>
+    </div>
+
+
+    <div [ngClass]="{invalid: form.get('authorBiography').touched&&form.get('authorBiography').invalid}">
+      <label for="authorBiography" class="formText">Author biography</label>
+      <textarea
+        class="textArea"
+        name="comment"
+        id="authorBiography"
+        type="text"
+        formControlName="authorBiography"
+        cols="40"
+        rows="3"
+        maxlength="5000"
+        ></textarea>
+      <div
+        class="validation"
+        *ngIf="form.get('authorBiography').touched&&form.get('authorBiography').invalid"
+      >
+        <small *ngIf="form.get('authorBiography').errors.required">
+          Add author biography:
+        </small>
+
+      </div>
+    </div>
+
+    <div class="saveButton">
+      <button
+        class="btn btn-block btn-primary"
+        type="submit"
+        [disabled]="form.invalid|| submitted"
+      >Save
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

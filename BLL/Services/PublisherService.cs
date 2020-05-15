@@ -1,5 +1,4 @@
 ﻿using BLL.DTOModels;
-using BLL.Infrastructure.Exceptions;
 using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
@@ -65,30 +64,6 @@ namespace BLL.Services
             {
                 throw e;
             }
-        }
-
-        public async Task<Guid> AddPublisherAsync(PublisherDTO publisherDTO)
-        {
-            var publisher = _mapper.GetMapper().Map<Publisher>(publisherDTO);
-            _unit.PublisherRepository.Add(publisher);
-            await _unit.SaveChangeAsync();
-            var id = await _unit.PublisherRepository.GetModelIdAsync(publisher.PublisherName);
-            if (id == default)
-            {
-                throw new ValidationException("Publisher not found", "");
-            }
-            return id;
-        }
-
-        public async Task<PublisherDTO> GetPublisherByNameAsync(string publisherName)
-        {
-            var publisherId = await _unit.PublisherRepository.GetModelIdAsync(publisherName);
-            if (publisherId == null)
-            {
-                return null;
-            }
-            var publisher = await GetPublisherDTOAsync(publisherId);
-            return publisher;
         }
 
         public void Dispose()
