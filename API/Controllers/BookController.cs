@@ -77,7 +77,7 @@ namespace API_Laer
 
                 if (books == null)
                 {
-                    return NotFound(new ResponseDTO { Message = "Books not found" });
+                    return NotFound(new ResponseDTO { Message = "Books not found in date base" });
                 }
 
                 return Ok(new ResponseObjectDTO { ResponseObject = books, Message = "Request successful" });

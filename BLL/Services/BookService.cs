@@ -4,7 +4,6 @@ using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
-using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,7 +94,9 @@ namespace BLL.Services
         {
             try
             {
-                return _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(await _unit.BookRepository.GetAllAsync());
+                var bookList = await _unit.BookRepository.GetAllAsync();
+                var res = _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(bookList);
+                return res;
             }
             catch (ValidationException e)
             {

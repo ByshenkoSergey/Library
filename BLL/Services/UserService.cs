@@ -9,7 +9,6 @@ using DAL.UnitOfWork;
 using BLL.DTOModels;
 using DAL.Models.IdentityModels;
 using BLL.Options;
-using BLL.Helper;
 using BLL.Services.Interfaces;
 using BLL.Infrastructure.Mapping;
 using BLL.Infrastructure.Exceptions;
@@ -53,7 +52,7 @@ namespace BLL.Services
             try
             {
                 IEnumerable<NewUserDTO> users = _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(await _unit.UserRepository.GetAllAsync());
-                return users;//.WithoutPasswords();
+                return users;
             }
             catch (Exception)
             {
