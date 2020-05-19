@@ -12,6 +12,12 @@ using System.IO;
 
 namespace API_Laer
 {
+
+
+    /// <summary>
+    /// Сlass for working with users
+    /// </summary>
+    
     [Authorize]
     [Route("api/book")]
     [ApiController]
@@ -20,11 +26,25 @@ namespace API_Laer
         private IBookService _service;
         private IWebHostEnvironment _appEnvironment;
 
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="service"></param>
+        /// <param name="appEnvironment"></param>
         public BookController(IBookService service, IWebHostEnvironment appEnvironment)
         {
             _service = service;
             _appEnvironment = appEnvironment;
         }
+
+
+
+        /// <summary>
+        /// Receiving the book file by id/ protected / role for access - Moderator, User,
+        /// SuperUser, admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet("get/file/{id}")]
         public async Task<IActionResult> GetBookAsync(Guid id)
@@ -45,6 +65,14 @@ namespace API_Laer
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
+
+
+        /// <summary>
+        /// Receiving the book by id/ protected / role for access - Moderator, User,
+        /// SuperUser, admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet("get/form/{id}")]
         public async Task<ActionResult<BookAddDTO>> GetBookAddDTOAsync(Guid id)
@@ -67,6 +95,11 @@ namespace API_Laer
         }
 
 
+        /// <summary>
+        /// Receiving the all books/ protected / role for access - Moderator, User,
+        /// SuperUser, admin
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<BookFormDTO>>> GetBooksFormAsync()
@@ -89,7 +122,13 @@ namespace API_Laer
 
         }
 
-        [Authorize(Roles = "Admin")]
+        /// <summary>
+        /// Delete book by id number/ protected / role for access - Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns> 
+
+        [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
         {
@@ -107,7 +146,13 @@ namespace API_Laer
         }
 
 
-        [Authorize(Roles = "Admin, Moderator")]
+        /// <summary>
+        /// Change book by id number/ protected / role for access - Moderator
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newBookDTO"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
         public async Task<ActionResult> PutBookAsync(Guid id, BookAddDTO newBookDTO)
         {
@@ -126,7 +171,14 @@ namespace API_Laer
             }
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+
+
+        /// <summary>
+        /// A method for create new book/ protected / role for access - Moderator
+        /// </summary>
+        /// <param name="bookDTO"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Moderator")]
         [HttpPost("post")]
         public async Task<ActionResult> InsertAsync(BookAddDTO bookDTO)
         {
@@ -141,7 +193,13 @@ namespace API_Laer
             }
         }
 
-        [Authorize(Roles = "Admin, Moderator")]
+
+        /// <summary>
+        /// Add a book file to the server storage/ protected/ role for access - Moderator
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "Moderator")]
         [HttpPost("upload/post")]
         public async Task<ActionResult> AddBookFile(IFormFile file)
         {

@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="T:API_Laer.AuthorController">
+            <summary>
+            Сlass for working with book authors
+            </summary>
+        </member>
+        <member name="M:API_Laer.AuthorController.#ctor(BLL.Services.Interfaces.IAuthorService)">
+            <summary>
+            Dependency injection
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:API_Laer.AuthorController.GetAuthorAsync(System.Guid)">
+            <summary>
+            Receiving the author by id/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.AuthorController.GetAllAuthorAsync">
+            <summary>
+            Receiving the all author/ protected / role for access - Moderator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.AuthorController.PutAuthorDTOAsync(System.Guid,BLL.DTOModels.AuthorDTO)">
+            <summary>
+            Change author by id number/ protected / role for access - Moderator
+            </summary>
+            <param name="id"></param>
+            <param name="authorDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.AuthorController.DeleteAuthorDTOAsync(System.Guid)">
+            <summary>
+            Delete author by id number/ protected / role for access - Moderator 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API_Laer.BookController">
+            <summary>
+            Сlass for working with users
+            </summary>
+        </member>
+        <member name="M:API_Laer.BookController.#ctor(BLL.Services.Interfaces.IBookService,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Dependency injection
+            </summary>
+            <param name="service"></param>
+            <param name="appEnvironment"></param>
+        </member>
+        <member name="M:API_Laer.BookController.GetBookAsync(System.Guid)">
+            <summary>
+            Receiving the book file by id/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.BookController.GetBookAddDTOAsync(System.Guid)">
+            <summary>
+            Receiving the book by id/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.BookController.GetBooksFormAsync">
+            <summary>
+            Receiving the all books/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.BookController.DeleteBookAsync(System.Guid)">
+            <summary>
+            Delete book by id number/ protected / role for access - Admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns> 
+        </member>
+        <member name="M:API_Laer.BookController.PutBookAsync(System.Guid,BLL.DTOModels.BookAddDTO)">
+            <summary>
+            Change book by id number/ protected / role for access - Moderator
+            </summary>
+            <param name="id"></param>
+            <param name="newBookDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.BookController.InsertAsync(BLL.DTOModels.BookAddDTO)">
+            <summary>
+            A method for create new book/ protected / role for access - Moderator
+            </summary>
+            <param name="bookDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.BookController.AddBookFile(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Add a book file to the server storage/ protected/ role for access - Moderator
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API_Laer.PublisherController">
+            <summary>
+            Сlass for working with book publishers
+            </summary>
+        </member>
+        <member name="M:API_Laer.PublisherController.#ctor(BLL.Services.Interfaces.IPublisherService)">
+            <summary>
+            Dependency injection
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:API_Laer.PublisherController.GetPublisherAsync(System.Guid)">
+            <summary>
+            Receiving the publisher by id/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.PublisherController.GetAllPublisherAsync">
+            <summary>
+            Receiving the all publishers/ protected / role for access - Moderator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.PublisherController.PutPublisherDTOAsync(System.Guid,BLL.DTOModels.PublisherDTO)">
+            <summary>
+            Change publisher by id number/ protected / role for access - Moderator
+            </summary>
+            <param name="id"></param>
+            <param name="publisherDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.PublisherController.DeletePublisherDTOAsync(System.Guid)">
+            <summary>
+            Delete publisher by id number/ protected / role for access - Moderator
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API_Laer.UserController">
+            <summary>
+            Сlass for working with users
+            </summary>
+        </member>
+        <member name="M:API_Laer.UserController.#ctor(BLL.Services.Interfaces.IUserService)">
+            <summary>
+            Dependency injection
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:API_Laer.UserController.Token(BLL.DTOModels.LoginUserDTO)">
+            <summary>
+            A method for generating a JWT access token/ available to anonymous users
+            </summary>
+            <param name="loginUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.UserController.AddNewUserAsync(BLL.DTOModels.NewUserDTO)">
+            <summary>
+            A method for create new user(registration)/ available to anonymous users
+            </summary>
+            <param name="newUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.UserController.GetUserAsync(System.Guid)">
+            <summary>
+            Receiving the user by id/ protected / role for access - Moderator, User,
+            SuperUser, admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.UserController.GetAllUserAsync">
+            <summary>
+            Receiving the all users/ protected / role for access - Admin
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.UserController.EditUserAsync(System.Guid,BLL.DTOModels.NewUserDTO)">
+            <summary>
+            Change user by id number/ protected / role for access - Admin
+            </summary>
+            <param name="id"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API_Laer.UserController.DeleteUser(System.Guid)">
+            <summary>
+            Delete user by id number/ protected / role for access - Admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns> 
+        </member>
+        <member name="T:API_Laer.Startup">
+            <summary>
+            Application setup
+            </summary>
+        </member>
+        <member name="M:API_Laer.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Dependency injection in Startup
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:API_Laer.Startup.Configuration">
+            <summary>
+            Property
+            </summary>
+        </member>
+        <member name="M:API_Laer.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuring services for further dependency injection
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:API_Laer.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Сonnection and adjustment of conveyors middleware
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:API.Controllers.UserRoleController">
+            <summary>
+            Сlass for working with users role
+            </summary>
+        </member>
+        <member name="M:API.Controllers.UserRoleController.#ctor(BLL.Services.Interfaces.IUserRoleService)">
+            <summary>
+            Dependency injection
+            </summary>
+            <param name="userRoleServices"></param>
+        </member>
+        <member name="M:API.Controllers.UserRoleController.GetAllUserRoleAsync">
+            <summary>
+            Receiving the all users role/ protected / role for access - Admin
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

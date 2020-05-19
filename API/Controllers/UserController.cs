@@ -8,6 +8,11 @@ using BLL.Infrastructure.Exceptions;
 
 namespace API_Laer
 {
+
+    /// <summary>
+    /// Сlass for working with users
+    /// </summary>
+
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
@@ -16,11 +21,22 @@ namespace API_Laer
     {
         private IUserService _userService;
 
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="userService"></param>
+
         public UserController(IUserService userService)
         {
             _userService = userService;
 
         }
+
+        /// <summary>
+        /// A method for generating a JWT access token/ available to anonymous users
+        /// </summary>
+        /// <param name="loginUser"></param>
+        /// <returns></returns>
 
         [AllowAnonymous]
         [HttpPost("token")]
@@ -29,8 +45,8 @@ namespace API_Laer
             try
             {
                 var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
-                return Ok(new ResponseObjectDTO  { ResponseObject = token, Message = "Request successful" });
-                
+                return Ok(new ResponseObjectDTO { ResponseObject = token, Message = "Request successful" });
+
             }
             catch (InvalidLogginUserException e)
             {
@@ -38,6 +54,13 @@ namespace API_Laer
             }
 
         }
+
+        /// <summary>
+        /// A method for create new user(registration)/ available to anonymous users
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
+
         [AllowAnonymous]
         [HttpPost("post")]
         public async Task<IActionResult> AddNewUserAsync(NewUserDTO newUser)
@@ -61,6 +84,13 @@ namespace API_Laer
             }
         }
 
+        /// <summary>
+        /// Receiving the user by id/ protected / role for access - Moderator, User,
+        /// SuperUser, admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetUserAsync(Guid id)
         {
@@ -74,6 +104,11 @@ namespace API_Laer
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
+
+        /// <summary>
+        /// Receiving the all users/ protected / role for access - Admin
+        /// </summary>
+        /// <returns></returns>
 
         [Authorize(Roles = "Admin")]
         [HttpGet("gets")]
@@ -90,6 +125,13 @@ namespace API_Laer
             }
         }
 
+        /// <summary>
+        /// Change user by id number/ protected / role for access - Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+
         [HttpPut("put/{id}")]
         public async Task<IActionResult> EditUserAsync(Guid id, NewUserDTO user)
         {
@@ -104,6 +146,12 @@ namespace API_Laer
             }
         }
 
+
+        /// <summary>
+        /// Delete user by id number/ protected / role for access - Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns> 
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {

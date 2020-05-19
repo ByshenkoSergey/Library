@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
+
+    /// <summary>
+    /// Сlass for working with users role
+    /// </summary>
+
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
@@ -17,11 +23,22 @@ namespace API.Controllers
        
         private IUserRoleService _userRoleServices;
 
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="userRoleServices"></param>
+
         public UserRoleController(IUserRoleService userRoleServices)
         {
            _userRoleServices = userRoleServices;
         }
-               
+
+
+        /// <summary>
+        /// Receiving the all users role/ protected / role for access - Admin
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet("gets")]
         public async Task<IActionResult> GetAllUserRoleAsync()
         {

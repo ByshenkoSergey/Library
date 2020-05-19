@@ -9,17 +9,36 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API_Laer
 {
+
+    /// <summary>
+    /// Сlass for working with book publishers
+    /// </summary>
+    
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+
+
     public class PublisherController : ControllerBase
     {
         private IPublisherService _service;
+
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="service"></param>
 
         public PublisherController(IPublisherService service)
         {
             _service = service;
         }
+
+        /// <summary>
+        /// Receiving the publisher by id/ protected / role for access - Moderator, User,
+        /// SuperUser, admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet("get/{id}")]
         public async Task<ActionResult<PublisherDTO>> GetPublisherAsync(Guid id)
@@ -28,13 +47,16 @@ namespace API_Laer
 
             if (publisher == null)
             {
-                return NotFound(new ResponseDTO { Message = "Publisher not found"});
+                return NotFound(new ResponseDTO { Message = "Publisher not found" });
             }
-            return Ok(new ResponseObjectDTO{ ResponseObject = publisher, Message = "Request successful" });
+            return Ok(new ResponseObjectDTO { ResponseObject = publisher, Message = "Request successful" });
         }
 
 
-
+        /// <summary>
+        /// Receiving the all publishers/ protected / role for access - Moderator
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Moderator")]
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<PublisherDTO>>> GetAllPublisherAsync()
@@ -50,14 +72,19 @@ namespace API_Laer
             }
         }
 
-        
+        /// <summary>
+        /// Change publisher by id number/ protected / role for access - Moderator
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="publisherDTO"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Moderator")]
         [HttpPut("put/{id}")]
-        public async Task<ActionResult> PutPublisherDTOAsync(Guid id, PublisherDTO PublisherDTO)
+        public async Task<ActionResult> PutPublisherDTOAsync(Guid id, PublisherDTO publisherDTO)
         {
             try
             {
-                await _service.EditPublisherAsync(id, PublisherDTO);
+                await _service.EditPublisherAsync(id, publisherDTO);
                 return Ok(new ResponseDTO { Message = "Publisher is puted" });
             }
             catch (NullReferenceException e)
@@ -66,6 +93,12 @@ namespace API_Laer
             }
 
         }
+
+        /// <summary>
+        /// Delete publisher by id number/ protected / role for access - Moderator
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]

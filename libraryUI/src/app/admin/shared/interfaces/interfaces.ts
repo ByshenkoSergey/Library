@@ -16,7 +16,6 @@ export interface BookAdd {
 export interface BookForm {
   bookId: number
   bookName: string
-  bookFileAddress: string
   authorName: string
   authorId:number
   yearOfPublishing: string
@@ -63,7 +62,7 @@ export interface User {
   phoneNumber?: string
   userRole:string
   email: string
-  
+
 }
 
 export interface UserRole {

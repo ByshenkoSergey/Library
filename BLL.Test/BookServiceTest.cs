@@ -9,6 +9,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Test
@@ -29,23 +30,54 @@ namespace BLL.Test
         }
 
         [Test]
-        public async Task GetAllBooksFormDTOAsync_return_AllBooksFormDTO()
+        public async Task GetAllBooksFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
         {
             // Arrange
-
-            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(()=>GetAllBookTest()));
+            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => GetAllBookTest()));
             _unitMock.Setup(unit => unit.BookRepository).Returns(_repoMock.Object);
             _mapMock.Setup(map => map.GetMapper()).Returns(GetMapTest());
             var bookService = new BookService(_unitMock.Object, _mapMock.Object);
 
             // Act
-            var actual = await bookService.GetAllBooksFormDTOAsync();
             var expected = GetAllBookFormDTOTest();
+            var actual = (await bookService.GetAllBooksFormDTOAsync()).ToList();
 
             // Assert
-
-            Assert.AreEqual(actual, expected);
+            Assert.Multiple(() =>
+            {
+                for (int i = 0; i < expected.Count; i++)
+                {
+                    Assert.AreEqual(expected[i].AuthorName, actual[i].AuthorName);
+                    Assert.AreEqual(expected[i].PublisherName, actual[i].PublisherName);
+                }
+            });
         }
+
+
+        [Test]
+        public async Task GetBookFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
+        {
+            // Arrange
+            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => GetAllBookTest()));
+            _unitMock.Setup(unit => unit.BookRepository).Returns(_repoMock.Object);
+            _mapMock.Setup(map => map.GetMapper()).Returns(GetMapTest());
+            var bookService = new BookService(_unitMock.Object, _mapMock.Object);
+
+            // Act
+            var expected = GetAllBookFormDTOTest();
+            var actual = (await bookService.GetAllBooksFormDTOAsync()).ToList();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                for (int i = 0; i < expected.Count; i++)
+                {
+                    Assert.AreEqual(expected[i].AuthorName, actual[i].AuthorName);
+                    Assert.AreEqual(expected[i].PublisherName, actual[i].PublisherName);
+                }
+            });
+        }
+
 
         private IMapper GetMapTest()
         {
@@ -100,7 +132,6 @@ namespace BLL.Test
             return publisherName;
 
         }
-
         private IEnumerable<Book> GetAllBookTest()
         {
             var bookList = new List<Book>();
@@ -144,8 +175,7 @@ namespace BLL.Test
             return bookList;
 
         }
-
-        private IEnumerable<BookFormDTO> GetAllBookFormDTOTest()
+        private List<BookFormDTO> GetAllBookFormDTOTest()
         {
             var bookFormDTOList = new List<BookFormDTO>();
 
@@ -157,7 +187,6 @@ namespace BLL.Test
                 AuthorName = "author1",
                 PublisherName = "publisher1",
                 BookName = "book1",
-                BookFileAddress = "address1",
                 YearOfPublishing = "2001",
                 Rating = 1
             });
@@ -170,7 +199,6 @@ namespace BLL.Test
                 AuthorName = "author2",
                 PublisherName = "publisher2",
                 BookName = "book2",
-                BookFileAddress = "address2",
                 YearOfPublishing = "2002",
                 Rating = 2
             });
@@ -183,7 +211,6 @@ namespace BLL.Test
                 AuthorName = "author3",
                 PublisherName = "publisher3",
                 BookName = "book3",
-                BookFileAddress = "address3",
                 YearOfPublishing = "2003",
                 Rating = 3
             });

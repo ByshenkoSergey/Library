@@ -95,8 +95,7 @@ namespace BLL.Services
             try
             {
                 var bookList = await _unit.BookRepository.GetAllAsync();
-                var res = _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(bookList);
-                return res;
+                return _mapper.GetMapper().Map<IEnumerable<Book>, IEnumerable<BookFormDTO>>(bookList);
             }
             catch (ValidationException e)
             {
@@ -146,6 +145,11 @@ namespace BLL.Services
             }
         }
 
+        public void Dispose()
+        {
+            _unit.Dispose();
+        }
+
         private void DeleteBookFile(string bookFileAddress)
         {
             try
@@ -159,6 +163,7 @@ namespace BLL.Services
                 throw new ArgumentException("Book file not found!");
             }
         }
+       
         private async Task<bool> BookAvailabilityCheckAsync(BookAddDTO newBookDTO)
         {
             var bookList = await _unit.BookRepository.GetAllAsync();
@@ -172,10 +177,6 @@ namespace BLL.Services
                 }
             }
             return false;
-        }
-        public void Dispose()
-        {
-            _unit.Dispose();
         }
 
 

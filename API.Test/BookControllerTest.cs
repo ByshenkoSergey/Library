@@ -34,7 +34,6 @@ namespace API.Test
                 AuthorName = "author1",
                 PublisherName = "publisher1",
                 BookName = "book1",
-                BookFileAddress = "address1",
                 YearOfPublishing = "2001",
                 Rating = 1
             };
@@ -47,7 +46,6 @@ namespace API.Test
                 AuthorName = "author2",
                 PublisherName = "publisher2",
                 BookName = "book2",
-                BookFileAddress = "address2",
                 YearOfPublishing = "2002",
                 Rating = 2
             };
@@ -60,7 +58,6 @@ namespace API.Test
                 AuthorName = "author3",
                 PublisherName = "publisher3",
                 BookName = "book3",
-                BookFileAddress = "address3",
                 YearOfPublishing = "2003",
                 Rating = 3
             };
