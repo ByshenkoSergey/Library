@@ -202,6 +202,24 @@
             <param name="id"></param>
             <returns></returns> 
         </member>
+        <member name="T:API_Laer.Program">
+            <summary>
+            Main class application
+            </summary>
+        </member>
+        <member name="M:API_Laer.Program.Main(System.String[])">
+            <summary>
+            application entry point
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:API_Laer.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Create host application
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:API_Laer.Startup">
             <summary>
             Application setup

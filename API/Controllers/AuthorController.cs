@@ -13,7 +13,8 @@ namespace API_Laer
     /// Сlass for working with book authors
     /// </summary>
     [Authorize]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
     
     public class AuthorController : ControllerBase

@@ -15,7 +15,8 @@ namespace API_Laer
     /// </summary>
     
     [Authorize]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
 
 
