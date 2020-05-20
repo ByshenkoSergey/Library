@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using BLL.DTOModels;
 using BLL.Services.Interfaces;
