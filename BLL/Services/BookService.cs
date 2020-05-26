@@ -14,8 +14,8 @@ namespace BLL.Services
 {
     public class BookService : IBookService
     {
-        private IUnitOfWork _unit;
-        private IMapConfig _mapper;
+        private readonly IUnitOfWork _unit;
+        private readonly IMapConfig _mapper;
 
 
         public BookService(IUnitOfWork unit, IMapConfig mapper)

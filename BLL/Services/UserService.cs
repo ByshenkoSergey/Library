@@ -17,9 +17,9 @@ namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork _unit;
-        private IMapConfig _mapper;
-        private IAuthOptions _options;
+        private readonly IUnitOfWork _unit;
+        private readonly IMapConfig _mapper;
+        private readonly IAuthOptions _options;
 
         public UserService(IUnitOfWork unit, IMapConfig mapper, IAuthOptions options)
         {
@@ -39,7 +39,7 @@ namespace BLL.Services
 
             if (user == null)
             {
-                throw new ValidationException("User not found", "");
+                return null;
             }
 
             var userDTO = _mapper.GetMapper().Map<NewUserDTO>(user);

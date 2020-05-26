@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog;
-using NLog.Web;
 using System;
+using NLog.Web;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace API_Laer
 {
@@ -25,17 +24,16 @@ namespace API_Laer
                 logger.Debug("init main");
                 CreateHostBuilder(args).Build().Run();
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                logger.Error(e, "Stopped program because of exception");
+                logger.Error(exception, "Stopped program because of exception");
                 throw;
             }
             finally
             {
                 NLog.LogManager.Shutdown();
             }
-            
-           
+
         }
 
         /// <summary>
@@ -44,16 +42,17 @@ namespace API_Laer
         /// <param name="args"></param>
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-            .ConfigureLogging(logging=>
-            {
-                logging.ClearProviders();
-                logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
-            })
-            .UseNLog();
+     Host.CreateDefaultBuilder(args)
+       .ConfigureWebHostDefaults(webBuilder =>
+       {
+           webBuilder.UseStartup<Startup>();
+       })
+       .ConfigureLogging(logging =>
+       {
+           logging.ClearProviders();
+           logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+       })
+       .UseNLog();
+
     }
 }

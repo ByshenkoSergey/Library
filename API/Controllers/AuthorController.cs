@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using BLL.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace API_Laer
 {
@@ -16,18 +17,23 @@ namespace API_Laer
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
-    
+
     public class AuthorController : ControllerBase
     {
-        private IAuthorService _service;
+        private readonly IAuthorService _service;
+        private readonly ILogger<AuthorController> _logger;
+
 
         /// <summary>
         /// Dependency injection
         /// </summary>
         /// <param name="service"></param>
-        public AuthorController(IAuthorService service)
+        /// <param name="logger"></param>
+        public AuthorController(IAuthorService service, ILogger<AuthorController> logger)
         {
             _service = service;
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
         /// <summary>
@@ -43,9 +49,11 @@ namespace API_Laer
 
             if (author == null)
             {
+                _logger.LogWarning("Author not found");
                 return NotFound(new ResponseDTO { Message = "Author not found" });
             }
 
+            _logger.LogInformation("Request successful");
             return Ok(new ResponseObjectDTO { ResponseObject = author, Message = "Request successful" });
         }
 
@@ -61,10 +69,12 @@ namespace API_Laer
             try
             {
                 var authorList = await _service.GetAllAuthorDTOAsync();
+                _logger.LogInformation("Request successful");
                 return Ok(new ResponseObjectDTO { ResponseObject = authorList, Message = "Request successful" });
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
@@ -84,10 +94,12 @@ namespace API_Laer
             try
             {
                 await _service.EditAuthorAsync(id, authorDTO);
-                return Ok(new ResponseDTO { Message = "Update is complite" });
+                _logger.LogInformation("Author is puted");
+                return Ok(new ResponseDTO { Message = "Author is puted" });
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
@@ -106,10 +118,12 @@ namespace API_Laer
             try
             {
                 await _service.DeleteAuthorAsync(id);
+                _logger.LogInformation("Author is delete");
                 return Ok(new ResponseDTO { Message = "Author is delete" });
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }

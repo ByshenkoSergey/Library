@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 
-
 namespace API_Laer
 {
     /// <summary>
@@ -41,7 +40,7 @@ namespace API_Laer
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddControllers();
-           
+                      
             services.AddApiVersioning(o => {
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
@@ -49,6 +48,7 @@ namespace API_Laer
             });
 
             services.AddMvc();
+           
 
             services.AddSwaggerGen(c =>
             {
@@ -87,7 +87,6 @@ namespace API_Laer
             {
                 app.UseDeveloperExceptionPage();
             }
-
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

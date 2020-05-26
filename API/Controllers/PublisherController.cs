@@ -5,7 +5,7 @@ using BLL.DTOModels;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.Extensions.Logging;
 
 namespace API_Laer
 {
@@ -22,16 +22,20 @@ namespace API_Laer
 
     public class PublisherController : ControllerBase
     {
-        private IPublisherService _service;
+        private readonly IPublisherService _service;
+        private readonly ILogger<PublisherController> _logger;
 
         /// <summary>
         /// Dependency injection
         /// </summary>
         /// <param name="service"></param>
+        /// <param name="logger"></param>
 
-        public PublisherController(IPublisherService service)
+        public PublisherController(IPublisherService service, ILogger<PublisherController> logger)
         {
             _service = service;
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
         /// <summary>
@@ -42,14 +46,16 @@ namespace API_Laer
         /// <returns></returns>
 
         [HttpGet("get/{id}")]
-        public async Task<ActionResult<PublisherDTO>> GetPublisherAsync(Guid id)
+        public async Task<IActionResult> GetPublisherAsync(Guid id)
         {
             var publisher = await _service.GetPublisherDTOAsync(id);
 
             if (publisher == null)
             {
+                _logger.LogWarning("Publisher not found");
                 return NotFound(new ResponseDTO { Message = "Publisher not found" });
             }
+            _logger.LogInformation("Request successful");
             return Ok(new ResponseObjectDTO { ResponseObject = publisher, Message = "Request successful" });
         }
 
@@ -65,10 +71,12 @@ namespace API_Laer
             try
             {
                 var publisherList = await _service.GetAllPublisherDTOAsync();
+                _logger.LogInformation("Request successful");
                 return Ok(new ResponseObjectDTO { ResponseObject = publisherList, Message = "Request successful" });
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
@@ -86,10 +94,12 @@ namespace API_Laer
             try
             {
                 await _service.EditPublisherAsync(id, publisherDTO);
+                _logger.LogInformation("Publisher is puted");
                 return Ok(new ResponseDTO { Message = "Publisher is puted" });
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
@@ -108,10 +118,12 @@ namespace API_Laer
             try
             {
                 await _service.DeletePublisherAsync(id);
+                _logger.LogInformation("Publisher is deleted");
                 return Ok(new ResponseDTO { Message = "Publisher is delete" });
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }

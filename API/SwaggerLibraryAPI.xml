@@ -153,11 +153,12 @@
             Сlass for working with users
             </summary>
         </member>
-        <member name="M:API_Laer.UserController.#ctor(BLL.Services.Interfaces.IUserService)">
+        <member name="M:API_Laer.UserController.#ctor(BLL.Services.Interfaces.IUserService,Microsoft.Extensions.Logging.ILogger{API_Laer.UserController})">
             <summary>
             Dependency injection
             </summary>
             <param name="userService"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:API_Laer.UserController.Token(BLL.DTOModels.LoginUserDTO)">
             <summary>

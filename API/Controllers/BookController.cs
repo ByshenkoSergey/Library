@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace API_Laer
 {
@@ -24,18 +25,22 @@ namespace API_Laer
     [ApiController]
     public class BookController : ControllerBase
     {
-        private IBookService _service;
-        private IWebHostEnvironment _appEnvironment;
+        private readonly IBookService _service;
+        private readonly IWebHostEnvironment _appEnvironment;
+        private readonly ILogger<BookController> _logger;
 
         /// <summary>
         /// Dependency injection
         /// </summary>
         /// <param name="service"></param>
         /// <param name="appEnvironment"></param>
-        public BookController(IBookService service, IWebHostEnvironment appEnvironment)
+        /// <param name="logger"></param>
+        public BookController(IBookService service, IWebHostEnvironment appEnvironment, ILogger<BookController> logger)
         {
             _service = service;
             _appEnvironment = appEnvironment;
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
 
@@ -48,7 +53,7 @@ namespace API_Laer
         /// <returns></returns>
 
         [HttpGet("get/file/{id}")]
-        public async Task<IActionResult> GetBookAsync(Guid id)
+        public async Task<IActionResult> GetBookFileAsync(Guid id)
         {
             try
             {
@@ -56,13 +61,16 @@ namespace API_Laer
 
                 if (bookFile == null)
                 {
+                    _logger.LogWarning("Book file not found");
                     return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
 
+                _logger.LogInformation("Request successful");
                 return File(bookFile.File, bookFile.FileType, bookFile.FileName);
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
@@ -76,7 +84,7 @@ namespace API_Laer
         /// <returns></returns>
 
         [HttpGet("get/form/{id}")]
-        public async Task<ActionResult<BookAddDTO>> GetBookAddDTOAsync(Guid id)
+        public async Task<IActionResult> GetBookAddDTOAsync(Guid id)
         {
             try
             {
@@ -84,13 +92,15 @@ namespace API_Laer
 
                 if (book == null)
                 {
+                    _logger.LogWarning("Book not found");
                     return NotFound(new ResponseDTO { Message = "Book not found" });
                 }
-
+                _logger.LogInformation("Request successful");
                 return Ok(new ResponseObjectDTO { ResponseObject = book, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
@@ -111,42 +121,22 @@ namespace API_Laer
 
                 if (books == null)
                 {
+                    _logger.LogWarning("Books not found");
                     return NotFound(new ResponseDTO { Message = "Books not found in date base" });
                 }
 
+                _logger.LogInformation("Request successful");
                 return Ok(new ResponseObjectDTO { ResponseObject = books, Message = "Request successful" });
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
 
         }
 
-        /// <summary>
-        /// Delete book by id number/ protected / role for access - Admin
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns> 
-
-        [Authorize(Roles = "Moderator")]
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> DeleteBookAsync(Guid id)
-        {
-            try
-            {
-                await _service.DeleteBookAsync(id);
-            }
-            catch (ValidationException e)
-            {
-
-                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
-            }
-
-            return Ok(new ResponseDTO { Message = "Book is delete" });
-        }
-
-
+      
         /// <summary>
         /// Change book by id number/ protected / role for access - Moderator
         /// </summary>
@@ -160,14 +150,17 @@ namespace API_Laer
             try
             {
                 await _service.EditBookAsync(newBookDTO, id);
+                _logger.LogInformation("Book is puted");
                 return Ok(new ResponseDTO { Message = "Book is puted" });
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
@@ -186,10 +179,17 @@ namespace API_Laer
             try
             {
                 var id = await _service.AddBookAsync(bookDTO);
+                if (id == default)
+                {
+                    _logger.LogWarning("Book not added");
+                    return BadRequest(new ResponseDTO { Message = "Book not added" });
+                }
+                _logger.LogInformation("User is added");
                 return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "Book info added" });
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
@@ -215,18 +215,44 @@ namespace API_Laer
                 if (file.Length > 0)
                 {
                     filePath = Path.Combine(uploads, file.FileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
                     }
                 }
-
+                _logger.LogInformation("Book file is added");
                 return Ok(new ResponseObjectDTO { ResponseObject = new { filePath = filePath, fileType = file.ContentType }, Message = "Book file added" });
             }
             catch (Exception e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = e.Message });
             }
         }
+
+        /// <summary>
+        /// Delete book by id number/ protected / role for access - Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns> 
+
+        [Authorize(Roles = "Moderator")]
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteBookAsync(Guid id)
+        {
+            try
+            {
+                await _service.DeleteBookAsync(id);
+                _logger.LogInformation("Book is deleted");
+                return Ok(new ResponseDTO { Message = "Book is delete" });
+            }
+            catch (ValidationException e)
+            {
+                _logger.LogError($"Error - {e.Message}");
+                return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
+            }
+
+        }
+
     }
 }
