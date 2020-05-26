@@ -215,13 +215,11 @@ namespace API_Laer
                 if (file.Length > 0)
                 {
                     filePath = Path.Combine(uploads, file.FileName);
-                    using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
+                    using FileStream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
                 }
                 _logger.LogInformation("Book file is added");
-                return Ok(new ResponseObjectDTO { ResponseObject = new { filePath = filePath, fileType = file.ContentType }, Message = "Book file added" });
+                return Ok(new ResponseObjectDTO { ResponseObject = new { filePath, fileType = file.ContentType }, Message = "Book file added" });
             }
             catch (Exception e)
             {

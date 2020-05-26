@@ -9,7 +9,7 @@ namespace DAL.Repository
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private LibraryDataBaseContext _context;
+        private readonly LibraryDataBaseContext _context;
 
         public Repository(LibraryDataBaseContext context)
         {
