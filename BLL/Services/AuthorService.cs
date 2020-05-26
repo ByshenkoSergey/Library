@@ -3,6 +3,7 @@ using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
 using DAL.Models;
 using DAL.UnitOfWork;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,13 +12,16 @@ namespace BLL.Services
 {
     public class AuthorService : IAuthorService
     {
-        private IUnitOfWork _unit;
-        private IMapConfig _mapper;
+        private readonly IUnitOfWork _unit;
+        private readonly IMapConfig _mapper;
+        private readonly ILogger<AuthorService> _logger;
 
-        public AuthorService(IUnitOfWork unit, IMapConfig mapper)
+        public AuthorService(IUnitOfWork unit, IMapConfig mapper, ILogger<AuthorService> logger)
         {
             _unit = unit;
             _mapper = mapper;
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
         public async Task<AuthorDTO> GetAuthorDTOAsync(Guid id)
@@ -26,15 +30,12 @@ namespace BLL.Services
 
             if (author == null)
             {
+                _logger.LogWarning("Author not found");
                 return null;
             }
 
+            _logger.LogInformation("Return author DTO");
             return _mapper.GetMapper().Map<Author, AuthorDTO>(author);
-        }
-
-        public void Dispose()
-        {
-            _unit.Dispose();
         }
 
         public async Task DeleteAuthorAsync(Guid id)
@@ -43,16 +44,21 @@ namespace BLL.Services
             {
                 _unit.AuthorRepository.Delete(id);
                 await _unit.SaveChangeAsync();
+                _logger.LogInformation("Author is deleted");
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
 
         public async Task<IEnumerable<AuthorDTO>> GetAllAuthorDTOAsync()
         {
-            return _mapper.GetMapper().Map<IEnumerable<Author>, IEnumerable<AuthorDTO>>(await _unit.AuthorRepository.GetAllAsync());
+            var authorList = await _unit.AuthorRepository.GetAllAsync();
+            var authorListDTO = _mapper.GetMapper().Map<IEnumerable<Author>, IEnumerable<AuthorDTO>>(authorList);
+            _logger.LogInformation("Return author list DTO");
+            return authorListDTO; 
         }
 
         public async Task EditAuthorAsync(Guid id, AuthorDTO authorDTO)
@@ -62,13 +68,22 @@ namespace BLL.Services
                 var author = _mapper.GetMapper().Map<AuthorDTO, Author>(authorDTO);
                 _unit.AuthorRepository.Edit(author, id);
                 await _unit.SaveChangeAsync();
+                _logger.LogInformation("Author is puted");
             }
 
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
+
+        public void Dispose()
+        {
+            _unit.Dispose();
+            _logger.LogInformation("Author reposytory is dispose");
+        }
+
 
     }
 
