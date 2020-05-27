@@ -12,6 +12,7 @@ using BLL.Options;
 using BLL.Services.Interfaces;
 using BLL.Infrastructure.Mapping;
 using BLL.Infrastructure.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace BLL.Services
 {
@@ -20,18 +21,20 @@ namespace BLL.Services
         private readonly IUnitOfWork _unit;
         private readonly IMapConfig _mapper;
         private readonly IAuthOptions _options;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(IUnitOfWork unit, IMapConfig mapper, IAuthOptions options)
+
+        public UserService(IUnitOfWork unit, IMapConfig mapper, 
+            IAuthOptions options, ILogger<UserService> logger)
         {
             _unit = unit;
             _mapper = mapper;
             _options = options;
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
-        public void Dispose()
-        {
-            _unit.Dispose();
-        }
+       
 
         public async Task<NewUserDTO> GetUserDTOAsync(Guid userId)
         {
@@ -39,10 +42,12 @@ namespace BLL.Services
 
             if (user == null)
             {
+                _logger.LogWarning("User not found");
                 return null;
             }
 
             var userDTO = _mapper.GetMapper().Map<NewUserDTO>(user);
+            _logger.LogInformation("Return user DTO");
             return userDTO;
         }
 
@@ -51,12 +56,15 @@ namespace BLL.Services
         {
             try
             {
-                IEnumerable<NewUserDTO> users = _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(await _unit.UserRepository.GetAllAsync());
-                return users;
+                var userList = await _unit.UserRepository.GetAllAsync();
+                var userListDTO = _mapper.GetMapper().Map<IEnumerable<User>, IEnumerable<NewUserDTO>>(userList);
+                _logger.LogInformation("Return user list DTO");
+                return userListDTO;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                _logger.LogError($"Error - {e.Message}");
+                throw e;
             }
         }
 
@@ -66,9 +74,11 @@ namespace BLL.Services
             {
                 _unit.UserRepository.Delete(userId);
                 await _unit.SaveChangeAsync();
+                _logger.LogInformation("User is deleted");
             }
             catch (NullReferenceException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
@@ -80,9 +90,11 @@ namespace BLL.Services
                 var newUser = _mapper.GetMapper().Map<User>(newUserDTO);
                 _unit.UserRepository.Edit(newUser, userId);
                 await _unit.SaveChangeAsync();
+                _logger.LogInformation("User is puted");
             }
             catch (ArgumentException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
@@ -94,11 +106,14 @@ namespace BLL.Services
             {
                 if (user.UserLogin == newUserDTO.UserLogin)
                 {
+
+                    _logger.LogWarning("Such user login already exists");
                     throw new ValidationException("Such user login already exists", "");
                 }
 
                 if (user.Email == newUserDTO.Email)
                 {
+                    _logger.LogWarning("Such user email already exists");
                     throw new ValidationException("Such user email already exists", "");
                 }
             }
@@ -109,11 +124,13 @@ namespace BLL.Services
                 var newUser = _mapper.GetMapper().Map<User>(newUserDTO);
                 _unit.UserRepository.Add(newUser);
                 await _unit.SaveChangeAsync();
-                Guid id = await _unit.UserRepository.GetModelIdAsync(newUser.UserLogin);
+                var id = await _unit.UserRepository.GetModelIdAsync(newUser.UserLogin);
+                _logger.LogInformation("Return user id");
                 return id;
             }
             catch (ArgumentException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw new ValidationException(e.Message, "");
             }
         }
@@ -135,6 +152,8 @@ namespace BLL.Services
                                                 signingCredentials: new SigningCredentials(_options.symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
                                                 );
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+                _logger.LogInformation("Token is created"); 
                 var response = new
                 {
                     access_token = encodedJwt,
@@ -144,17 +163,26 @@ namespace BLL.Services
 
                 };
                 var json = JsonSerializer.Serialize(response);
+                _logger.LogInformation("Return token and other informations");
                 return json;
             }
             catch (InvalidLogginUserException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
             catch (ValidationException e)
             {
+                _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
 
+        }
+
+        public void Dispose()
+        {
+            _unit.Dispose();
+            _logger.LogInformation("User repository is disposed");
         }
 
         private async Task<Guid> GetUserIdAsync(string userLogin)
@@ -164,9 +192,11 @@ namespace BLL.Services
             {
                 if (user.UserLogin == userLogin)
                 {
+                    _logger.LogInformation("Return user id");
                     return user.UserId;
                 }
             }
+            _logger.LogWarning("User not found");
             throw new ValidationException("User not found", "");
 
         }
@@ -187,16 +217,19 @@ namespace BLL.Services
             }
             if (user == null)
             {
+                _logger.LogWarning("User not found");
                 throw new InvalidLogginUserException("User not found");
             }
             else
             {
                 if (user.UserPassword != password)
                 {
+                    _logger.LogWarning("Invalid password");
                     throw new InvalidLogginUserException("Invalid password");
                 }
             }
 
+            _logger.LogInformation("Return user");
             return user;
         }
 
@@ -210,6 +243,7 @@ namespace BLL.Services
             ClaimsIdentity claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
+            _logger.LogInformation("Return claims identity");
             return claimsIdentity;
         }
     }

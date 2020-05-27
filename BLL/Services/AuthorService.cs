@@ -34,8 +34,9 @@ namespace BLL.Services
                 return null;
             }
 
+            var authorDTO = _mapper.GetMapper().Map<Author, AuthorDTO>(author);
             _logger.LogInformation("Return author DTO");
-            return _mapper.GetMapper().Map<Author, AuthorDTO>(author);
+            return authorDTO;
         }
 
         public async Task DeleteAuthorAsync(Guid id)
