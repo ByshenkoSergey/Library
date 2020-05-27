@@ -1,83 +1,41 @@
 ﻿using BLL.DTOModels;
 using DAL.Models.IdentityModels;
 using DAL.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLL.Infrastructure.Mapping;
 using BLL.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace BLL.Services
 {
     public class UserRoleService : IUserRoleService
     {
-        private IUnitOfWork _unit;
-        private IMapConfig _mapper;
+        private readonly IUnitOfWork _unit;
+        private readonly IMapConfig _mapper;
+        private readonly ILogger<UserRoleService> _logger;
 
 
-        public UserRoleService(IUnitOfWork unit, IMapConfig mapper)
+        public UserRoleService(IUnitOfWork unit, IMapConfig mapper, ILogger<UserRoleService> logger)
         {
             _unit = unit;
             _mapper = mapper;
-        }
-
-        public async Task<UserRoleDTO> GetUserRoleDTOAsync(Guid id)
-        {
-            var userRole = await _unit.UserRoleRepository.GetAsync(id);
-
-            if (userRole == null)
-            {
-                return null;
-            }
-
-            return _mapper.GetMapper().Map<UserRole, UserRoleDTO>(userRole);
-        }
-
-        public async Task DeleteUserRoleAsync(Guid id)
-        {
-            try
-            {
-                _unit.UserRoleRepository.Delete(id);
-                await _unit.SaveChangeAsync();
-            }
-            catch (NullReferenceException e)
-            {
-                throw e;
-            }
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
         }
 
         public async Task<IEnumerable<UserRoleDTO>> GetAllUserRoleDTOAsync()
         {
-            var res = _mapper.GetMapper().Map<IEnumerable<UserRole>, IEnumerable<UserRoleDTO>>(await _unit.UserRoleRepository.GetAllAsync());
-            return res;
-        }
-
-        public async Task PutUserRoleAsync(Guid id, UserRoleDTO userRoleDTO)
-        {
-            try
-            {
-                var userRole = _mapper.GetMapper().Map<UserRoleDTO, UserRole>(userRoleDTO);
-                _unit.UserRoleRepository.Edit(userRole, id);
-                await _unit.SaveChangeAsync();
-            }
-
-            catch (NullReferenceException e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<Guid> AddUserRoleAsync(UserRoleDTO userRoleDTO)
-        {
-            var userRole = _mapper.GetMapper().Map<UserRole>(userRoleDTO);
-            _unit.UserRoleRepository.Add(userRole);
-            await _unit.SaveChangeAsync();
-            return await _unit.UserRoleRepository.GetModelIdAsync(userRole.RoleName);
+            var userRoleList = await _unit.UserRoleRepository.GetAllAsync();
+            var userRoleListDTO = _mapper.GetMapper().Map<IEnumerable<UserRole>, IEnumerable<UserRoleDTO>>(userRoleList);
+            _logger.LogInformation("Return user role list DTO");
+            return userRoleListDTO;
         }
 
         public void Dispose()
         {
             _unit.Dispose();
+            _logger.LogInformation("User role repository is disposed");
         }
     }
 }
