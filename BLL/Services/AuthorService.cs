@@ -81,7 +81,7 @@ namespace BLL.Services
         public void Dispose()
         {
             _unit.Dispose();
-            _logger.LogInformation("Author reposytory is dispose");
+            _logger.LogInformation("Author repository is disposed");
         }
 
 
