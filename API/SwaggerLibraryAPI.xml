@@ -9,11 +9,12 @@
             Сlass for working with book authors
             </summary>
         </member>
-        <member name="M:API_Laer.AuthorController.#ctor(BLL.Services.Interfaces.IAuthorService)">
+        <member name="M:API_Laer.AuthorController.#ctor(BLL.Services.Interfaces.IAuthorService,Microsoft.Extensions.Logging.ILogger{API_Laer.AuthorController})">
             <summary>
             Dependency injection
             </summary>
             <param name="service"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:API_Laer.AuthorController.GetAuthorAsync(System.Guid)">
             <summary>
@@ -49,14 +50,15 @@
             Сlass for working with users
             </summary>
         </member>
-        <member name="M:API_Laer.BookController.#ctor(BLL.Services.Interfaces.IBookService,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:API_Laer.BookController.#ctor(BLL.Services.Interfaces.IBookService,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILogger{API_Laer.BookController})">
             <summary>
             Dependency injection
             </summary>
             <param name="service"></param>
             <param name="appEnvironment"></param>
+            <param name="logger"></param>
         </member>
-        <member name="M:API_Laer.BookController.GetBookAsync(System.Guid)">
+        <member name="M:API_Laer.BookController.GetBookFileAsync(System.Guid)">
             <summary>
             Receiving the book file by id/ protected / role for access - Moderator, User,
             SuperUser, admin
@@ -78,13 +80,6 @@
             SuperUser, admin
             </summary>
             <returns></returns>
-        </member>
-        <member name="M:API_Laer.BookController.DeleteBookAsync(System.Guid)">
-            <summary>
-            Delete book by id number/ protected / role for access - Admin
-            </summary>
-            <param name="id"></param>
-            <returns></returns> 
         </member>
         <member name="M:API_Laer.BookController.PutBookAsync(System.Guid,BLL.DTOModels.BookAddDTO)">
             <summary>
@@ -108,16 +103,24 @@
             <param name="file"></param>
             <returns></returns>
         </member>
+        <member name="M:API_Laer.BookController.DeleteBookAsync(System.Guid)">
+            <summary>
+            Delete book by id number/ protected / role for access - Admin
+            </summary>
+            <param name="id"></param>
+            <returns></returns> 
+        </member>
         <member name="T:API_Laer.PublisherController">
             <summary>
             Сlass for working with book publishers
             </summary>
         </member>
-        <member name="M:API_Laer.PublisherController.#ctor(BLL.Services.Interfaces.IPublisherService)">
+        <member name="M:API_Laer.PublisherController.#ctor(BLL.Services.Interfaces.IPublisherService,Microsoft.Extensions.Logging.ILogger{API_Laer.PublisherController})">
             <summary>
             Dependency injection
             </summary>
             <param name="service"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:API_Laer.PublisherController.GetPublisherAsync(System.Guid)">
             <summary>
@@ -255,11 +258,12 @@
             Сlass for working with users role
             </summary>
         </member>
-        <member name="M:API.Controllers.UserRoleController.#ctor(BLL.Services.Interfaces.IUserRoleService)">
+        <member name="M:API.Controllers.UserRoleController.#ctor(BLL.Services.Interfaces.IUserRoleService,Microsoft.Extensions.Logging.ILogger{API.Controllers.UserRoleController})">
             <summary>
             Dependency injection
             </summary>
             <param name="userRoleServices"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:API.Controllers.UserRoleController.GetAllUserRoleAsync">
             <summary>
