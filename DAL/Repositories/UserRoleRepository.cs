@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Models.IdentityModels;
 using DAL.Repository;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -8,8 +9,15 @@ namespace DAL.Repositories
 {
     public class UserRoleRepository : Repository<UserRole>
     {
-        public UserRoleRepository(LibraryDataBaseContext context)
-  : base(context) { }
+
+        private readonly ILogger<UserRoleRepository> _logger;
+
+        public UserRoleRepository(LibraryDataBaseContext context, ILogger<UserRoleRepository> logger)
+  : base(context, logger) 
+        {
+            _logger = logger;
+            _logger.LogInformation("Dependency injection successfully");
+        }
 
        
         public override async Task<Guid> GetModelIdAsync(string name)
@@ -19,9 +27,11 @@ namespace DAL.Repositories
             {
                 if (userRole.RoleName == name)
                 {
+                    _logger.LogInformation("Return user role id");
                     return userRole.RoleId;
                 }
             }
+            _logger.LogWarning("User role not found, return default");
             return default;
         }
     }
