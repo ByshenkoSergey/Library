@@ -28,7 +28,7 @@ namespace DAL.Repositories
                     return author.AuthorId;
                 }
             }
-            _logger.LogWarning("author not found, return default");
+            _logger.LogWarning("Author not found, return default");
             return default;
         }
     }
