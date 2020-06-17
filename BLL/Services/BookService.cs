@@ -29,7 +29,7 @@ namespace BLL.Services
         }
 
 
-        public async Task<BookAddDTO> GetBookAddDTOAsync(Guid id)
+        public async Task<BookAddDTO> GetBookAddDTOAsync(Guid id)//+
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
