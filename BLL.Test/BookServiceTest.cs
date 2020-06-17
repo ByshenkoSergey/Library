@@ -5,6 +5,7 @@ using BLL.Services;
 using DAL.Models;
 using DAL.Repository.Interfaces;
 using DAL.UnitOfWork;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -20,6 +21,9 @@ namespace BLL.Test
         private Mock<IUnitOfWork> _unitMock;
         private Mock<IRepository<Book>> _repoMock;
         private Mock<IMapConfig> _mapMock;
+        private Mock<ILogger<BookService>> _loggerMock;
+        private List<Book> _booksTestData;
+
 
         [SetUp]
         public void Setup()
@@ -27,19 +31,22 @@ namespace BLL.Test
             _unitMock = new Mock<IUnitOfWork>();
             _repoMock = new Mock<IRepository<Book>>();
             _mapMock = new Mock<IMapConfig>();
+            _loggerMock = new Mock<ILogger<BookService>>();
+            _booksTestData = GenerateBooksTestData().ToList();
         }
 
         [Test]
         public async Task GetAllBooksFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
         {
             // Arrange
-            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => GetAllBookTest()));
+            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => (IEnumerable<Book>)_booksTestData));
             _unitMock.Setup(unit => unit.BookRepository).Returns(_repoMock.Object);
             _mapMock.Setup(map => map.GetMapper()).Returns(GetMapTest());
-            var bookService = new BookService(_unitMock.Object, _mapMock.Object);
+
+            var bookService = new BookService(_unitMock.Object, _mapMock.Object, _loggerMock.Object);
 
             // Act
-            var expected = GetAllBookFormDTOTest();
+            var expected = GenerateAllBookFormDTOTest().ToList();
             var actual = (await bookService.GetAllBooksFormDTOAsync()).ToList();
 
             // Assert
@@ -49,34 +56,38 @@ namespace BLL.Test
                 {
                     Assert.AreEqual(expected[i].AuthorName, actual[i].AuthorName);
                     Assert.AreEqual(expected[i].PublisherName, actual[i].PublisherName);
+                    Assert.AreEqual(expected[i].BookName, actual[i].BookName);
                 }
             });
         }
-
 
         [Test]
-        public async Task GetBookFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
+        public async Task GetBookAddDTOAsync_Id_true_return_BookAddDTO()
         {
             // Arrange
-            _repoMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => GetAllBookTest()));
+            _repoMock.Setup(repo => repo.GetAsync(new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1))).Returns(Task.Run(() => _booksTestData[0]));
             _unitMock.Setup(unit => unit.BookRepository).Returns(_repoMock.Object);
             _mapMock.Setup(map => map.GetMapper()).Returns(GetMapTest());
-            var bookService = new BookService(_unitMock.Object, _mapMock.Object);
+
+            var mapConfig = new MapConfig(_unitMock.Object, _mapMock.Object, _loggerMock.Object);
+            var bookService = new BookService(_unitMock.Object, _mapMock.Object, _loggerMock.Object);
 
             // Act
-            var expected = GetAllBookFormDTOTest();
-            var actual = (await bookService.GetAllBooksFormDTOAsync()).ToList();
+            var expected = GenerateAllBookFormDTOTest().ToList()[0];
+            var actual = (await bookService.GetBookAddDTOAsync(new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)));
 
             // Assert
             Assert.Multiple(() =>
             {
-                for (int i = 0; i < expected.Count; i++)
-                {
-                    Assert.AreEqual(expected[i].AuthorName, actual[i].AuthorName);
-                    Assert.AreEqual(expected[i].PublisherName, actual[i].PublisherName);
-                }
+                    Assert.AreEqual(expected.AuthorName, actual.AuthorName);
+                    Assert.AreEqual(expected.PublisherName, actual.PublisherName);
+                    Assert.AreEqual(expected.BookName, actual.BookName);
+                
             });
         }
+
+
+
 
 
         private IMapper GetMapTest()
@@ -89,21 +100,22 @@ namespace BLL.Test
             }).CreateMapper();
             return _mapper;
         }
+
         private string GetAuthorName(Guid authorId)
         {
 
             string authorName = null;
             switch (authorId)
             {
-                case var r when (r == new Guid("00000000000000000000000000000011")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11)):
                     authorName = "author1";
                     break;
 
-                case var r when (r == new Guid("00000000000000000000000000000022")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22)):
                     authorName = "author2";
                     break;
 
-                case var r when (r == new Guid("00000000000000000000000000000033")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33)):
                     authorName = "author3";
                     break;
             }
@@ -117,105 +129,100 @@ namespace BLL.Test
             string publisherName = null;
             switch (publisherId)
             {
-                case var r when (r == new Guid("00000000000000000000000000000111")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111)):
                     publisherName = "publisher1";
                     break;
 
-                case var r when (r == new Guid("00000000000000000000000000000222")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222)):
                     publisherName = "publisher2";
                     break;
 
-                case var r when (r == new Guid("00000000000000000000000000000333")):
+                case var r when (r == new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 255)):
                     publisherName = "publisher3";
                     break;
             }
             return publisherName;
 
         }
-        private IEnumerable<Book> GetAllBookTest()
+        private IEnumerable<Book> GenerateBooksTestData()
         {
-            var bookList = new List<Book>();
-
-            bookList.Add(new Book
+            yield return new Book
             {
-                BookId = new Guid("00000000000000000000000000000001"),
-                AuthorId = new Guid("00000000000000000000000000000011"),
-                PublisherId = new Guid("00000000000000000000000000000111"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111),
                 BookName = "book1",
                 FilePath = "address1",
                 FileType = "text/plain",
                 YearOfPublishing = "2001",
                 Rating = 1
-            });
+            };
 
-            bookList.Add(new Book
+            yield return new Book
             {
-                BookId = new Guid("00000000000000000000000000000002"),
-                AuthorId = new Guid("00000000000000000000000000000022"),
-                PublisherId = new Guid("00000000000000000000000000000222"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 222),
                 BookName = "book2",
                 FilePath = "address2",
                 FileType = "text/plain",
                 YearOfPublishing = "2002",
                 Rating = 2
-            });
+            };
 
-            bookList.Add(new Book
+            yield return new Book
             {
-                BookId = new Guid("00000000000000000000000000000003"),
-                AuthorId = new Guid("00000000000000000000000000000033"),
-                PublisherId = new Guid("00000000000000000000000000000333"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 255),
                 BookName = "book3",
                 FilePath = "address3",
                 FileType = "text/plain",
                 YearOfPublishing = "2003",
                 Rating = 3
-            });
-
-            return bookList;
+            };
 
         }
-        private List<BookFormDTO> GetAllBookFormDTOTest()
-        {
-            var bookFormDTOList = new List<BookFormDTO>();
 
-            bookFormDTOList.Add(new BookFormDTO
+
+        private IEnumerable<BookFormDTO> GenerateAllBookFormDTOTest()
+        {
+            yield return new BookFormDTO
             {
-                BookId = new Guid("00000000000000000000000000000001"),
-                AuthorId = new Guid("00000000000000000000000000000011"),
-                PublisherId = new Guid("00000000000000000000000000000111"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 111),
                 AuthorName = "author1",
                 PublisherName = "publisher1",
                 BookName = "book1",
                 YearOfPublishing = "2001",
                 Rating = 1
-            });
+            };
 
-            bookFormDTOList.Add(new BookFormDTO
+            yield return new BookFormDTO
             {
-                BookId = new Guid("00000000000000000000000000000002"),
-                AuthorId = new Guid("00000000000000000000000000000022"),
-                PublisherId = new Guid("00000000000000000000000000000222"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 222),
                 AuthorName = "author2",
                 PublisherName = "publisher2",
                 BookName = "book2",
                 YearOfPublishing = "2002",
                 Rating = 2
-            });
+            };
 
-            bookFormDTOList.Add(new BookFormDTO
+            yield return new BookFormDTO
             {
-                BookId = new Guid("00000000000000000000000000000003"),
-                AuthorId = new Guid("00000000000000000000000000000033"),
-                PublisherId = new Guid("00000000000000000000000000000333"),
+                BookId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3),
+                AuthorId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33),
+                PublisherId = new Guid(0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 255),
                 AuthorName = "author3",
                 PublisherName = "publisher3",
                 BookName = "book3",
                 YearOfPublishing = "2003",
                 Rating = 3
-            });
+            };
 
-            return bookFormDTOList;
         }
     }
 }

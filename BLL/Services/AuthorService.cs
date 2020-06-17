@@ -41,6 +41,7 @@ namespace BLL.Services
 
         public async Task DeleteAuthorAsync(Guid id)
         {
+                         
             try
             {
                 _unit.AuthorRepository.Delete(id);
