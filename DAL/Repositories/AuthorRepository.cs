@@ -9,12 +9,11 @@ namespace DAL.Repositories
 {
     public class AuthorRepository : Repository<Author>
     {
-        private readonly ILogger<AuthorRepository> _logger;
-        public AuthorRepository(LibraryDataBaseContext context, ILogger<AuthorRepository> logger)
-    : base(context, logger) 
+        
+        public AuthorRepository(LibraryDataBaseContext context)
+    : base(context) 
         {
-            _logger = logger;
-            _logger.LogInformation("Dependency injection successfully");
+           
         }
 
         public override async Task<Guid> GetModelIdAsync(string name)
@@ -24,11 +23,9 @@ namespace DAL.Repositories
             {
                 if (author.AuthorName == name)
                 {
-                    _logger.LogInformation("Return author id");
-                    return author.AuthorId;
+                  return author.AuthorId;
                 }
             }
-            _logger.LogWarning("Author not found, return default");
             return default;
         }
     }

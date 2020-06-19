@@ -9,15 +9,13 @@ namespace DAL.Repositories
 {
     public class UserRepository : Repository<User>
     {
-        private readonly ILogger<UserRepository> _logger;
 
-        public UserRepository(LibraryDataBaseContext context, ILogger<UserRepository> logger)
-  : base(context, logger) 
+        public UserRepository(LibraryDataBaseContext context)
+  : base(context)
         {
-            _logger = logger;
-            _logger.LogInformation("Dependency injection successfully");
+
         }
-       
+
         public override async Task<Guid> GetModelIdAsync(string name)
         {
             var userList = await GetAllAsync();
@@ -25,11 +23,11 @@ namespace DAL.Repositories
             {
                 if (user.UserLogin == name)
                 {
-                    _logger.LogInformation("Return user id");
+
                     return user.UserId;
                 }
             }
-            _logger.LogWarning("User not found, return default");
+
             return default;
         }
     }

@@ -10,16 +10,13 @@ namespace DAL.Repositories
     public class UserRoleRepository : Repository<UserRole>
     {
 
-        private readonly ILogger<UserRoleRepository> _logger;
-
-        public UserRoleRepository(LibraryDataBaseContext context, ILogger<UserRoleRepository> logger)
-  : base(context, logger) 
+        public UserRoleRepository(LibraryDataBaseContext context)
+: base(context)
         {
-            _logger = logger;
-            _logger.LogInformation("Dependency injection successfully");
+
         }
 
-       
+
         public override async Task<Guid> GetModelIdAsync(string name)
         {
             var userRoleList = await GetAllAsync();
@@ -27,11 +24,11 @@ namespace DAL.Repositories
             {
                 if (userRole.RoleName == name)
                 {
-                    _logger.LogInformation("Return user role id");
+
                     return userRole.RoleId;
                 }
             }
-            _logger.LogWarning("User role not found, return default");
+
             return default;
         }
     }

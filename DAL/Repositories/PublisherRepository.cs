@@ -9,12 +9,10 @@ namespace DAL.Repositories
 {
     class PublisherRepository : Repository<Publisher>
     {
-        private readonly ILogger<PublisherRepository> _logger;
-        public PublisherRepository(LibraryDataBaseContext context, ILogger<PublisherRepository> logger)
-  : base(context, logger) 
+        public PublisherRepository(LibraryDataBaseContext context)
+: base(context)
         {
-            _logger = logger;
-            _logger.LogInformation("Dependency injection successfully");
+
         }
 
         public override async Task<Guid> GetModelIdAsync(string name)
@@ -24,11 +22,11 @@ namespace DAL.Repositories
             {
                 if (Publisher.PublisherName == name)
                 {
-                    _logger.LogInformation("Return publisher id");
+
                     return Publisher.PublisherId;
                 }
             }
-            _logger.LogWarning("Publisher not found, return default");
+
             return default;
         }
 

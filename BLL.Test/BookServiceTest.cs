@@ -187,7 +187,8 @@ namespace BLL.Test
 
             // Act
             await bookService.AddBookAsync(GetNewBookDTO());
-            var actual = _booksTestData;
+            var bookList = await bookService.GetAllBooksFormDTOAsync();
+            var actual = bookList.Count();
 
             // Assert
             Assert.AreEqual(actual, 3);
@@ -335,7 +336,7 @@ namespace BLL.Test
                 }
                 _booksTestData.Remove(bookRemove);
             });
-            _repoBooksMock.Setup(repo => repo.Add(GetNewBook())).Callback<Book>((book) => 
+            _repoBooksMock.Setup(repo => repo.Add(It.IsAny<Book>())).Callback<Book>((book) => 
             { 
                 _booksTestData.Add(book);
                 
