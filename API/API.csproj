@@ -77,6 +77,10 @@
   </Target>
 
   <ItemGroup>
+    <Content Remove="wwwroot\BookLibrary\.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app.component.ts" />
     <None Remove="ClientApp\src\app.module.ts" />
     <None Remove="ClientApp\src\app\bookapp\bookservice.ts" />
@@ -113,9 +117,6 @@
     <None Include="wwwroot\BookLibrary\Square World.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Include="wwwroot\BookLibrary\test.txt" />
-    <None Include="wwwroot\BookLibrary\tests.txt" />
-    <None Include="wwwroot\BookLibrary\Киплинг.txt" />
     <None Include="wwwroot\BookLibrary\Нello cat.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

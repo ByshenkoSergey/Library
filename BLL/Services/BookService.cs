@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 
 namespace BLL.Services
@@ -52,7 +53,7 @@ namespace BLL.Services
         }
 
 
-        public async Task<FileDTO> GetBookFileAsync(Guid id)
+        public async Task<FileDTO> GetBookFileAsync(Guid id)//+
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -89,17 +90,26 @@ namespace BLL.Services
 
         }
 
-        public async Task DeleteBookAsync(Guid id)
+        public async Task DeleteBookAsync(Guid id)//+
         {
             try
             {
                 var book = await _unit.BookRepository.GetAsync(id);
+                if (book == null)
+                {
+                    throw new ValidationException("Book not found", "");
+                }
                 _unit.BookRepository.Delete(id);
                 DeleteBookFile(book.FilePath);
                 await _unit.SaveChangeAsync();
                 _logger.LogInformation("Book is deleted");
             }
             catch (NullReferenceException e)
+            {
+                _logger.LogError($"Error - {e.Message}");
+                throw new ValidationException(e.Message, "");
+            }
+            catch (ValidationException e)
             {
                 _logger.LogError($"Error - {e.Message}");
                 throw new ValidationException(e.Message, "");
@@ -172,7 +182,7 @@ namespace BLL.Services
             }
         }
 
-       
+
         private void DeleteBookFile(string bookFileAddress)
         {
             try
