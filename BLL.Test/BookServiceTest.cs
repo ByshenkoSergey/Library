@@ -10,7 +10,6 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +29,8 @@ namespace BLL.Test
         private List<Book> _booksTestData;
         private List<Publisher> _publishersTestData;
         private List<Author> _authorsTestData;
+        private MapConfig _mapConfig;
+        private BookService _bookService;
 
 
         [SetUp]
@@ -52,19 +53,19 @@ namespace BLL.Test
             AuthorMoqSetup();
             PublisherMoqSetup();
             UnitMoqSetup();
+
+            _mapConfig = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
+            _bookService = new BookService(_unitMock.Object, _mapConfig, _bookLogger.Object);
         }
 
 
         [Test]
         public async Task GetAllBooksFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+            
             // Act
             var expected = GenerateAllBookFormDTOTest().ToList();
-            var actual = (await bookService.GetAllBooksFormDTOAsync()).ToList();
+            var actual = (await _bookService.GetAllBooksFormDTOAsync()).ToList();
 
             // Assert
             Assert.Multiple(() =>
@@ -81,13 +82,10 @@ namespace BLL.Test
         [Test]
         public async Task GetBookAddDTOAsync_book_id_true_return_BookAddDTO()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+            
             // Act
             var expected = GenerateAllBookFormDTOTest().ToList()[0];
-            var actual = await bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000000001"));
+            var actual = await _bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000000001"));
 
             // Assert
             Assert.Multiple(() =>
@@ -102,12 +100,9 @@ namespace BLL.Test
         [Test]
         public async Task GetBookAddDTOAsync_book_id_false_return_BookAddDTO()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+           
             // Act
-            var actual = await bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000005001"));
+            var actual = await _bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000005001"));
 
             // Assert
             Assert.IsNull(actual);
@@ -116,14 +111,9 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_id_true_return_FileDTO()
         {
-            // Arrange
-
-
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+            
             // Act
-            var actual = await bookService.GetBookFileAsync(new Guid("00000000000000000000000000000001"));
+            var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000001"));
 
             // Assert
             Assert.Multiple(() =>
@@ -137,12 +127,9 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_id_fail_return_null()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+           
             // Act
-            var actual = await bookService.GetBookFileAsync(new Guid("00000000000000000000000000000321"));
+            var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000321"));
 
             // Assert
             Assert.IsNull(actual);
@@ -151,12 +138,9 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_path_fail_return_null()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+           
             // Act
-            var actual = await bookService.GetBookFileAsync(new Guid("00000000000000000000000000000002"));
+            var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000002"));
 
             // Assert
             Assert.IsNull(actual);
@@ -165,13 +149,10 @@ namespace BLL.Test
         [Test]
         public async Task DeleteBookAsync_book_id_true_count_books_minus_one_book()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+            
             // Act
-            await bookService.DeleteBookAsync(new Guid("00000000000000000000000000000001"));
-            var bookList = await bookService.GetAllBooksFormDTOAsync();
+            await _bookService.DeleteBookAsync(new Guid("00000000000000000000000000000001"));
+            var bookList = await _bookService.GetAllBooksFormDTOAsync();
             var actual = bookList.Count();
 
             // Assert
@@ -181,17 +162,94 @@ namespace BLL.Test
         [Test]
         public async Task AddBookAsync_count_books_plus_one_book()
         {
-            // Arrange
-            var mapper = new MapConfig(_unitMock.Object, _mapper.Object, _mapLogger.Object);
-            var bookService = new BookService(_unitMock.Object, mapper, _bookLogger.Object);
-
+           
             // Act
-            await bookService.AddBookAsync(GetNewBookDTO());
-            var bookList = await bookService.GetAllBooksFormDTOAsync();
+            await _bookService.AddBookAsync(GetNewBookDTO());
+            var bookList = await _bookService.GetAllBooksFormDTOAsync();
             var actual = bookList.Count();
 
             // Assert
             Assert.AreEqual(actual, 3);
+        }
+
+
+        [Test]
+        public async Task AddBookAsync_newAuthorAndNewPublisher_count_books_plus_one_book_and_one_publisher_and_one_author()
+        {
+            // Act
+            await _bookService.AddBookAsync(GetNewBookDTOWithNewAuthorAndNewPublisher());
+            var bookList = await _unitMock.Object.BookRepository.GetAllAsync();
+            var authorList = await _unitMock.Object.AuthorRepository.GetAllAsync();
+            var publisherList = await _unitMock.Object.PublisherRepository.GetAllAsync();
+            
+
+            var actualBookCount = bookList.Count();
+            var actualAuthorCount = authorList.Count();
+            var actualPublisherCount = publisherList.Count();
+
+
+            // Assert
+            Assert.Multiple(() => {
+                Assert.AreEqual(actualBookCount, 3);
+                Assert.AreEqual(actualAuthorCount, 3);
+                Assert.AreEqual(actualPublisherCount, 3);
+            });
+            
+        }
+
+        [Test]
+        public async Task EditBookAsync_newAuthorAndNewPublisher_change_book_and_plus_one_publisher_and_plus_one_author()
+        {
+            // Act
+            await _bookService.EditBookAsync(GetChangeBookDTOWithNewAuthorAndNewPublisher(), new Guid("00000000000000000000000000000001"));
+            var bookList = await _unitMock.Object.BookRepository.GetAllAsync();
+            var authorList = await _unitMock.Object.AuthorRepository.GetAllAsync();
+            var publisherList = await _unitMock.Object.PublisherRepository.GetAllAsync();
+
+
+            var actualBook = bookList.ToList()[0];
+            var actualAuthorCount = authorList.Count();
+            var actualPublisherCount = publisherList.Count();
+
+
+            // Assert
+            Assert.Multiple(() => {
+                Assert.AreEqual(actualAuthorCount, 3);
+                Assert.AreEqual(actualPublisherCount, 3);
+                Assert.AreEqual(actualBook.BookId,new Guid("00000000000000000000000000000001"));
+                Assert.AreEqual(actualBook.BookName, "book1_change.txt");
+                Assert.AreEqual(actualBook.YearOfPublishing, "2022");
+            });
+
+        }
+
+        private BookAddDTO GetChangeBookDTOWithNewAuthorAndNewPublisher()
+        {
+            return new BookAddDTO
+            {
+                BookId = new Guid("00000000000000000000000000000001"),
+                AuthorName = "author3",
+                PublisherName = "publisher3",
+                BookName = "book1_change",
+                FilePath = @"E:\project\Library\API\wwwroot\BookLibrary\BookLibraryTest\book1_change.txt",
+                FileType = "text/plain",
+                YearOfPublishing = "2022",
+            };
+        }
+
+
+            private BookAddDTO GetNewBookDTOWithNewAuthorAndNewPublisher()
+        {
+            return new BookAddDTO
+            {
+                BookId = new Guid("00000000000000000000000000000003"),
+                AuthorName = "author3",
+                PublisherName = "publisher3",
+                BookName = "book3",
+                FilePath = @"E:\project\Library\API\wwwroot\BookLibrary\BookLibraryTest\book3.txt",
+                FileType = "text/plain",
+                YearOfPublishing = "2003",
+            };
         }
 
         private BookAddDTO GetNewBookDTO()
@@ -214,9 +272,7 @@ namespace BLL.Test
             {
                 BookId = new Guid("00000000000000000000000000000001"),
                 AuthorId = new Guid("00000000000000000000000000000011"),
-                PublisherId = new Guid("00000000000000000000000000000111"),
-                BookName = "book1",
-                FilePath = @"E:\project\Library\API\wwwroot\BookLibrary\BookLibraryTest\book1.txt",
+
                 FileType = "text/plain",
                 YearOfPublishing = "2001",
                 Rating = 1
@@ -266,8 +322,8 @@ namespace BLL.Test
         }
 
         private IEnumerable<Author> GenerateAuthorsTestData()
-        {
-            yield return new Author
+        { 
+        yield return new Author
             {
                 AuthorName = "author1",
                 AuthorBiography = "biography1",
@@ -316,6 +372,10 @@ namespace BLL.Test
             }
         }
 
+
+       
+
+
         private void BookMoqSetup()
         {
             _repoBooksMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => (IEnumerable<Book>)_booksTestData));
@@ -336,29 +396,22 @@ namespace BLL.Test
                 }
                 _booksTestData.Remove(bookRemove);
             });
-            _repoBooksMock.Setup(repo => repo.Add(It.IsAny<Book>())).Callback<Book>((book) => 
-            { 
-                _booksTestData.Add(book);
-                
-            });
+            _repoBooksMock.Setup(repo => repo.Add(It.IsAny<Book>())).Callback<Book>((book) => _booksTestData.Add(book));
+            _repoBooksMock.Setup(repo => repo.Edit(It.IsAny<Book>(), It.IsAny<Guid>())).Callback<Book, Guid>((book, id) => 
+            {
+                int testId;
+                if (id == new Guid("00000000000000000000000000000001"))
+                    testId = 0;
+                else if (id == new Guid("00000000000000000000000000000002"))
+                    testId = 1;
+                else
+                    throw new ArgumentException("Test book not found");
+                _booksTestData.RemoveAt(testId);
+                _booksTestData.Insert(testId, book);
+                });
         }
 
        
-        private Book GetNewBook()
-        {
-            return new Book
-            {
-                BookId = new Guid("00000000000000000000000000000003"),
-                AuthorId = new Guid("00000000000000000000000000000022"),
-                PublisherId = new Guid("00000000000000000000000000000111"),
-                BookName = "book3",
-                FilePath = @"E:\project\Library\API\wwwroot\BookLibrary\BookLibraryTest\book3.txt",
-                FileType = "text/plain",
-                YearOfPublishing = "2003",
-                Rating = 3
-            };
-        }
-
         private void AuthorMoqSetup()
         {
             _repoAuthorsMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => (IEnumerable<Author>)_authorsTestData));
@@ -366,6 +419,9 @@ namespace BLL.Test
             _repoAuthorsMock.Setup(repo => repo.GetAsync(new Guid("00000000000000000000000000000022"))).Returns(Task.Run(() => _authorsTestData[1]));
             _repoAuthorsMock.Setup(repo => repo.GetModelIdAsync("author1")).Returns(Task.Run(() => _authorsTestData[0].AuthorId));
             _repoAuthorsMock.Setup(repo => repo.GetModelIdAsync("author2")).Returns(Task.Run(() => _authorsTestData[1].AuthorId));
+            _repoAuthorsMock.Setup(repo => repo.GetModelIdAsync("author3")).Returns(Task.Run(() => new Guid("00000000000000000000000000000033")));
+            _repoAuthorsMock.Setup(repo => repo.Add(It.IsAny<Author>())).Callback<Author>((author) => _authorsTestData.Add(author));
+           
         }
 
         private void PublisherMoqSetup()
@@ -375,6 +431,8 @@ namespace BLL.Test
             _repoPublishersMock.Setup(repo => repo.GetAsync(new Guid("00000000000000000000000000000222"))).Returns(Task.Run(() => _publishersTestData[1]));
             _repoPublishersMock.Setup(repo => repo.GetModelIdAsync("publisher1")).Returns(Task.Run(() => _publishersTestData[0].PublisherId));
             _repoPublishersMock.Setup(repo => repo.GetModelIdAsync("publisher2")).Returns(Task.Run(() => _publishersTestData[1].PublisherId));
+            _repoPublishersMock.Setup(repo => repo.GetModelIdAsync("publisher3")).Returns(Task.Run(() => new Guid("00000000000000000000000000000333")));
+            _repoPublishersMock.Setup(repo => repo.Add(It.IsAny<Publisher>())).Callback<Publisher>((publisher) => _publishersTestData.Add(publisher));
         }
 
         private void UnitMoqSetup()
