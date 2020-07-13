@@ -58,6 +58,8 @@ namespace BLL.Test
             _bookService = new BookService(_unitMock.Object, _mapConfig, _bookLogger.Object);
         }
 
+        #region GetAll
+
 
         [Test]
         public async Task GetAllBooksFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
@@ -96,6 +98,9 @@ namespace BLL.Test
 
             });
         }
+
+        #endregion
+
 
         [Test]
         public async Task GetBookAddDTOAsync_book_id_false_return_BookAddDTO()

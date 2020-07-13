@@ -182,7 +182,6 @@ namespace BLL.Services
             }
         }
 
-
         private void DeleteBookFile(string bookFileAddress)
         {
             try
@@ -215,14 +214,6 @@ namespace BLL.Services
             _logger.LogInformation("Such a book is not exists");
             return false;
         }
-
-        public void Dispose()
-        {
-            _unit.Dispose();
-            _logger.LogInformation("Book repository is disposed");
-        }
-
-
 
     }
 

@@ -8,7 +8,6 @@ namespace BLL.Services.Interfaces
     public interface IBookService
     {
         Task DeleteBookAsync(Guid id);
-        void Dispose();
         Task<BookAddDTO> GetBookAddDTOAsync(Guid id);
         Task EditBookAsync(BookAddDTO newBookDTO, Guid bookId);
         Task<IEnumerable<BookFormDTO>> GetAllBooksFormDTOAsync();

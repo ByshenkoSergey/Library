@@ -79,11 +79,5 @@ namespace BLL.Services
             }
         }
 
-        public void Dispose()
-        {
-            _unit.Dispose();
-            _logger.LogInformation("Publisher repository is disposed");
-        }
-
     }
 }

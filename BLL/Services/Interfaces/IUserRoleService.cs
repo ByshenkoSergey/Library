@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Interfaces
 {
-    public interface IUserRoleService : IDisposable
+    public interface IUserRoleService 
     {
         Task<IEnumerable<UserRoleDTO>> GetAllUserRoleDTOAsync();
     }

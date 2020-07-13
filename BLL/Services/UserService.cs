@@ -179,12 +179,6 @@ namespace BLL.Services
 
         }
 
-        public void Dispose()
-        {
-            _unit.Dispose();
-            _logger.LogInformation("User repository is disposed");
-        }
-
         private async Task<Guid> GetUserIdAsync(string userLogin)
         {
             var userList = await GetAllUsersDTOAsync();

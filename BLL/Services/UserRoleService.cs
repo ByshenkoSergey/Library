@@ -32,10 +32,5 @@ namespace BLL.Services
             return userRoleListDTO;
         }
 
-        public void Dispose()
-        {
-            _unit.Dispose();
-            _logger.LogInformation("User role repository is disposed");
-        }
     }
 }

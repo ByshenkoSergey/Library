@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Interfaces
 {
-    public interface IPublisherService:IDisposable
+    public interface IPublisherService
     {
         Task DeletePublisherAsync(Guid id);
         Task EditPublisherAsync(Guid id, PublisherDTO publisherDTO );

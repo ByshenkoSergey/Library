@@ -41,7 +41,7 @@ namespace BLL.Services
 
         public async Task DeleteAuthorAsync(Guid id)
         {
-                         
+
             try
             {
                 _unit.AuthorRepository.Delete(id);
@@ -60,7 +60,7 @@ namespace BLL.Services
             var authorList = await _unit.AuthorRepository.GetAllAsync();
             var authorListDTO = _mapper.GetMapper().Map<IEnumerable<Author>, IEnumerable<AuthorDTO>>(authorList);
             _logger.LogInformation("Return author list DTO");
-            return authorListDTO; 
+            return authorListDTO;
         }
 
         public async Task EditAuthorAsync(Guid id, AuthorDTO authorDTO)
@@ -79,13 +79,6 @@ namespace BLL.Services
                 throw e;
             }
         }
-
-        public void Dispose()
-        {
-            _unit.Dispose();
-            _logger.LogInformation("Author repository is disposed");
-        }
-
 
     }
 

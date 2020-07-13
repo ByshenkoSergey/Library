@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Interfaces
 {
-    public interface IUserService : IDisposable
+    public interface IUserService 
     {
         Task DeleteUserAsync(Guid userId);
         Task EditUserAsync(Guid userId, NewUserDTO newUserDTO);

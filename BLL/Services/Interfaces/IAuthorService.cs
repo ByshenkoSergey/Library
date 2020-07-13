@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.Interfaces
 {
-    public interface IAuthorService : IDisposable
+    public interface IAuthorService 
     {
         Task<AuthorDTO> GetAuthorDTOAsync(Guid id);
         Task DeleteAuthorAsync(Guid id);
