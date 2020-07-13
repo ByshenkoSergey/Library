@@ -16,7 +16,7 @@ namespace BLL.Infrastructure
     public static class BLInfrastructure
     {
 
-        public static void AddBLServises(this IServiceCollection services, string connectionString, string key)
+        public static void AddBLServices(this IServiceCollection services, string connectionString, string key)
         {
             services.AddScoped<IAuthOptions, AuthOptions>(c => new AuthOptions(key));
             services.AddScoped<IUserService, UserService>();

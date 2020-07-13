@@ -1,12 +1,11 @@
+using API.Infrastructure;
 using AutoMapper;
 using BLL.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using System;
 
 namespace API_Laer
@@ -38,41 +37,23 @@ namespace API_Laer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
             services.AddCors();
+            
             services.AddControllers();
-                      
-            services.AddApiVersioning(o => {
-                o.ReportApiVersions = true;
-                o.AssumeDefaultVersionWhenUnspecified = true;
-                o.DefaultApiVersion = new ApiVersion(1, 0);
-            });
-
+            
             services.AddMvc();
-           
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "Library API",
-                    Description = "ASP.NET Core Web API"
-                });
-                c.IncludeXmlComments(GetXmlCommentsPath());
-            });
+            
+            services.AddAPIServices();
 
             //DefaultConnection
             //NewConnectionHomePC
-            services.AddBLServises(Configuration.GetConnectionString("NewConnectionHomePC"),
+            services.AddBLServices(Configuration.GetConnectionString("NewConnectionHomePC"),
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
 
-
         }
 
-        private static string GetXmlCommentsPath()
-        {
-            return String.Format(@"{0}\SwaggerLibraryAPI.XML", AppDomain.CurrentDomain.BaseDirectory);
-        }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
