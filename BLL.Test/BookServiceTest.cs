@@ -60,11 +60,10 @@ namespace BLL.Test
 
         #region GetAll
 
-
         [Test]
         public async Task GetAllBooksFormDTOAsync_map_books_to_booksFormDTO_return_AllBooksFormDTO()
         {
-            
+
             // Act
             var expected = GenerateAllBookFormDTOTest().ToList();
             var actual = (await _bookService.GetAllBooksFormDTOAsync()).ToList();
@@ -84,7 +83,7 @@ namespace BLL.Test
         [Test]
         public async Task GetBookAddDTOAsync_book_id_true_return_BookAddDTO()
         {
-            
+
             // Act
             var expected = GenerateAllBookFormDTOTest().ToList()[0];
             var actual = await _bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000000001"));
@@ -98,14 +97,14 @@ namespace BLL.Test
 
             });
         }
-
         #endregion
 
+        #region Get
 
         [Test]
         public async Task GetBookAddDTOAsync_book_id_false_return_BookAddDTO()
         {
-           
+
             // Act
             var actual = await _bookService.GetBookAddDTOAsync(new Guid("00000000000000000000000000005001"));
 
@@ -116,7 +115,7 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_id_true_return_FileDTO()
         {
-            
+
             // Act
             var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000001"));
 
@@ -132,7 +131,7 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_id_fail_return_null()
         {
-           
+
             // Act
             var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000321"));
 
@@ -143,18 +142,21 @@ namespace BLL.Test
         [Test]
         public async Task GetBookFileAsync_book_path_fail_return_null()
         {
-           
+
             // Act
             var actual = await _bookService.GetBookFileAsync(new Guid("00000000000000000000000000000002"));
 
             // Assert
             Assert.IsNull(actual);
         }
+        #endregion
+
+        #region Delete
 
         [Test]
         public async Task DeleteBookAsync_book_id_true_count_books_minus_one_book()
         {
-            
+
             // Act
             await _bookService.DeleteBookAsync(new Guid("00000000000000000000000000000001"));
             var bookList = await _bookService.GetAllBooksFormDTOAsync();
@@ -163,11 +165,14 @@ namespace BLL.Test
             // Assert
             Assert.AreEqual(actual, 1);
         }
+        #endregion
+
+        #region Add
 
         [Test]
         public async Task AddBookAsync_count_books_plus_one_book()
         {
-           
+
             // Act
             await _bookService.AddBookAsync(GetNewBookDTO());
             var bookList = await _bookService.GetAllBooksFormDTOAsync();
@@ -186,7 +191,7 @@ namespace BLL.Test
             var bookList = await _unitMock.Object.BookRepository.GetAllAsync();
             var authorList = await _unitMock.Object.AuthorRepository.GetAllAsync();
             var publisherList = await _unitMock.Object.PublisherRepository.GetAllAsync();
-            
+
 
             var actualBookCount = bookList.Count();
             var actualAuthorCount = authorList.Count();
@@ -194,13 +199,17 @@ namespace BLL.Test
 
 
             // Assert
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.AreEqual(actualBookCount, 3);
                 Assert.AreEqual(actualAuthorCount, 3);
                 Assert.AreEqual(actualPublisherCount, 3);
             });
-            
+
         }
+        #endregion
+
+        #region Edit
 
         [Test]
         public async Task EditBookAsync_newAuthorAndNewPublisher_change_book_and_plus_one_publisher_and_plus_one_author()
@@ -218,15 +227,17 @@ namespace BLL.Test
 
 
             // Assert
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.AreEqual(actualAuthorCount, 3);
                 Assert.AreEqual(actualPublisherCount, 3);
-                Assert.AreEqual(actualBook.BookId,new Guid("00000000000000000000000000000001"));
+                Assert.AreEqual(actualBook.BookId, new Guid("00000000000000000000000000000001"));
                 Assert.AreEqual(actualBook.BookName, "book1_change.txt");
                 Assert.AreEqual(actualBook.YearOfPublishing, "2022");
             });
 
         }
+        #endregion
 
         private BookAddDTO GetChangeBookDTOWithNewAuthorAndNewPublisher()
         {
@@ -243,7 +254,7 @@ namespace BLL.Test
         }
 
 
-            private BookAddDTO GetNewBookDTOWithNewAuthorAndNewPublisher()
+        private BookAddDTO GetNewBookDTOWithNewAuthorAndNewPublisher()
         {
             return new BookAddDTO
             {
@@ -327,8 +338,8 @@ namespace BLL.Test
         }
 
         private IEnumerable<Author> GenerateAuthorsTestData()
-        { 
-        yield return new Author
+        {
+            yield return new Author
             {
                 AuthorName = "author1",
                 AuthorBiography = "biography1",
@@ -378,7 +389,7 @@ namespace BLL.Test
         }
 
 
-       
+
 
 
         private void BookMoqSetup()
@@ -402,7 +413,7 @@ namespace BLL.Test
                 _booksTestData.Remove(bookRemove);
             });
             _repoBooksMock.Setup(repo => repo.Add(It.IsAny<Book>())).Callback<Book>((book) => _booksTestData.Add(book));
-            _repoBooksMock.Setup(repo => repo.Edit(It.IsAny<Book>(), It.IsAny<Guid>())).Callback<Book, Guid>((book, id) => 
+            _repoBooksMock.Setup(repo => repo.Edit(It.IsAny<Book>(), It.IsAny<Guid>())).Callback<Book, Guid>((book, id) =>
             {
                 int testId;
                 if (id == new Guid("00000000000000000000000000000001"))
@@ -413,10 +424,10 @@ namespace BLL.Test
                     throw new ArgumentException("Test book not found");
                 _booksTestData.RemoveAt(testId);
                 _booksTestData.Insert(testId, book);
-                });
+            });
         }
 
-       
+
         private void AuthorMoqSetup()
         {
             _repoAuthorsMock.Setup(repo => repo.GetAllAsync()).Returns(Task.Run(() => (IEnumerable<Author>)_authorsTestData));
@@ -426,7 +437,7 @@ namespace BLL.Test
             _repoAuthorsMock.Setup(repo => repo.GetModelIdAsync("author2")).Returns(Task.Run(() => _authorsTestData[1].AuthorId));
             _repoAuthorsMock.Setup(repo => repo.GetModelIdAsync("author3")).Returns(Task.Run(() => new Guid("00000000000000000000000000000033")));
             _repoAuthorsMock.Setup(repo => repo.Add(It.IsAny<Author>())).Callback<Author>((author) => _authorsTestData.Add(author));
-           
+
         }
 
         private void PublisherMoqSetup()
