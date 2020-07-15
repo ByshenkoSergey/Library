@@ -48,7 +48,7 @@ namespace API_Laer
 
             //DefaultConnection
             //NewConnectionHomePC
-            services.AddBLServices(Configuration.GetConnectionString("NewConnectionHomePC"),
+            services.AddBLServices(Configuration.GetConnectionString("DefaultConnection"),
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
 
         }
