@@ -271,5 +271,16 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:API.Infrastructure.APIInfrastructure">
+            <summary>
+            Static class for startup class extension method
+            </summary>
+        </member>
+        <member name="M:API.Infrastructure.APIInfrastructure.AddAPIServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            The extension method in which the connection of versioning and swagger is made to unload startup
+            </summary>
+            <param name="services"></param>
+        </member>
     </members>
 </doc>
