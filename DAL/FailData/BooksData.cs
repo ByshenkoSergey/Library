@@ -7,9 +7,9 @@ namespace DAL.FailData
 {
     public class BooksData
     {
-        private static List<Publisher> publishings = PublisherData.GetPublishersData().ToList();
-        private static List<Author> authors = AuthorsData.GetAuthorsData().ToList();
-              
+        private static readonly List<Publisher> _publishings = PublisherData.GetPublishersData().ToList();
+        private static readonly List<Author> _authors = AuthorsData.GetAuthorsData().ToList();
+
         public static IEnumerable<Book> GetBooksData()
         {
             yield return new Book
@@ -18,8 +18,8 @@ namespace DAL.FailData
                 BookName = "Black sea.txt",
                 FilePath = "wwwroot/BookLibrary/Black sea.txt",
                 YearOfPublishing = "2008",
-                PublisherId = publishings[1].PublisherId,
-                AuthorId = authors[0].AuthorId,
+                PublisherId = _publishings[1].PublisherId,
+                AuthorId = _authors[0].AuthorId,
                 Rating = 3,
                 FileType = "application/octet-stream"
             };
@@ -30,8 +30,8 @@ namespace DAL.FailData
                 BookName = "Нello cat.txt",
                 FilePath = "wwwroot/BookLibrary/Нello cat.txt",
                 YearOfPublishing = "2010",
-                PublisherId = publishings[3].PublisherId,
-                AuthorId = authors[1].AuthorId,
+                PublisherId = _publishings[3].PublisherId,
+                AuthorId = _authors[1].AuthorId,
                 Rating = 5,
                 FileType = "application/octet-stream"
             };
@@ -42,11 +42,10 @@ namespace DAL.FailData
                 BookName = "Black dog.txt",
                 FilePath = "wwwroot/BookLibrary/Black dog.txt",
                 YearOfPublishing = "2001",
-                PublisherId = publishings[2].PublisherId,
-                AuthorId = authors[2].AuthorId,
+                PublisherId = _publishings[2].PublisherId,
+                AuthorId = _authors[2].AuthorId,
                 Rating = 0,
                 FileType = "application/octet-stream"
-
             };
 
             yield return new Book
@@ -55,8 +54,8 @@ namespace DAL.FailData
                 BookName = "Happy bird.txt",
                 FilePath = "wwwroot/BookLibrary/Happy bird.txt",
                 YearOfPublishing = "1994",
-                PublisherId = publishings[0].PublisherId,
-                AuthorId = authors[3].AuthorId,
+                PublisherId = _publishings[0].PublisherId,
+                AuthorId = _authors[3].AuthorId,
                 Rating = 2,
                 FileType = "application/octet-stream"
             };
@@ -67,11 +66,10 @@ namespace DAL.FailData
                 BookName = "Little snake.txt",
                 FilePath = "wwwroot/BookLibrary/Little snake.txt",
                 YearOfPublishing = "2009",
-                PublisherId = publishings[2].PublisherId,
-                AuthorId = authors[4].AuthorId,
+                PublisherId = _publishings[2].PublisherId,
+                AuthorId = _authors[4].AuthorId,
                 Rating = 5,
                 FileType = "application/octet-stream"
-
             };
 
             yield return new Book
@@ -80,8 +78,8 @@ namespace DAL.FailData
                 BookName = "Merry.txt",
                 FilePath = "wwwroot/BookLibrary/Merry.txt",
                 YearOfPublishing = "2012",
-                PublisherId = publishings[0].PublisherId,
-                AuthorId = authors[5].AuthorId,
+                PublisherId = _publishings[0].PublisherId,
+                AuthorId = _authors[5].AuthorId,
                 Rating = 4,
                 FileType = "application/octet-stream"
             };
@@ -92,11 +90,10 @@ namespace DAL.FailData
                 BookName = "New spring.txt",
                 FilePath = "wwwroot/BookLibrary/New spring.txt",
                 YearOfPublishing = "2005",
-                PublisherId = publishings[3].PublisherId,
-                AuthorId = authors[6].AuthorId,
+                PublisherId = _publishings[3].PublisherId,
+                AuthorId = _authors[6].AuthorId,
                 Rating = 4,
                 FileType = "application/octet-stream"
-
             };
 
             yield return new Book
@@ -105,14 +102,11 @@ namespace DAL.FailData
                 BookName = "Square World.txt",
                 FilePath = "wwwroot/BookLibrary/Square World.txt",
                 YearOfPublishing = "2015",
-                PublisherId = publishings[1].PublisherId,
-                AuthorId = authors[7].AuthorId,
+                PublisherId = _publishings[1].PublisherId,
+                AuthorId = _authors[7].AuthorId,
                 Rating = 5,
                 FileType = "application/octet-stream"
             };
-
-
-
         }
     }
 }

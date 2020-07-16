@@ -9,31 +9,27 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
 
-
     /// <summary>
     /// Сlass for working with users role
     /// </summary>
-
     [Authorize(Roles = "Admin")]
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
     public class UserRoleController : ControllerBase
     {
-
-       
         private readonly IUserRoleService _userRoleServices;
         private readonly ILogger<UserRoleController> _logger;
+
 
         /// <summary>
         /// Dependency injection
         /// </summary>
         /// <param name="userRoleServices"></param>
         /// <param name="logger"></param>
-
         public UserRoleController(IUserRoleService userRoleServices, ILogger<UserRoleController> logger)
         {
-           _userRoleServices = userRoleServices;
+            _userRoleServices = userRoleServices;
             _logger = logger;
             _logger.LogInformation("Dependency injection successfully");
         }
@@ -43,7 +39,6 @@ namespace API.Controllers
         /// Receiving the all users role/ protected / role for access - Admin
         /// </summary>
         /// <returns></returns>
-
         [HttpGet("gets")]
         public async Task<IActionResult> GetAllUserRoleAsync()
         {
@@ -59,7 +54,5 @@ namespace API.Controllers
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
-
-      
     }
 }

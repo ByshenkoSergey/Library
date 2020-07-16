@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import {AdminLayoutComponent} from './shared/components/admin-layout/admin-layout.component';
 import {LoginPageComponent} from '../login-page/login-page.component';
 import {PublisherPageComponent} from './publisher-page/publisher-page.component';
@@ -25,12 +24,7 @@ import {PublisherEditPageComponent} from "./publisher.edit-page/publisher.edit-p
 import {SearchAuthorPipe} from "./shared/Pipe/search.author.pipe";
 import {AuthorEditPageComponent} from './author.edit-page/author.edit-page.component';
 import {SearchUserPipe} from "./shared/Pipe/search.user.pipe";
-import { UserEditPageComponent } from './user.edit-page/user.edit-page.component';
-
-
-
-
-
+import {UserEditPageComponent} from './user.edit-page/user.edit-page.component';
 
 @NgModule({
   declarations: [
@@ -55,8 +49,6 @@ import { UserEditPageComponent } from './user.edit-page/user.edit-page.component
     AuthorEditPageComponent,
     UserRolesPageComponent,
     UserEditPageComponent
-
-
   ],
   imports: [
     CommonModule,
@@ -68,7 +60,6 @@ import { UserEditPageComponent } from './user.edit-page/user.edit-page.component
       {
         path: '', component: AdminLayoutComponent, children: [
           {path: '', redirectTo: 'src/app/login', pathMatch: 'full'},
-
           {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard]},
           {path: 'book/:id', component: BookOpenPageComponent, canActivate: [AuthGuard]},
           {path: 'publishing/:id', component: PublisherPageComponent, canActivate: [AuthGuard]},
@@ -83,7 +74,6 @@ import { UserEditPageComponent } from './user.edit-page/user.edit-page.component
           {path: 'publisher/edit/:id', component: PublisherEditPageComponent, canActivate: [AuthGuard]},
           {path: 'author/edit/:id', component: AuthorEditPageComponent, canActivate: [AuthGuard]},
           {path: 'user/edit/:id', component: UserEditPageComponent, canActivate: [AuthGuard]},
-
         ]
       }
     ])

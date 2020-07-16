@@ -8,7 +8,7 @@
 
     <div [ngClass]="{invalid: form.get('userLogin').touched&&form.get('userLogin').invalid}">
       <label for="userLogin" class="formText">Login* </label>
-      <input id="userLogin" type="text" pattern="^[A-Za-z0-9]*$"   formControlName="userLogin">
+      <input id="userLogin" type="text" pattern="^[A-Za-z0-9]*$" formControlName="userLogin">
       <div
         class="validation"
         *ngIf="form.get('userLogin').touched&&form.get('userLogin').invalid"
@@ -59,12 +59,12 @@
     <div [ngClass]="{invalid: form.get('userFirstName').touched&&form.get('userFirstName').invalid}">
       <label for="userFirstName" class="formText">First name </label>
       <input id="userFirstName" type="text" maxlength="50" formControlName="userFirstName">
-     </div>
+    </div>
 
     <div [ngClass]="{invalid: form.get('userLastName').touched&&form.get('userLastName').invalid}">
       <label for="userLastName" class="formText">Last name </label>
       <input id="userLastName" type="text" maxlength="50" formControlName="userLastName">
-     </div>
+    </div>
 
     <div [ngClass]="{invalid: form.get('userYearsOld').touched&&form.get('userYearsOld').invalid}">
       <label for="userYearsOld" class="formText"> User years old </label>
@@ -73,7 +73,7 @@
         class="validation"
         *ngIf="form.get('userYearsOld').touched&&form.get('userYearsOld').invalid"
       >
-       <small *ngIf="form.get('userYearsOld').errors.pattern">
+        <small *ngIf="form.get('userYearsOld').errors.pattern">
           Only numbers can be used
         </small>
       </div>

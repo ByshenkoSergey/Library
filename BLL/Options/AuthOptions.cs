@@ -13,17 +13,14 @@ namespace BLL.Options
         }
 
         public const string issuer = "Library"; // издатель токена
-
         public const string audience = "AuthClient"; // потребитель токена
-
         public const double lifeTime = 1440; // время жизни токена 
-        public SymmetricSecurityKey symmetricSecurityKey
+        public SymmetricSecurityKey SymmetricSecurityKey
         {
             get
             {
                 return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_secretKey));
             }
         }
-
     }
 }

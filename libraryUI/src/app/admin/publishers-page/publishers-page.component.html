@@ -1,5 +1,7 @@
 <div class="publisher-search">
-  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  <label>
+    <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  </label>
 </div>
 
 <div class="publisherForm" *ngIf="userRole=='Moderator'">

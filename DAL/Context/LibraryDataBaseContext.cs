@@ -1,5 +1,4 @@
-﻿using DAL.Configurations;
-using DAL.FailData;
+﻿using DAL.FailData;
 using DAL.Models;
 using DAL.Models.IdentityModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -25,7 +24,6 @@ namespace DAL.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
             modelBuilder.Entity<Book>().HasData(BooksData.GetBooksData());
             modelBuilder.Entity<Author>().HasData(AuthorsData.GetAuthorsData());
             modelBuilder.Entity<Publisher>().HasData(PublisherData.GetPublishersData());

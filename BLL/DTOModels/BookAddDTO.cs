@@ -11,6 +11,5 @@ namespace BLL.DTOModels
         public string PublisherName { get; set; }
         public string FileType { get; set; }
         public string FilePath { get; set; }
-
     }
 }

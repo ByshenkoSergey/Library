@@ -33,35 +33,27 @@ namespace BLL.Infrastructure.Mapping
                 cnf.CreateMap<Publisher, PublisherDTO>();
                 cnf.CreateMap<PublisherDTO, Publisher>();
                 cnf.CreateMap<UserRole, UserRoleDTO>();
-
                 cnf.CreateMap<Book, BookFormDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
-
                 cnf.CreateMap<BookAddDTO, Book>()
                                .ForMember("PublisherId", opt => opt.MapFrom(p => GetPublisherIdAsync(p.PublisherName).Result))
                                .ForMember("AuthorId", opt => opt.MapFrom(p => GetAuthorIdAsync(p.AuthorName).Result))
                                .ForMember("Rating", opt => opt.MapFrom(p => 0))
                                .ForMember("BookName", opt => opt.MapFrom(p => p.BookName + ".txt"));
-
                 cnf.CreateMap<Book, BookAddDTO>()
                                .ForMember("PublisherName", opt => opt.MapFrom(p => GetPublisherNameAsync(p.PublisherId).Result))
                                .ForMember("AuthorName", opt => opt.MapFrom(a => GetAuthorNameAsync(a.AuthorId).Result));
-
                 cnf.CreateMap<User, NewUserDTO>()
                                 .ForMember("UserRole", opt => opt.MapFrom(p => GetUserRoleName(p.ApplicationUserRoleId).Result));
-
                 cnf.CreateMap<NewUserDTO, User>()
                                 .ForMember("ApplicationUserRoleId", opt => opt.MapFrom(p => GetUserRoleId(p.UserRole).Result));
-
             }).CreateMapper();
-           
+
             _logger.LogInformation("Return mapper");
             return _mapper;
-
         }
 
-        #region NewUserDTOToApplicationUser
         private async Task<string> GetUserRoleName(Guid applicationUserRoleId)
         {
             var role = await _unit.UserRoleRepository.GetAsync(applicationUserRoleId);
@@ -74,9 +66,7 @@ namespace BLL.Infrastructure.Mapping
             _logger.LogInformation("Return role name");
             return role.RoleName;
         }
-        #endregion
 
-        #region ApplicationUserToNewUserDTO
         private async Task<Guid> GetUserRoleId(string applicationUserRoleName)
         {
             var roleId = await _unit.UserRoleRepository.GetModelIdAsync(applicationUserRoleName);
@@ -88,9 +78,7 @@ namespace BLL.Infrastructure.Mapping
             _logger.LogInformation("Return role id");
             return roleId;
         }
-        #endregion
 
-        #region MapBookAddDTOToBook
         private async Task<Guid> GetPublisherIdAsync(string publisherName)
         {
             var publisherList = await _unit.PublisherRepository.GetAllAsync();
@@ -116,7 +104,6 @@ namespace BLL.Infrastructure.Mapping
 
             _logger.LogInformation("Create new publisher and return publisher id");
             return id;
-
         }
 
         private async Task<Guid> GetAuthorIdAsync(string authorName)
@@ -145,9 +132,7 @@ namespace BLL.Infrastructure.Mapping
             _logger.LogInformation("Create new author and return publisher id");
             return id;
         }
-        #endregion
 
-        #region MapBooksToBooksFromDTO
         private async Task<string> GetPublisherNameAsync(Guid publisherId)
         {
             var publisher = await _unit.PublisherRepository.GetAsync(publisherId);
@@ -174,10 +159,9 @@ namespace BLL.Infrastructure.Mapping
             }
 
             var name = author.AuthorName;
+
             _logger.LogInformation("Return author name");
             return name;
         }
-        #endregion
-
     }
 }

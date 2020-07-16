@@ -1,4 +1,3 @@
-
 <div class="userRoleForm" *ngIf="userRole=='Admin'">
   <table>
     <thead>
@@ -13,12 +12,9 @@
 
     <tr *ngFor="let role of userRoles; let idx = index">
       <td>{{ idx + 1}}</td>
-
       <td>{{role.roleName}}</td>
       <td>{{role.roleInfo}}</td>
-
     </tr>
     </tbody>
   </table>
-
 </div>

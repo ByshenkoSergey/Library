@@ -21,7 +21,8 @@ export class AuthorsPageComponent implements OnInit, OnDestroy {
   constructor(
     private service: AuthorService,
     private auth: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
 
@@ -53,7 +54,7 @@ export class AuthorsPageComponent implements OnInit, OnDestroy {
 
   remove(id: number) {
     this.dSub = this.service.deleteAuthor(id).subscribe(() => {
-      this.authors = this.authors.filter(author => author.authorId!==id)
+      this.authors = this.authors.filter(author => author.authorId !== id)
     })
   }
 

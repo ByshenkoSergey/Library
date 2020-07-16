@@ -17,7 +17,7 @@ export interface BookForm {
   bookId: number
   bookName: string
   authorName: string
-  authorId:number
+  authorId: number
   yearOfPublishing: string
   publisherName: string
   publisherId: number
@@ -28,7 +28,7 @@ export interface DbAuthResponse {
   access_token: string
   userId: any
   tokenExpiration: string
-  userRole:string
+  userRole: string
 }
 
 export interface Author {
@@ -37,12 +37,6 @@ export interface Author {
   authorBiography: string
 }
 
-export interface BookFile {
-  fileName: string
-  file: any
-  filePath: string
-  fileType:string
-}
 
 export interface Publisher {
   publisherId?: number
@@ -60,24 +54,20 @@ export interface User {
   userLastName?: string
   userYearsOld?: string
   phoneNumber?: string
-  userRole:string
+  userRole: string
   email: string
 
 }
 
 export interface UserRole {
   roleName: string
-  roleInfo:string
+  roleInfo: string
 }
 
 export interface Response {
-  message:string
-  }
-
-export interface ResponseObject {
-  object: any
-  message:string
+  message: string
 }
+
 
 export interface ProgressStatus {
   status: ProgressStatusEnum;

@@ -38,13 +38,13 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     ).subscribe((user: User) => {
       this.user = user
       this.form = new FormGroup({
-        userLogin: new FormControl(user.userLogin,[Validators.required, Validators.pattern(/\D{4,}/)]),
-        userPassword: new FormControl(user.userPassword,[Validators.required, Validators.pattern(/\D{4,}/)]),
-        email: new FormControl(user.email,[Validators.required, Validators.email]),
+        userLogin: new FormControl(user.userLogin, [Validators.required, Validators.pattern(/\D{4,}/)]),
+        userPassword: new FormControl(user.userPassword, [Validators.required, Validators.pattern(/\D{4,}/)]),
+        email: new FormControl(user.email, [Validators.required, Validators.email]),
         userFirstName: new FormControl(user.userFirstName),
         userLastName: new FormControl(user.userLastName),
-        userYearsOld: new FormControl(user.userYearsOld,Validators.pattern(/^[0-9]*$/)),
-        phoneNumber: new FormControl(user.phoneNumber,[Validators.required,Validators.pattern(/^[+][3][8][(][0]\d{2}[)][ ]\d{3}[-]\d{2}[-]\d{2}/)])
+        userYearsOld: new FormControl(user.userYearsOld, Validators.pattern(/^[0-9]*$/)),
+        phoneNumber: new FormControl(user.phoneNumber, [Validators.required, Validators.pattern(/^[+][3][8][(][0]\d{2}[)][ ]\d{3}[-]\d{2}[-]\d{2}/)])
       })
       this.role = this.auth.userRole
     })

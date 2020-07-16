@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace API_Laer
 {
+
     /// <summary>
     /// Main class application
     /// </summary>
@@ -33,8 +34,8 @@ namespace API_Laer
             {
                 NLog.LogManager.Shutdown();
             }
-
         }
+
 
         /// <summary>
         /// Create host application
@@ -53,6 +54,5 @@ namespace API_Laer
            logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
        })
        .UseNLog();
-
     }
 }

@@ -11,6 +11,7 @@ namespace API.Infrastructure
     /// </summary>
     public static class APIInfrastructure
     {
+
         /// <summary>
         /// The extension method in which the connection of versioning and swagger is made to unload startup
         /// </summary>
@@ -28,7 +29,8 @@ namespace API.Infrastructure
                 c.IncludeXmlComments(GetXmlCommentsPath());
             });
 
-            services.AddApiVersioning(o => {
+            services.AddApiVersioning(o =>
+            {
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
@@ -40,6 +42,4 @@ namespace API.Infrastructure
             return String.Format(@"{0}\SwaggerLibraryAPI.XML", AppDomain.CurrentDomain.BaseDirectory);
         }
     }
-
-    
 }

@@ -7,13 +7,12 @@ namespace DAL.FailData
 {
     public class ApplicationUserData
     {
-        private static List<UserRole> roleList = ApplicationUserRoleData.GetApplicationUserRoleData().ToList();
+        private static readonly List<UserRole> _roleList = ApplicationUserRoleData.GetApplicationUserRoleData().ToList();
 
-        
         private static Guid GetUserRoleGuid(string roleName)
         {
             Guid result = default;
-            foreach (var role in roleList)
+            foreach (var role in _roleList)
             {
                 if (role.RoleName == roleName)
                 {
@@ -77,8 +76,6 @@ namespace DAL.FailData
                 Email = "sidorov@gmail.com",
                 ApplicationUserRoleId = GetUserRoleGuid("SuperUser"),
             };
-
-
         }
     }
 }

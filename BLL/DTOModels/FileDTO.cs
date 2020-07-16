@@ -7,6 +7,6 @@ namespace BLL.DTOModels
     {
         public string FileName { get; set; }
         public MemoryStream File { get; set; }
-       public string FileType { get; set; }
+        public string FileType { get; set; }
     }
 }

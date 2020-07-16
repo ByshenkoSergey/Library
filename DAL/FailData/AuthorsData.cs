@@ -106,8 +106,6 @@ namespace DAL.FailData
                 "egestas justo vel,iaculis ex.Fusce pulvinar feugiat orci, ac ultricies est ultrices in. Donec blandit maximus tempor.Praesent a hendrerit lectus.Donec ex libero," +
                 "tempor nec purus vitae, bibendum elementum metus.Phasellus mollis justo et iaculis aliquam.Aenean vitae bibendum enim.Quisque sagittis volutpat mattis.Integer viverra nec dolor vitae malesuada."
             };
-
-
         }
     }
 }

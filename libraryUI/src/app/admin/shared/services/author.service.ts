@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
 import {Author} from "../interfaces/interfaces";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
@@ -19,15 +19,15 @@ export class AuthorService {
   }
 
   getAuthor(id: number): Observable<Author> {
-       return this.http.get<Author>(this.url + '/get/' + id)
-      .pipe(map((response:any)=>{
-                      return {
-        ...response,
-        authorId:response.authorId,
-        authorName:response.authorName,
-        authorBiography:response.authorBiography,
-       }
-    }));
+    return this.http.get<Author>(this.url + '/get/' + id)
+      .pipe(map((response: any) => {
+        return {
+          ...response,
+          authorId: response.authorId,
+          authorName: response.authorName,
+          authorBiography: response.authorBiography,
+        }
+      }));
   }
 
   updateAuthor(author: Author): Observable<any> {

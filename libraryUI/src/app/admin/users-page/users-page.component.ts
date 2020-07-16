@@ -27,7 +27,6 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.userRole = this.auth.userRole;
     this.pSub = this.service.getUsers().subscribe((data: User[]) => {
       this.users = data
-
       this.config = {
         itemsPerPage: 5,
         currentPage: 1,

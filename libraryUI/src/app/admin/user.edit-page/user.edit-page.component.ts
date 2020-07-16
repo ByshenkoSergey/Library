@@ -56,8 +56,7 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     }
 
     this.uSub = this.service.updateUser(user).subscribe(() => {
-      if(this.auth.userRole==this.user.userRole)
-      {
+      if (this.auth.userRole == this.user.userRole) {
         this.auth.logout()
       }
       this.router.navigate(['/admin', 'users']);

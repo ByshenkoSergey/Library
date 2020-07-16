@@ -15,7 +15,6 @@ namespace BLL.Services
         private readonly IMapConfig _mapper;
         private readonly ILogger<UserRoleService> _logger;
 
-
         public UserRoleService(IUnitOfWork unit, IMapConfig mapper, ILogger<UserRoleService> logger)
         {
             _unit = unit;
@@ -31,6 +30,5 @@ namespace BLL.Services
             _logger.LogInformation("Return user role list DTO");
             return userRoleListDTO;
         }
-
     }
 }

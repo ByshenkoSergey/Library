@@ -41,7 +41,6 @@ namespace BLL.Services
 
         public async Task DeleteAuthorAsync(Guid id)
         {
-
             try
             {
                 _unit.AuthorRepository.Delete(id);
@@ -72,14 +71,11 @@ namespace BLL.Services
                 await _unit.SaveChangeAsync();
                 _logger.LogInformation("Author is puted");
             }
-
             catch (NullReferenceException e)
             {
                 _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
-
     }
-
 }

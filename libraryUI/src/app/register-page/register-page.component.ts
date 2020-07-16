@@ -51,8 +51,7 @@ export class RegisterPageComponent implements OnInit {
       userRole:this.auth.userRole
 
     }
-    this.service.createUser(user).subscribe( (response) =>{
-      console.log('I component')
+    this.service.createUser(user).subscribe( () =>{
       this.form.reset()
       this.router.navigate(['/','login'])})
   }
