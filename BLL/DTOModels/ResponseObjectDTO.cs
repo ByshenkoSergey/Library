@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BLL.DTOModels
+﻿namespace BLL.DTOModels
 {
     public class ResponseObjectDTO
     {

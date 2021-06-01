@@ -61,7 +61,6 @@ namespace BLL.Services
             return publisherListDTO;
         }
 
-
         public async Task EditPublisherAsync(Guid id, PublisherDTO publisherDTO)
         {
             try
@@ -71,13 +70,11 @@ namespace BLL.Services
                 await _unit.SaveChangeAsync();
                 _logger.LogInformation("Publisher is puted");
             }
-
             catch (NullReferenceException e)
             {
                 _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
         }
-
     }
 }

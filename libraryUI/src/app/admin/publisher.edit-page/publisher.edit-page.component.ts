@@ -23,7 +23,7 @@ export class PublisherEditPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) {
-      }
+  }
 
   ngOnInit() {
     this.route.params.pipe(
@@ -36,7 +36,7 @@ export class PublisherEditPageComponent implements OnInit, OnDestroy {
         publisherName: new FormControl(publisher.publisherName, Validators.required),
         publisherPhone: new FormControl(publisher.publisherTellNumber, Validators.required),
         publisherEmail: new FormControl(publisher.publisherEmail, Validators.required),
-        publisherInfo : new FormControl(publisher.publisherInfo, Validators.required),
+        publisherInfo: new FormControl(publisher.publisherInfo, Validators.required),
 
       })
     })
@@ -50,11 +50,11 @@ export class PublisherEditPageComponent implements OnInit, OnDestroy {
     const publisher: Publisher = {
       publisherId: this.publisher.publisherId,
       publisherName: this.form.value.publisherName,
-       publisherTellNumber: this.form.value.publisherPhone,
+      publisherTellNumber: this.form.value.publisherPhone,
       publisherEmail: this.form.value.publisherEmail,
       publisherInfo: this.form.value.publisherInfo,
     }
-      this.uSub = this.service.updatePublisher(publisher).subscribe(() => {
+    this.uSub = this.service.updatePublisher(publisher).subscribe(() => {
       this.submitted = false
       this.router.navigate(['/admin', 'publishers']);
     })

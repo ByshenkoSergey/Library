@@ -8,7 +8,7 @@ namespace DAL.Models
         public Guid AuthorId { get; set; }
         public string AuthorName { get; set; }
         public string AuthorBiography { get; set; }
-        
+
         public virtual IEnumerable<Book> Books { get; set; }
 
         public Author()

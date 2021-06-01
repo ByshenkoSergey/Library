@@ -1,6 +1,8 @@
 <div class="usersPage">
 <div class="user-search">
-  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  <label>
+    <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  </label>
 </div>
 
 <div class="userForm" *ngIf="userRole=='Admin'">

@@ -32,7 +32,6 @@ export class BookEditPageComponent implements OnInit, OnDestroy {
       })
     ).subscribe((book: any) => {
       this.book = book
-      console.log(book)
       this.form = new FormGroup({
         bookName: new FormControl(book.bookName, Validators.required),
         authorName: new FormControl(book.authorName, Validators.required),
@@ -57,7 +56,6 @@ export class BookEditPageComponent implements OnInit, OnDestroy {
       fileType: this.book.fileType
 
     }
-    console.log(book)
     this.uSub = this.service.updateBook(book).subscribe(() => {
       this.submitted = false
       this.router.navigate(['/admin', 'dashboard']);

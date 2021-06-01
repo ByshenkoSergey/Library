@@ -23,8 +23,7 @@ namespace BLL.Services
         private readonly IAuthOptions _options;
         private readonly ILogger<UserService> _logger;
 
-
-        public UserService(IUnitOfWork unit, IMapConfig mapper, 
+        public UserService(IUnitOfWork unit, IMapConfig mapper,
             IAuthOptions options, ILogger<UserService> logger)
         {
             _unit = unit;
@@ -33,8 +32,6 @@ namespace BLL.Services
             _logger = logger;
             _logger.LogInformation("Dependency injection successfully");
         }
-
-       
 
         public async Task<NewUserDTO> GetUserDTOAsync(Guid userId)
         {
@@ -50,7 +47,6 @@ namespace BLL.Services
             _logger.LogInformation("Return user DTO");
             return userDTO;
         }
-
 
         public async Task<IEnumerable<NewUserDTO>> GetAllUsersDTOAsync()
         {
@@ -106,7 +102,6 @@ namespace BLL.Services
             {
                 if (user.UserLogin == newUserDTO.UserLogin)
                 {
-
                     _logger.LogWarning("Such user login already exists");
                     throw new ValidationException("Such user login already exists", "");
                 }
@@ -117,7 +112,6 @@ namespace BLL.Services
                     throw new ValidationException("Such user email already exists", "");
                 }
             }
-
 
             try
             {
@@ -142,25 +136,22 @@ namespace BLL.Services
                 var user = await GetUserAsync(userLogin, password);
                 var identity = GetIdentity(user);
                 var now = DateTime.UtcNow;
-
                 var jwt = new JwtSecurityToken(
-                                                issuer: AuthOptions.issuer,
-                                                audience: AuthOptions.audience,
-                                                notBefore: now,
-                                                claims: identity.Claims,
-                                                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.lifeTime)),
-                                                signingCredentials: new SigningCredentials(_options.symmetricSecurityKey, SecurityAlgorithms.HmacSha256)
-                                                );
+                                issuer: AuthOptions.issuer,
+                                audience: AuthOptions.audience,
+                                notBefore: now,
+                                claims: identity.Claims,
+                                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.lifeTime)),
+                                signingCredentials: new SigningCredentials(_options.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256)
+                                );
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-                _logger.LogInformation("Token is created"); 
+                _logger.LogInformation("Token is created");
                 var response = new
                 {
                     access_token = encodedJwt,
-                    userId= await GetUserIdAsync(userLogin),
+                    userId = await GetUserIdAsync(userLogin),
                     tokenExpiration = AuthOptions.lifeTime.ToString(),
                     userRole = user.UserRole
-
                 };
                 var json = JsonSerializer.Serialize(response);
                 _logger.LogInformation("Return token and other informations");
@@ -176,7 +167,6 @@ namespace BLL.Services
                 _logger.LogError($"Error - {e.Message}");
                 throw e;
             }
-
         }
 
         private async Task<Guid> GetUserIdAsync(string userLogin)
@@ -192,13 +182,11 @@ namespace BLL.Services
             }
             _logger.LogWarning("User not found");
             throw new ValidationException("User not found", "");
-
         }
 
         private async Task<NewUserDTO> GetUserAsync(string userName, string password)
         {
             var allUsers = await GetAllUsersDTOAsync();
-
             NewUserDTO user = null;
 
             foreach (var person in allUsers)
@@ -209,6 +197,7 @@ namespace BLL.Services
                     break;
                 }
             }
+
             if (user == null)
             {
                 _logger.LogWarning("User not found");

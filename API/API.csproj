@@ -62,8 +62,6 @@
 
 
   <ItemGroup>
-    <None Include="wwwroot\BookLibrary\Cap.txt" />
-    <None Include="wwwroot\BookLibrary\Cat Jek.txt" />
     <None Include="wwwroot\BookLibrary\Happy bird.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

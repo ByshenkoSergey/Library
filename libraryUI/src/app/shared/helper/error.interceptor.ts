@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpEventType} from '@angular/common/http';
+import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {AuthService} from 'src/app/admin/shared/services/auth.service';
@@ -8,7 +8,6 @@ import {AlertService} from 'src/app/admin/shared/services/alertService';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-
 
   modEvent: any
 
@@ -22,23 +21,13 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(map(event => {
 
       if (event instanceof HttpResponse) {
-        console.log('event')
-        console.log(event)
         const responseMessage = event.body['message']
-        console.log('message')
-        console.log(responseMessage)
         this.alert.success(responseMessage)
         const responseObject = event.body['responseObject']
-        console.log('object')
-        console.log(responseObject)
         if (responseObject != null) {
-          console.log('if')
           this.modEvent = event.clone({body: responseObject});
-          console.log(this.modEvent)
-          console.log("next")
           return this.modEvent;
-        } else if(responseMessage!=null) {
-          console.log('null')
+        } else if (responseMessage != null) {
           this.modEvent = event.clone({body: 'ok'});
           return this.modEvent;
         } else {
@@ -68,9 +57,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       {
         this.alert.warning(`${err.message}`)
       }
-      console.log('error')
-      const error = err.error.message || err.statusText;
-      return next.handle(request);
+            return next.handle(request);
     }))
   }
 }

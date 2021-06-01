@@ -18,7 +18,6 @@ namespace DAL.Configurations
             builder.HasKey(k => k.BookId);
             builder.HasOne(o => o.Publisher).WithMany(m => m.Books).OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(o => o.Author).WithMany(m => m.Books).OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

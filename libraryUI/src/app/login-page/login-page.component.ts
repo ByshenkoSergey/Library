@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../admin/shared/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -20,44 +20,43 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-
   }
 
   ngOnInit() {
-this.route.queryParams.subscribe( (params)=>{
-  if(params['loginAgain']){
-    this.message = 'Пожалуйста авторизируйтесь'
-  }else if(params['authFailed']){
-    this.message='Сесия истекла, пожалуйста авторизируйтесь'
+    this.route.queryParams.subscribe((params) => {
+      if (params['loginAgain']) {
+        this.message = 'Please log in'
+      } else if (params['authFailed']) {
+        this.message = 'Session expired, please log in'
+      }
+    })
+
+    this.form = new FormGroup({
+      login: new FormControl(null, [
+        Validators.required, Validators.minLength(4)
+      ]),
+      password: new FormControl(null, [
+        Validators.required, Validators.minLength(4)
+      ])
+
+    });
   }
-})
-
-  this.form = new FormGroup( {
-    login: new FormControl(null, [
-      Validators.required, Validators.minLength(4)
-    ]),
-    password: new FormControl(null, [
-      Validators.required, Validators.minLength(4)
-    ])
-
-  });
-}
 
   submit() {
-    if (this.form.invalid){
+    if (this.form.invalid) {
       return;
     }
     this.submitted = true;
-    const  user: UserLogin = {
+    const user: UserLogin = {
       login: this.form.value.login,
       password: this.form.value.password
     }
-     this.auth.login(user).subscribe(() => {
-     this.form.reset()
-     this.router.navigate(['/admin', 'dashboard'])
-      this.submitted=false
-    }, () =>{
-      this.submitted=false
+    this.auth.login(user).subscribe(() => {
+      this.form.reset()
+      this.router.navigate(['/admin', 'dashboard'])
+      this.submitted = false
+    }, () => {
+      this.submitted = false
     })
   }
 }

@@ -4,12 +4,12 @@ import {Publisher} from "../interfaces/interfaces";
 @Pipe({
   name: 'searchPublishers'
 })
-export class SearchPublisherPipe implements  PipeTransform{
+export class SearchPublisherPipe implements PipeTransform {
   transform(publishers: Publisher[], search = ''): Publisher[] {
-    if(!search.trim()){
+    if (!search.trim()) {
       return publishers
     }
-    return publishers.filter(publisher =>{
+    return publishers.filter(publisher => {
       return publisher.publisherName.toLowerCase().includes(search.toLowerCase())
     })
   }

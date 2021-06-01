@@ -7,6 +7,5 @@ namespace BLL.DTOModels
         public Guid AuthorId { get; set; }
         public string AuthorName { get; set; }
         public string AuthorBiography { get; set; }
-
     }
 }

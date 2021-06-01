@@ -13,16 +13,15 @@ namespace API_Laer
     /// <summary>
     /// Сlass for working with users
     /// </summary>
-
     [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
-
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
+
 
         /// <summary>
         /// Dependency injection
@@ -42,7 +41,6 @@ namespace API_Laer
         /// </summary>
         /// <param name="loginUser"></param>
         /// <returns></returns>
-
         [AllowAnonymous]
         [HttpPost("token")]
         public async Task<IActionResult> Token(LoginUserDTO loginUser)
@@ -52,22 +50,20 @@ namespace API_Laer
                 var token = await _userService.GetTokenAsync(loginUser.Login, loginUser.Password);
                 _logger.LogInformation("Token created and sent to client");
                 return Ok(new ResponseObjectDTO { ResponseObject = token, Message = "Request successful" });
-
             }
             catch (InvalidLogginUserException e)
             {
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
+
 
         /// <summary>
         /// A method for create new user(registration)/ available to anonymous users
         /// </summary>
         /// <param name="newUser"></param>
         /// <returns></returns>
-
         [AllowAnonymous]
         [HttpPost("post")]
         public async Task<IActionResult> AddNewUserAsync(NewUserDTO newUser)
@@ -78,12 +74,15 @@ namespace API_Laer
                 {
                     newUser.UserRole = "User";
                 }
+
                 var id = await _userService.AddUserAsync(newUser);
+
                 if (id == default)
                 {
                     _logger.LogWarning("User not added");
                     return BadRequest(new ResponseDTO { Message = "User not added" });
                 }
+
                 _logger.LogInformation("User is added");
                 return Ok(new ResponseObjectDTO { ResponseObject = id, Message = "User is added" });
             }
@@ -94,17 +93,16 @@ namespace API_Laer
             }
         }
 
+
         /// <summary>
         /// Receiving the user by id/ protected / role for access - Moderator, User,
         /// SuperUser, admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetUserAsync(Guid id)
         {
-
             var user = await _userService.GetUserDTOAsync(id);
             if (user == null)
             {
@@ -115,11 +113,11 @@ namespace API_Laer
             return Ok(new ResponseObjectDTO { ResponseObject = user, Message = "Request successful" });
         }
 
+
         /// <summary>
         /// Receiving the all users/ protected / role for access - Admin
         /// </summary>
         /// <returns></returns>
-
         [Authorize(Roles = "Admin")]
         [HttpGet("gets")]
         public async Task<IActionResult> GetAllUserAsync()
@@ -137,13 +135,13 @@ namespace API_Laer
             }
         }
 
+
         /// <summary>
         /// Change user by id number/ protected / role for access - Admin
         /// </summary>
         /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-
         [HttpPut("put/{id}")]
         public async Task<IActionResult> EditUserAsync(Guid id, NewUserDTO user)
         {
@@ -181,7 +179,5 @@ namespace API_Laer
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
-
     }
-
 }

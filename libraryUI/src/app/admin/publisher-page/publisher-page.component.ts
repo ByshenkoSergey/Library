@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {Publisher} from "../shared/interfaces/interfaces";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -17,7 +17,8 @@ export class PublisherPageComponent implements OnInit {
   constructor(
     private service: PublisherService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.publisher$ = this.route.params

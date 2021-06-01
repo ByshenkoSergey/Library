@@ -23,9 +23,9 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit() {
        this.form=new FormGroup({
       userLogin: new FormControl(null
-        ,[Validators.required, Validators.minLength(9)]),
+        ,[Validators.required, Validators.minLength(4)]),
       userPassword: new FormControl(null,
-        [Validators.required, Validators.minLength(9)]),
+        [Validators.required, Validators.minLength(4)]),
       email: new FormControl(null,
         [Validators.required,Validators.email]),
       userFirstName: new FormControl(null),
@@ -51,8 +51,7 @@ export class RegisterPageComponent implements OnInit {
       userRole:this.auth.userRole
 
     }
-    this.service.createUser(user).subscribe( (response) =>{
-      console.log('I component')
+    this.service.createUser(user).subscribe( () =>{
       this.form.reset()
       this.router.navigate(['/','login'])})
   }

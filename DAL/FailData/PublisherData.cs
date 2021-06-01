@@ -8,7 +8,6 @@ namespace DAL.FailData
     {
         public static IEnumerable<Publisher> GetPublishersData()
         {
-            
             yield return new Publisher
             {
                 PublisherId = new Guid("e40037b136b24671bd1df0784e1299bf"),

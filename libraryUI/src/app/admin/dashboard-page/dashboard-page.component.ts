@@ -35,7 +35,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         itemsPerPage: 5,
         currentPage: 1,
         totalItems: data.length
-        }
+      }
     });
   }
 

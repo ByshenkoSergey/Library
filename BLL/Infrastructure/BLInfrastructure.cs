@@ -15,7 +15,6 @@ namespace BLL.Infrastructure
 {
     public static class BLInfrastructure
     {
-
         public static void AddBLServices(this IServiceCollection services, string connectionString, string key)
         {
             services.AddScoped<IAuthOptions, AuthOptions>(c => new AuthOptions(key));
@@ -28,27 +27,26 @@ namespace BLL.Infrastructure
             services.AddScoped<IPublisherService, PublisherService>();
             services.AddDbContext<LibraryDataBaseContext>(c => c.UseSqlServer(connectionString), ServiceLifetime.Scoped, ServiceLifetime.Scoped);
             services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<LibraryDataBaseContext>();
-
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                 .AddJwtBearer(x =>
-                 {
-                     x.RequireHttpsMetadata = false;
-                     x.SaveToken = true;
-                     x.TokenValidationParameters = new TokenValidationParameters
-                     {
-                         ValidateIssuerSigningKey = true,
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
-                         ValidateIssuer = true,
-                         ValidIssuer = AuthOptions.issuer,
-                         ValidateAudience = true,
-                         ValidAudience = AuthOptions.audience,
-                         ValidateLifetime = true,
-                     };
-                 });
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                    ValidateIssuer = true,
+                    ValidIssuer = AuthOptions.issuer,
+                    ValidateAudience = true,
+                    ValidAudience = AuthOptions.audience,
+                    ValidateLifetime = true,
+                };
+            });
         }
     }
 }

@@ -17,7 +17,6 @@ namespace API_Laer
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
-
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _service;
@@ -35,6 +34,7 @@ namespace API_Laer
             _logger = logger;
             _logger.LogInformation("Dependency injection successfully");
         }
+
 
         /// <summary>
         /// Receiving the author by id/ protected / role for access - Moderator, User,
@@ -77,7 +77,6 @@ namespace API_Laer
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
 
 
@@ -102,7 +101,6 @@ namespace API_Laer
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
 
 

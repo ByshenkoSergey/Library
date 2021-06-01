@@ -19,7 +19,6 @@ namespace DAL.Configurations
             builder.Property(p => p.PhoneNumber).HasMaxLength(256);
             builder.Property(p => p.Email).HasMaxLength(256);
             builder.Property(p => p.UserYearsOld).HasMaxLength(25);
-
         }
     }
 }

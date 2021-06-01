@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System.Linq;
 
 
 namespace BLL.Services
@@ -20,7 +19,6 @@ namespace BLL.Services
         private readonly IMapConfig _mapper;
         private readonly ILogger<BookService> _logger;
 
-
         public BookService(IUnitOfWork unit, IMapConfig mapper, ILogger<BookService> logger)
         {
             _unit = unit;
@@ -29,8 +27,7 @@ namespace BLL.Services
             _logger.LogInformation("Dependency injection successfully");
         }
 
-
-        public async Task<BookAddDTO> GetBookAddDTOAsync(Guid id)//+
+        public async Task<BookAddDTO> GetBookAddDTOAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -49,11 +46,9 @@ namespace BLL.Services
                 _logger.LogError("File address is failrule");
                 throw new ValidationException("File address is failrule", "");
             }
-
         }
 
-
-        public async Task<FileDTO> GetBookFileAsync(Guid id)//+
+        public async Task<FileDTO> GetBookFileAsync(Guid id)
         {
             var book = await _unit.BookRepository.GetAsync(id);
 
@@ -65,6 +60,7 @@ namespace BLL.Services
             try
             {
                 var filePath = book.FilePath;
+
                 if (!File.Exists(filePath))
                 {
                     _logger.LogWarning("Book address not found");
@@ -77,6 +73,7 @@ namespace BLL.Services
                 {
                     await stream.CopyToAsync(memory);
                 }
+
                 memory.Position = 0;
 
                 _logger.LogInformation("Return book file DTO");
@@ -87,14 +84,14 @@ namespace BLL.Services
                 _logger.LogError("Download is failrule");
                 throw new ValidationException("Download is failrule", "");
             }
-
         }
 
-        public async Task DeleteBookAsync(Guid id)//+
+        public async Task DeleteBookAsync(Guid id)
         {
             try
             {
                 var book = await _unit.BookRepository.GetAsync(id);
+
                 if (book == null)
                 {
                     throw new ValidationException("Book not found", "");
@@ -116,7 +113,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task<IEnumerable<BookFormDTO>> GetAllBooksFormDTOAsync()//+
+        public async Task<IEnumerable<BookFormDTO>> GetAllBooksFormDTOAsync()
         {
             try
             {
@@ -131,11 +128,11 @@ namespace BLL.Services
                 throw e;
             }
         }
+
         public async Task<Guid> AddBookAsync(BookAddDTO newBookDTO)
         {
             if (!newBookDTO.FilePath.EndsWith(".txt"))
             {
-
                 _logger.LogWarning("Format file is not validate");
                 throw new ValidationException("Format file is not validate", "");
             }
@@ -190,7 +187,6 @@ namespace BLL.Services
                 file.Delete();
                 _logger.LogInformation("Book is deleted");
             }
-
             catch (ArgumentException)
             {
                 _logger.LogError("Book file not found!");
@@ -214,8 +210,6 @@ namespace BLL.Services
             _logger.LogInformation("Such a book is not exists");
             return false;
         }
-
     }
-
 }
 

@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
 {
-    public interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<Author> AuthorRepository { get; }
         IRepository<Book> BookRepository { get; }
         IRepository<Publisher> PublisherRepository { get; }
         IRepository<User> UserRepository { get; }
         IRepository<UserRole> UserRoleRepository { get; }
-
         Task SaveChangeAsync();
     }
 }

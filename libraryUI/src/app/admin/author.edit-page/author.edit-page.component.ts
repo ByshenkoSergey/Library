@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { Author} from "../shared/interfaces/interfaces";
+import {Author} from "../shared/interfaces/interfaces";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import { AuthorService } from '../shared/services/author.service';
+import {AuthorService} from '../shared/services/author.service';
 import {switchMap} from "rxjs/operators";
 
 @Component({
@@ -22,7 +22,8 @@ export class AuthorEditPageComponent implements OnInit, OnDestroy {
     private service: AuthorService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.route.params.pipe(
@@ -47,7 +48,7 @@ export class AuthorEditPageComponent implements OnInit, OnDestroy {
       authorId: this.author.authorId,
       authorName: this.form.value.authorName,
       authorBiography: this.form.value.authorBiography
-     }
+    }
     this.uSub = this.service.updateAuthor(author).subscribe(() => {
       this.submitted = false
       this.router.navigate(['/admin', 'authors']);

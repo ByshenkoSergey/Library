@@ -1,7 +1,6 @@
 ﻿using DAL.Context;
 using DAL.Models;
 using DAL.Repository;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -9,12 +8,8 @@ namespace DAL.Repositories
 {
     class BookRepository : Repository<Book>
     {
-
         public BookRepository(LibraryDataBaseContext context)
-   : base(context)
-        {
-
-        }
+   : base(context) { }
 
         public override async Task<Guid> GetModelIdAsync(string name)
         {
@@ -23,12 +18,9 @@ namespace DAL.Repositories
             {
                 if (book.BookName == name)
                 {
-
                     return book.BookId;
                 }
             }
-
-
             return default;
         }
     }

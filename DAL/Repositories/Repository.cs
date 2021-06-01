@@ -31,23 +31,23 @@ namespace DAL.Repository
             _context.Entry<T>(model).State = EntityState.Deleted;
             _context.Set<T>().Remove(model);
         }
+
         public void Edit(T item, Guid id)
         {
             var model = FindModelAsync(id).Result;
             if (model == null)
             {
-
                 throw new NullReferenceException($"{typeof(T)} not found");
             }
             Delete(id);
             Add(item);
-
         }
+
         public async Task<T> FindModelAsync(Guid id)
         {
-
             return await _context.Set<T>().FindAsync(id);
         }
+
         public async Task<T> GetAsync(Guid id)
         {
             return await FindModelAsync(id);
@@ -59,6 +59,5 @@ namespace DAL.Repository
         }
 
         public abstract Task<Guid> GetModelIdAsync(string name);
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using DAL.Context;
 using DAL.Models.IdentityModels;
 using DAL.Repository;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -9,13 +8,8 @@ namespace DAL.Repositories
 {
     public class UserRoleRepository : Repository<UserRole>
     {
-
         public UserRoleRepository(LibraryDataBaseContext context)
-: base(context)
-        {
-
-        }
-
+: base(context){}
 
         public override async Task<Guid> GetModelIdAsync(string name)
         {
@@ -24,11 +18,9 @@ namespace DAL.Repositories
             {
                 if (userRole.RoleName == name)
                 {
-
                     return userRole.RoleId;
                 }
             }
-
             return default;
         }
     }

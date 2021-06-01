@@ -4,12 +4,12 @@ import {BookForm} from "../interfaces/interfaces";
 @Pipe({
   name: 'searchBooks'
 })
-export class SearchBookPipe implements  PipeTransform{
+export class SearchBookPipe implements PipeTransform {
   transform(books: BookForm[], search = ''): BookForm[] {
-    if(!search.trim()){
+    if (!search.trim()) {
       return books
     }
-    return books.filter(book =>{
+    return books.filter(book => {
       return book.bookName.toLowerCase().includes(search.toLowerCase())
     })
   }

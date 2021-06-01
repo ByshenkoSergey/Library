@@ -11,15 +11,10 @@ namespace DAL.Models
         public string FileType { get; set; }
         public string FilePath { get; set; }
 
-
         public Guid AuthorId { get; set; }
         public virtual Author Author { get; set; }
 
         public Guid PublisherId { get; set; }
         public virtual Publisher Publisher { get; set; }
-
-
-
-
     }
 }

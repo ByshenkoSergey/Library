@@ -10,11 +10,13 @@ using System;
 
 namespace API_Laer
 {
+
     /// <summary>
     /// Application setup
     /// </summary>
     public class Startup
     {
+
         /// <summary>
         /// Dependency injection in Startup
         /// </summary>
@@ -23,6 +25,7 @@ namespace API_Laer
         {
             Configuration = configuration;
         }
+
 
         /// <summary>
         /// Property
@@ -37,23 +40,18 @@ namespace API_Laer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
+
             services.AddCors();
-            
+
             services.AddControllers();
-            
+
             services.AddMvc();
-            
+
             services.AddAPIServices();
 
-            //DefaultConnection
-            //NewConnectionHomePC
-            services.AddBLServices(Configuration.GetConnectionString("DefaultConnection"),
+            services.AddBLServices(Configuration.GetConnectionString("NewConnectionHomePC"),//DefaultConnection or NewConnectionHomePC
                 Configuration.GetSection("AppSettings").GetValue<string>("Secret"));
-
         }
-
-        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
@@ -70,7 +68,7 @@ namespace API_Laer
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -93,8 +91,6 @@ namespace API_Laer
             {
                 endpoints.MapControllers();
             });
-
-
         }
     }
 }

@@ -13,7 +13,6 @@ namespace API_Laer
     /// <summary>
     /// Сlass for working with book publishers
     /// </summary>
-    
     [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
@@ -25,12 +24,12 @@ namespace API_Laer
         private readonly IPublisherService _service;
         private readonly ILogger<PublisherController> _logger;
 
+
         /// <summary>
         /// Dependency injection
         /// </summary>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-
         public PublisherController(IPublisherService service, ILogger<PublisherController> logger)
         {
             _service = service;
@@ -38,13 +37,13 @@ namespace API_Laer
             _logger.LogInformation("Dependency injection successfully");
         }
 
+
         /// <summary>
         /// Receiving the publisher by id/ protected / role for access - Moderator, User,
         /// SuperUser, admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetPublisherAsync(Guid id)
         {
@@ -55,6 +54,7 @@ namespace API_Laer
                 _logger.LogWarning("Publisher not found");
                 return NotFound(new ResponseDTO { Message = "Publisher not found" });
             }
+
             _logger.LogInformation("Request successful");
             return Ok(new ResponseObjectDTO { ResponseObject = publisher, Message = "Request successful" });
         }
@@ -81,6 +81,7 @@ namespace API_Laer
             }
         }
 
+
         /// <summary>
         /// Change publisher by id number/ protected / role for access - Moderator
         /// </summary>
@@ -102,15 +103,14 @@ namespace API_Laer
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
+
 
         /// <summary>
         /// Delete publisher by id number/ protected / role for access - Moderator
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeletePublisherDTOAsync(Guid id)
@@ -127,7 +127,5 @@ namespace API_Laer
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
-
-
     }
 }

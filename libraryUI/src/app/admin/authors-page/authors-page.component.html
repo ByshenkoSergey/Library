@@ -1,5 +1,7 @@
 <div class="author-search">
-  <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  <label>
+    <input type="text" placeholder="Search" [(ngModel)]="searchStr">
+  </label>
 </div>
 
 <div class="authorForm" *ngIf="userRole=='Moderator'">

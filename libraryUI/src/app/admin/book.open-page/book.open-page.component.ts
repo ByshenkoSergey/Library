@@ -40,7 +40,7 @@ export class BookOpenPageComponent implements OnInit {
     this.downloadStatus.emit({status: ProgressStatusEnum.START});
     this.service.getBook(this.id).subscribe(res => {
       this.bookName = res.bookName
-     })
+    })
     this.service.getBookFile(this.id).subscribe(data => {
         this.downloadedFile = data
         switch (data.type) {
@@ -63,7 +63,7 @@ export class BookOpenPageComponent implements OnInit {
             break;
         }
       },
-      error => {
+      () => {
         this.downloadStatus.emit({status: ProgressStatusEnum.ERROR});
       }
     );

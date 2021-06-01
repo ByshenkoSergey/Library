@@ -14,11 +14,9 @@ using Microsoft.Extensions.Logging;
 namespace API_Laer
 {
 
-
     /// <summary>
     /// Сlass for working with users
     /// </summary>
-    
     [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{v:apiVersion}/[controller]")]
@@ -28,6 +26,7 @@ namespace API_Laer
         private readonly IBookService _service;
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly ILogger<BookController> _logger;
+
 
         /// <summary>
         /// Dependency injection
@@ -44,14 +43,12 @@ namespace API_Laer
         }
 
 
-
         /// <summary>
         /// Receiving the book file by id/ protected / role for access - Moderator, User,
         /// SuperUser, admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [HttpGet("get/file/{id}")]
         public async Task<IActionResult> GetBookFileAsync(Guid id)
         {
@@ -82,7 +79,6 @@ namespace API_Laer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [HttpGet("get/form/{id}")]
         public async Task<IActionResult> GetBookAddDTOAsync(Guid id)
         {
@@ -111,7 +107,6 @@ namespace API_Laer
         /// SuperUser, admin
         /// </summary>
         /// <returns></returns>
-
         [HttpGet("gets")]
         public async Task<ActionResult<IEnumerable<BookFormDTO>>> GetBooksFormAsync()
         {
@@ -133,10 +128,9 @@ namespace API_Laer
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
 
-      
+
         /// <summary>
         /// Change book by id number/ protected / role for access - Moderator
         /// </summary>
@@ -164,7 +158,6 @@ namespace API_Laer
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
         }
-
 
 
         /// <summary>
@@ -228,12 +221,12 @@ namespace API_Laer
             }
         }
 
+
         /// <summary>
         /// Delete book by id number/ protected / role for access - Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns> 
-
         [Authorize(Roles = "Moderator")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteBookAsync(Guid id)
@@ -249,8 +242,6 @@ namespace API_Laer
                 _logger.LogError($"Error - {e.Message}");
                 return BadRequest(new ResponseDTO { Message = $"{e.Message}" });
             }
-
         }
-
     }
 }

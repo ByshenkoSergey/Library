@@ -1,7 +1,6 @@
 ﻿using DAL.Context;
 using DAL.Models;
 using DAL.Repository;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -10,10 +9,7 @@ namespace DAL.Repositories
     class PublisherRepository : Repository<Publisher>
     {
         public PublisherRepository(LibraryDataBaseContext context)
-: base(context)
-        {
-
-        }
+: base(context) { }
 
         public override async Task<Guid> GetModelIdAsync(string name)
         {
@@ -22,13 +18,10 @@ namespace DAL.Repositories
             {
                 if (Publisher.PublisherName == name)
                 {
-
                     return Publisher.PublisherId;
                 }
             }
-
             return default;
         }
-
     }
 }

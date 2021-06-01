@@ -17,6 +17,5 @@ namespace DAL.Models
         {
             Books = new List<Book>();
         }
-
     }
 }
