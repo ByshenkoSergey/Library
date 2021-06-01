@@ -19,7 +19,7 @@ namespace API_Laer
     [Route("api/v{v:apiVersion}/[controller]")]
     [ApiController]
 
-
+    //1
     public class PublisherController : ControllerBase
     {
         private readonly IPublisherService _service;
